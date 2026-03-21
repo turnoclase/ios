@@ -41,12 +41,23 @@ struct ContentView: View {
     // Animación del botón siguiente
     @State private var opacidadBotonSiguiente: Double = 1.0
 
+    // Calcula el centro de un botón situado sobre el borde del círculo amarillo.
+    // ángulo: 0° = arriba, sentido horario.
+    private func posicionEnBorde(angulo: Double, centroX: CGFloat, centroY: CGFloat, radio: CGFloat) -> CGPoint {
+        let rad = (angulo - 90) * .pi / 180
+        return CGPoint(
+            x: centroX + radio * CGFloat(cos(rad)),
+            y: centroY + radio * CGFloat(sin(rad))
+        )
+    }
+
     var body: some View {
         GeometryReader { geo in
             let tamanyoCirculoPrincipal: CGFloat = min(geo.size.width, geo.size.height) * 0.65
             let tamanyoBoton: CGFloat = 72
             let centroX = geo.size.width / 2 - 7
             let centroY = geo.size.height / 2
+            let radio = tamanyoCirculoPrincipal / 2
 
             ZStack {
                 Color(.systemBackground)
@@ -99,10 +110,7 @@ struct ContentView: View {
                     vm.feedbackTactilLigero()
                     mostrarMenuAcciones = true
                 }
-                .position(
-                    x: centroX - tamanyoCirculoPrincipal / 2 + tamanyoBoton / 2 - 16,
-                    y: centroY - tamanyoCirculoPrincipal / 2 + tamanyoBoton / 2 - 16
-                )
+                .position(posicionEnBorde(angulo: -60, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonCodigoAula")
 
                 // Botón número en cola (rojo, arriba-derecha)
@@ -114,10 +122,7 @@ struct ContentView: View {
                 ) {
                     vm.simularBotonEnCola()
                 }
-                .position(
-                    x: centroX + tamanyoCirculoPrincipal / 2 - tamanyoBoton / 2 + 16,
-                    y: centroY - tamanyoCirculoPrincipal / 2 + tamanyoBoton / 2 - 16
-                )
+                .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonEnCola")
 
                 // Botón siguiente (azul, abajo-derecha)
@@ -140,10 +145,7 @@ struct ContentView: View {
                         opacidadBotonSiguiente = pressing ? 0.15 : 1.0
                     }
                 }, perform: {})
-                .position(
-                    x: centroX + tamanyoCirculoPrincipal / 2 - tamanyoBoton / 2 + 16,
-                    y: centroY + tamanyoCirculoPrincipal / 2 - tamanyoBoton / 2 + 16
-                )
+                .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonSiguiente")
 
                 // PageControl + ActivityIndicator (centrado debajo del círculo)
