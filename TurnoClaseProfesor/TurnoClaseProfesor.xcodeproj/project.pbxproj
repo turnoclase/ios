@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		410D71001FA8D1B8009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */; };
 		411081552173FDF900ADD784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411081572173FDF900ADD784 /* Localizable.strings */; };
+		413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A912F6EA846005B7D54 /* ContentView.swift */; };
+		413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A932F6EA850005B7D54 /* AulaViewModel.swift */; };
 		4148914E26FF11E0008D9B9C /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4148914D26FF11E0008D9B9C /* Reachability */; };
 		414C7985221F998F003E97E4 /* TurnoClaseShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; };
 		414C7986221F998F003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -24,11 +26,9 @@
 		41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */; };
 		41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */; };
 		41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */; };
-		41F4C5D11B34BCD5004AA55E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F4C5D01B34BCD5004AA55E /* ViewController.swift */; };
 		41F4C5D41B34BCD5004AA55E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D21B34BCD5004AA55E /* Main.storyboard */; };
 		41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D51B34BCD5004AA55E /* Images.xcassets */; };
 		41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */; };
-		41F8B927216A156D006EBBAC /* Teclado.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F8B926216A156D006EBBAC /* Teclado.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +71,8 @@
 		411081582173FDFF00ADD784 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		411081592173FE0300ADD784 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		413592C3221F84BD0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		413C7A912F6EA846005B7D54 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		413C7A932F6EA850005B7D54 /* AulaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AulaViewModel.swift; sourceTree = "<group>"; };
 		41675B1E1B553EC1001696CE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		41675B1F1B553EC1001696CE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		41675B201B553EE9001696CE /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Main.strings; sourceTree = "<group>"; };
@@ -88,11 +90,9 @@
 		41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TurnoClase Teacher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F4C5CD1B34BCD5004AA55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		41F4C5D01B34BCD5004AA55E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		41F4C5D31B34BCD5004AA55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		41F4C5D51B34BCD5004AA55E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41F4C5D81B34BCD6004AA55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		41F8B926216A156D006EBBAC /* Teclado.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teclado.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,9 +174,9 @@
 		41F4C5CB1B34BCD5004AA55E /* TurnoClaseProfesor */ = {
 			isa = PBXGroup;
 			children = (
+				413C7A932F6EA850005B7D54 /* AulaViewModel.swift */,
+				413C7A912F6EA846005B7D54 /* ContentView.swift */,
 				41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */,
-				41F4C5D01B34BCD5004AA55E /* ViewController.swift */,
-				41F8B926216A156D006EBBAC /* Teclado.swift */,
 				41BD61D51FB79575002385FE /* UI */,
 				41F4C5CC1B34BCD5004AA55E /* Supporting Files */,
 			);
@@ -348,8 +348,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41F4C5D11B34BCD5004AA55E /* ViewController.swift in Sources */,
-				41F8B927216A156D006EBBAC /* Teclado.swift in Sources */,
+				413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */,
+				413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */,
 				41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
