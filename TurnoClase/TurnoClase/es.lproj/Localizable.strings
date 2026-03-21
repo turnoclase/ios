@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  TurnoClase
+
+  Created by widemos on 8/7/15.
+  Copyright (c) 2015 Ion Jaureguialzo Sarasola. All rights reserved.
+*/
+
+ES_TU_TURNO="¡Es tu turno!";
+VOLVER_A_EMPEZAR="Pulsa ⟳ para pedir turno";
+ESPERA="Espera para pedir turno...";
+MENSAJE_ERROR="Verifica el número de aula\no la conexión de red";

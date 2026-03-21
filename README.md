@@ -1,13 +1,3 @@
-# ios
+# TurnoClase
 
-```
- _____________________________________
-/ Give me a sleeping pill and tell me \
-\ your troubles.                      /
- -------------------------------------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\/\
-                ||----w |
-                ||     ||
-```
+Versión para iOS.

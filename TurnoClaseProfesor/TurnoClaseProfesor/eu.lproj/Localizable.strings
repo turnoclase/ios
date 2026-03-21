@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  TurnoClaseProfesor
+
+  Created by Ion Jaureguialzo Sarasola on 15/10/2018.
+  Copyright © 2018 Ion Jaureguialzo Sarasola. All rights reserved.
+*/
+
+"Boton_Siguiente" = "Siguiente"; // No traducir
+
+"Aula %@" = "%@ gela";
+"Cancelar" = "Ezeztatu";
+"Conectado como invitado" = "Gonbidatu moduan konektatua";
+"Conectar" = "Konektatu";
+"Conectar a otra aula" = "Beste gela batera konektatu";
+"Código de aula" = "Gela zenbakia";
+"Desconectar del aula" = "Gela honetatik deskonektatu";
+"Error de conexión" = "Konexio arazoa";
+"Establecer tiempo de espera" = "Itxaroteko denbora ezarri";
+"Generar nueva aula" = "Gela berria sortu";
+"Guardar" = "Gorde";
+"Introduce los datos del aula a la que quieres conectar." = "Idatzi konektatu nahi duzun gelaren datuak.";
+"No se ha podido acceder al aula con los datos proporcionados." = "Idatzitako datuekin ezin izan da gela horretara konektatu.";
+"Ok" = "Ados";
+"PIN" = "PIN";
+"PIN para compartir este aula: %@" = "Gela partekatzeko PIN kodea: %@";
+"Siguiente" = "Hurrengoa";
+"Tiempo de espera (minutos)" = "Itxaroteko denbora (minutuak)";
+
+"Añadir aula" = "Gela bat gehitu";
+"Borrar aula" = "Gela ezabatu";
+"Vaciar aula" = "Gela ustu";
+
+"Esta acción vaciará la cola de espera." = "Akzio honek itxaroten daudenen lerroa ezabatuko du.";
+"Recuperar aula" = "Gela berreskuratu";
+
+"No hay conexión de red" = "Ez dago sareko konexiorik";
+
+"Etiquetar aula" = "Gela etiketatu";
+"Introduce la nueva etiqueta." = "Sartu etiketa berria.";
+"Etiqueta" = "Etiketa";

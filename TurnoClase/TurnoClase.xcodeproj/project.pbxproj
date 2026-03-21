@@ -1,0 +1,708 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		410088F91FBED8F70058B3F5 /* TurnoClaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410088F81FBED8F70058B3F5 /* TurnoClaseUITests.swift */; };
+		410089011FBEEAB90058B3F5 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410089001FBEEAB90058B3F5 /* SnapshotHelper.swift */; };
+		410D71021FA8D634009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D71011FA8D633009AC062 /* GoogleService-Info.plist */; };
+		4116087A1B517B88008C9A1E /* Licenses in Resources */ = {isa = PBXBuildFile; fileRef = 411608781B517B88008C9A1E /* Licenses */; };
+		4116087B1B517B88008C9A1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 411608791B517B88008C9A1E /* Settings.bundle */; };
+		411609241B41B7E700E5BD59 /* TurnoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411609231B41B7E700E5BD59 /* TurnoViewController.swift */; };
+		414C5BF81FBF65E500D88D64 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414EC8641B4C8B1B0002492C /* Localizable.strings */; };
+		414C797F221F991E003E97E4 /* TurnoClaseShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; };
+		414C7980221F991E003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		414EC8621B4C8B1B0002492C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414EC8641B4C8B1B0002492C /* Localizable.strings */; };
+		415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415BC6471B2F5305004FADE0 /* AppDelegate.swift */; };
+		415BC64A1B2F5305004FADE0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415BC6491B2F5305004FADE0 /* ViewController.swift */; };
+		415BC64D1B2F5305004FADE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415BC64B1B2F5305004FADE0 /* Main.storyboard */; };
+		415BC64F1B2F5305004FADE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415BC64E1B2F5305004FADE0 /* Images.xcassets */; };
+		415BC6521B2F5305004FADE0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415BC6501B2F5305004FADE0 /* LaunchScreen.xib */; };
+		4185BE8226396E82002706CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE8126396E82002706CF /* FirebaseAuth */; };
+		4185BE8426396E82002706CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE8326396E82002706CF /* FirebaseFirestore */; };
+		4185BE872639751E002706CF /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE862639751E002706CF /* XCGLogger */; };
+		4188EE9129CB9F13009EEC94 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 4188EE9029CB9F13009EEC94 /* Localize_Swift */; };
+		41983C7427EA0E7C001B524A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 41983C7327EA0E7C001B524A /* FirebaseAppCheck */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		410088FB1FBED8F70058B3F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 415BC63A1B2F5305004FADE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 415BC6411B2F5305004FADE0;
+			remoteInfo = TurnoClase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		414C7981221F991F003E97E4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				414C7980221F991E003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		410088F61FBED8F60058B3F5 /* TurnoClaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnoClaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		410088F81FBED8F70058B3F5 /* TurnoClaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseUITests.swift; sourceTree = "<group>"; };
+		410088FA1FBED8F70058B3F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		410089001FBEEAB90058B3F5 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		410D71011FA8D633009AC062 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		411608781B517B88008C9A1E /* Licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Licenses; path = TurnoClase/Licenses; sourceTree = "<group>"; };
+		411608791B517B88008C9A1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = TurnoClase/Settings.bundle; sourceTree = "<group>"; };
+		411609231B41B7E700E5BD59 /* TurnoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnoViewController.swift; sourceTree = "<group>"; };
+		413592BB221F814C0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		414EC8541B4C83CB0002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		414EC8551B4C83CB0002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		414EC8561B4C85260002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Main.strings; sourceTree = "<group>"; };
+		414EC8571B4C85260002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		414EC8631B4C8B1B0002492C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		414EC8651B4C8B570002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		414EC8661B4C8B580002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		415BC6421B2F5305004FADE0 /* TurnoClase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnoClase.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		415BC6461B2F5305004FADE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		415BC6471B2F5305004FADE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		415BC6491B2F5305004FADE0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		415BC64C1B2F5305004FADE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		415BC64E1B2F5305004FADE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		415BC6511B2F5305004FADE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		4199FF0B1E32EF9500F9E42F /* TurnoClase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnoClase.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		410088F31FBED8F60058B3F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		415BC63F1B2F5305004FADE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4188EE9129CB9F13009EEC94 /* Localize_Swift in Frameworks */,
+				4185BE8426396E82002706CF /* FirebaseFirestore in Frameworks */,
+				4185BE8226396E82002706CF /* FirebaseAuth in Frameworks */,
+				414C797F221F991E003E97E4 /* TurnoClaseShared.framework in Frameworks */,
+				41983C7427EA0E7C001B524A /* FirebaseAppCheck in Frameworks */,
+				4185BE872639751E002706CF /* XCGLogger in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		410088F71FBED8F70058B3F5 /* TurnoClaseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				410089001FBEEAB90058B3F5 /* SnapshotHelper.swift */,
+				410088F81FBED8F70058B3F5 /* TurnoClaseUITests.swift */,
+				410088FA1FBED8F70058B3F5 /* Info.plist */,
+			);
+			path = TurnoClaseUITests;
+			sourceTree = "<group>";
+		};
+		411608771B517B6E008C9A1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				411608781B517B88008C9A1E /* Licenses */,
+				411608791B517B88008C9A1E /* Settings.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		415BC6391B2F5305004FADE0 = {
+			isa = PBXGroup;
+			children = (
+				415BC6441B2F5305004FADE0 /* TurnoClase */,
+				411608771B517B6E008C9A1E /* Resources */,
+				410088F71FBED8F70058B3F5 /* TurnoClaseUITests */,
+				415BC6431B2F5305004FADE0 /* Products */,
+				DF45B9DA60FC384B1AA2D15F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		415BC6431B2F5305004FADE0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				415BC6421B2F5305004FADE0 /* TurnoClase.app */,
+				410088F61FBED8F60058B3F5 /* TurnoClaseUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		415BC6441B2F5305004FADE0 /* TurnoClase */ = {
+			isa = PBXGroup;
+			children = (
+				415BC6471B2F5305004FADE0 /* AppDelegate.swift */,
+				415BC6491B2F5305004FADE0 /* ViewController.swift */,
+				411609231B41B7E700E5BD59 /* TurnoViewController.swift */,
+				41BD61D41FB79521002385FE /* UI */,
+				415BC6451B2F5305004FADE0 /* Supporting Files */,
+			);
+			path = TurnoClase;
+			sourceTree = "<group>";
+		};
+		415BC6451B2F5305004FADE0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4199FF0B1E32EF9500F9E42F /* TurnoClase.entitlements */,
+				410D71011FA8D633009AC062 /* GoogleService-Info.plist */,
+				415BC6461B2F5305004FADE0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		41BD61D41FB79521002385FE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				415BC64B1B2F5305004FADE0 /* Main.storyboard */,
+				415BC64E1B2F5305004FADE0 /* Images.xcassets */,
+				415BC6501B2F5305004FADE0 /* LaunchScreen.xib */,
+				414EC8641B4C8B1B0002492C /* Localizable.strings */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		DF45B9DA60FC384B1AA2D15F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				413592BB221F814C0089E71C /* TurnoClaseShared.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		410088F51FBED8F60058B3F5 /* TurnoClaseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 410088FF1FBED8F70058B3F5 /* Build configuration list for PBXNativeTarget "TurnoClaseUITests" */;
+			buildPhases = (
+				410088F21FBED8F60058B3F5 /* Sources */,
+				410088F31FBED8F60058B3F5 /* Frameworks */,
+				410088F41FBED8F60058B3F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				410088FC1FBED8F70058B3F5 /* PBXTargetDependency */,
+			);
+			name = TurnoClaseUITests;
+			productName = TurnoClaseUITests;
+			productReference = 410088F61FBED8F60058B3F5 /* TurnoClaseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		415BC6411B2F5305004FADE0 /* TurnoClase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 415BC6611B2F5305004FADE0 /* Build configuration list for PBXNativeTarget "TurnoClase" */;
+			buildPhases = (
+				415BC63E1B2F5305004FADE0 /* Sources */,
+				415BC63F1B2F5305004FADE0 /* Frameworks */,
+				415BC6401B2F5305004FADE0 /* Resources */,
+				414C7981221F991F003E97E4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TurnoClase;
+			packageProductDependencies = (
+				4185BE8126396E82002706CF /* FirebaseAuth */,
+				4185BE8326396E82002706CF /* FirebaseFirestore */,
+				4185BE862639751E002706CF /* XCGLogger */,
+				41983C7327EA0E7C001B524A /* FirebaseAppCheck */,
+				4188EE9029CB9F13009EEC94 /* Localize_Swift */,
+			);
+			productName = TurnoClase;
+			productReference = 415BC6421B2F5305004FADE0 /* TurnoClase.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		415BC63A1B2F5305004FADE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 2600;
+				ORGANIZATIONNAME = "Ion Jaureguialzo Sarasola";
+				TargetAttributes = {
+					410088F51FBED8F60058B3F5 = {
+						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 1020;
+						TestTargetID = 415BC6411B2F5305004FADE0;
+					};
+					415BC6411B2F5305004FADE0 = {
+						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 1020;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 415BC63D1B2F5305004FADE0 /* Build configuration list for PBXProject "TurnoClase" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				eu,
+				es,
+			);
+			mainGroup = 415BC6391B2F5305004FADE0;
+			packageReferences = (
+				4185BE8026396E82002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4185BE852639751D002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */,
+				4188EE8F29CB9F13009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+			);
+			productRefGroup = 415BC6431B2F5305004FADE0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				415BC6411B2F5305004FADE0 /* TurnoClase */,
+				410088F51FBED8F60058B3F5 /* TurnoClaseUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		410088F41FBED8F60058B3F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				414C5BF81FBF65E500D88D64 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		415BC6401B2F5305004FADE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				414EC8621B4C8B1B0002492C /* Localizable.strings in Resources */,
+				410D71021FA8D634009AC062 /* GoogleService-Info.plist in Resources */,
+				415BC64D1B2F5305004FADE0 /* Main.storyboard in Resources */,
+				415BC6521B2F5305004FADE0 /* LaunchScreen.xib in Resources */,
+				4116087A1B517B88008C9A1E /* Licenses in Resources */,
+				415BC64F1B2F5305004FADE0 /* Images.xcassets in Resources */,
+				4116087B1B517B88008C9A1E /* Settings.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		410088F21FBED8F60058B3F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				410088F91FBED8F70058B3F5 /* TurnoClaseUITests.swift in Sources */,
+				410089011FBEEAB90058B3F5 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		415BC63E1B2F5305004FADE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				415BC64A1B2F5305004FADE0 /* ViewController.swift in Sources */,
+				415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */,
+				411609241B41B7E700E5BD59 /* TurnoViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		410088FC1FBED8F70058B3F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 415BC6411B2F5305004FADE0 /* TurnoClase */;
+			targetProxy = 410088FB1FBED8F70058B3F5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		414EC8641B4C8B1B0002492C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				414EC8631B4C8B1B0002492C /* Base */,
+				414EC8651B4C8B570002492C /* es */,
+				414EC8661B4C8B580002492C /* eu */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		415BC64B1B2F5305004FADE0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				415BC64C1B2F5305004FADE0 /* Base */,
+				414EC8541B4C83CB0002492C /* es */,
+				414EC8561B4C85260002492C /* eu */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		415BC6501B2F5305004FADE0 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				415BC6511B2F5305004FADE0 /* Base */,
+				414EC8551B4C83CB0002492C /* es */,
+				414EC8571B4C85260002492C /* eu */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		410088FD1FBED8F70058B3F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = TurnoClaseUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TurnoClase;
+			};
+			name = Debug;
+		};
+		410088FE1FBED8F70058B3F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = TurnoClaseUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TurnoClase;
+			};
+			name = Release;
+		};
+		415BC65F1B2F5305004FADE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RSEH385M54;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		415BC6601B2F5305004FADE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RSEH385M54;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		415BC6621B2F5305004FADE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TurnoClase/TurnoClase.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 74;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TurnoClase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.2.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		415BC6631B2F5305004FADE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TurnoClase/TurnoClase.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 74;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TurnoClase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.2.1;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		410088FF1FBED8F70058B3F5 /* Build configuration list for PBXNativeTarget "TurnoClaseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				410088FD1FBED8F70058B3F5 /* Debug */,
+				410088FE1FBED8F70058B3F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		415BC63D1B2F5305004FADE0 /* Build configuration list for PBXProject "TurnoClase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				415BC65F1B2F5305004FADE0 /* Debug */,
+				415BC6601B2F5305004FADE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		415BC6611B2F5305004FADE0 /* Build configuration list for PBXNativeTarget "TurnoClase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				415BC6621B2F5305004FADE0 /* Debug */,
+				415BC6631B2F5305004FADE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4185BE8026396E82002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+		4185BE852639751D002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
+		4188EE8F29CB9F13009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ijaureguialzo/Localize-Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4185BE8126396E82002706CF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185BE8026396E82002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		4185BE8326396E82002706CF /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185BE8026396E82002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		4185BE862639751E002706CF /* XCGLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185BE852639751D002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = XCGLogger;
+		};
+		4188EE9029CB9F13009EEC94 /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4188EE8F29CB9F13009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
+		};
+		41983C7327EA0E7C001B524A /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185BE8026396E82002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 415BC63A1B2F5305004FADE0 /* Project object */;
+}

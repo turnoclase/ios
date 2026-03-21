@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings
+  TurnoClaseProfesor
+
+  Created by Ion Jaureguialzo Sarasola on 15/10/2018.
+  Copyright © 2018 Ion Jaureguialzo Sarasola. All rights reserved.
+*/
+
+"Boton_Siguiente" = "Siguiente"; // No traducir
+
+"Aula %@" = "Classroom %@";
+"Cancelar" = "Cancel";
+"Conectado como invitado" = "Connected as guest";
+"Conectar" = "Connect";
+"Conectar a otra aula" = "Connect to another classroom";
+"Código de aula" = "Classroom code";
+"Desconectar del aula" = "Disconnect from the classroom";
+"Error de conexión" = "Connection error";
+"Establecer tiempo de espera" = "Set wait time";
+"Generar nueva aula" = "Generate new classroom";
+"Guardar" = "Save";
+"Introduce los datos del aula a la que quieres conectar." = "Insert data of the classroom you are connecting to.";
+"No se ha podido acceder al aula con los datos proporcionados." = "Can't access to the classroom with provided data.";
+"Ok" = "Ok";
+"PIN" = "PIN";
+"PIN para compartir este aula: %@" = "PIN to share this classroom: %@";
+"Siguiente" = "Next";
+"Tiempo de espera (minutos)" = "Wait time (minutes)";
+
+"Añadir aula" = "Add classroom";
+"Borrar aula" = "Delete classroom";
+"Vaciar aula" = "Empty classroom";
+
+"Esta acción vaciará la cola de espera." = "This action will clear the waiting queue.";
+"Recuperar aula" = "Classroom recovery";
+
+"No hay conexión de red" = "No network connection";
+
+"Etiquetar aula" = "Set classroom label";
+"Introduce la nueva etiqueta." = "Insert the new label.";
+"Etiqueta" = "Label";

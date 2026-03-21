@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "2600"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "41F4C5C81B34BCD5004AA55E"
+               BuildableName = "TurnoClase Teacher.app"
+               BlueprintName = "TurnoClaseProfesor"
+               ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "function version {&#10;    echo &quot;$@&quot; | awk -F. &apos;{ printf(&quot;%d%03d%03d%03d\n&quot;, $1,$2,$3,$4); }&apos;;&#10;}&#10;&#10;# Don&#x2019;t run on iOS devices.&#10;if [[ &quot;${SDKROOT}&quot; != *&quot;simulator&quot;* ]]; then&#10;    exit 0&#10;fi&#10;&#10;# Don&#x2019;t run on iOS versions before 13.&#10;if [ $(version &quot;${TARGET_DEVICE_OS_VERSION}&quot;) -ge $(version &quot;13&quot;) ]; then&#10;    xcrun simctl boot &quot;${TARGET_DEVICE_IDENTIFIER}&quot;&#10;&#10;    xcrun simctl status_bar &quot;${TARGET_DEVICE_IDENTIFIER}&quot; override \&#10;        --time &quot;9:41&quot; \&#10;        --dataNetwork wifi \&#10;        --wifiMode active \&#10;        --wifiBars 3 \&#10;        --cellularMode active \&#10;        --cellularBars 4 \&#10;        --operatorName &quot;&quot; \&#10;        --batteryState charged \&#10;        --batteryLevel 100&#10;fi&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "41B669AE1FC10B7300DEB965"
+                     BuildableName = "TurnoClaseProfesorUITests.xctest"
+                     BlueprintName = "TurnoClaseProfesorUITests"
+                     ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "function version {&#10;    echo &quot;$@&quot; | awk -F. &apos;{ printf(&quot;%d%03d%03d%03d\n&quot;, $1,$2,$3,$4); }&apos;;&#10;}&#10;&#10;# Don&#x2019;t run on iOS devices.&#10;if [[ &quot;${SDKROOT}&quot; != *&quot;simulator&quot;* ]]; then&#10;    exit 0&#10;fi&#10;&#10;# Don&#x2019;t run on iOS versions before 13.&#10;if [ $(version &quot;${TARGET_DEVICE_OS_VERSION}&quot;) -ge $(version &quot;13&quot;) ]; then&#10;    xcrun simctl boot &quot;${TARGET_DEVICE_IDENTIFIER}&quot;&#10;    xcrun simctl status_bar &quot;${TARGET_DEVICE_IDENTIFIER}&quot; clear&#10;fi&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "41B669AE1FC10B7300DEB965"
+                     BuildableName = "TurnoClaseProfesorUITests.xctest"
+                     BlueprintName = "TurnoClaseProfesorUITests"
+                     ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "41F4C5C81B34BCD5004AA55E"
+            BuildableName = "TurnoClase Teacher.app"
+            BlueprintName = "TurnoClaseProfesor"
+            ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "41B669AE1FC10B7300DEB965"
+               BuildableName = "TurnoClaseProfesorUITests.xctest"
+               BlueprintName = "TurnoClaseProfesorUITests"
+               ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "41F4C5C81B34BCD5004AA55E"
+            BuildableName = "TurnoClase Teacher.app"
+            BlueprintName = "TurnoClaseProfesor"
+            ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "41F4C5C81B34BCD5004AA55E"
+            BuildableName = "TurnoClase Teacher.app"
+            BlueprintName = "TurnoClaseProfesor"
+            ReferencedContainer = "container:TurnoClaseProfesor.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

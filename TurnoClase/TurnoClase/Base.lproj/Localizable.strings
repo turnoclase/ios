@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  TurnoClase
+
+  Created by widemos on 8/7/15.
+  Copyright (c) 2015 Ion Jaureguialzo Sarasola. All rights reserved.
+*/
+
+ES_TU_TURNO="It's your turn!";
+VOLVER_A_EMPEZAR="Press ⟳ to request a turn";
+ESPERA="Wait to request another turn...";
+MENSAJE_ERROR="Check classroom number\nor network connection";
