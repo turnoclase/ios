@@ -84,7 +84,7 @@ struct TurnoView: View {
                 .background(Circle().fill(Color(red: 0.875, green: 0.886, blue: 0.902).opacity(0.6)))
                 .position(x: centroX, y: centroY)
 
-                // Botón código de aula (amarillo, -60°)
+                // Botón código de aula (amarillo, 30°)
                 BotónCircular(
                     titulo: vm.codigoAulaActual,
                     colorFondo: Color(red: 0.996, green: 0.773, blue: 0.180),
@@ -92,10 +92,10 @@ struct TurnoView: View {
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 13, weight: .regular)
                 ) { }
-                .position(posicionEnBorde(angulo: -60, centroX: centroX, centroY: centroY, radio: radio))
+                .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonCodigoAula")
 
-                // Botón cancelar (rojo, -150° = equivale a izquierda)
+                // Botón cancelar (rojo, -60°)
                 BotónCircularIcono(
                     simbolo: "xmark",
                     colorFondo: Color(red: 0.925, green: 0.263, blue: 0.220),
@@ -105,7 +105,7 @@ struct TurnoView: View {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     vm.cancelar()
                 }
-                .position(posicionEnBorde(angulo: -150, centroX: centroX, centroY: centroY, radio: radio))
+                .position(posicionEnBorde(angulo: -60, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonCancelar")
 
                 // Botón actualizar (azul, 150°)
