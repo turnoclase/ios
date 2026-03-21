@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21F321278112493C82374791 /* ConexionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F08B9027F54E748509DFD9 /* ConexionViewModel.swift */; };
 		410088F91FBED8F70058B3F5 /* TurnoClaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410088F81FBED8F70058B3F5 /* TurnoClaseUITests.swift */; };
 		410089011FBEEAB90058B3F5 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410089001FBEEAB90058B3F5 /* SnapshotHelper.swift */; };
 		410D71021FA8D634009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D71011FA8D633009AC062 /* GoogleService-Info.plist */; };
@@ -17,10 +18,6 @@
 		414C7980221F991E003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		414EC8621B4C8B1B0002492C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414EC8641B4C8B1B0002492C /* Localizable.strings */; };
 		415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415BC6471B2F5305004FADE0 /* AppDelegate.swift */; };
-		E6F1B4304FCE4821AA0F458A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646018F9DD34395BFA5FA4F /* ContentView.swift */; };
-		653BE40901B9485D9C807A04 /* TurnoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00D712EF8C5412CA3C4F1EE /* TurnoView.swift */; };
-		21F321278112493C82374791 /* ConexionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F08B9027F54E748509DFD9 /* ConexionViewModel.swift */; };
-		415BC64D1B2F5305004FADE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415BC64B1B2F5305004FADE0 /* Main.storyboard */; };
 		415BC64F1B2F5305004FADE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415BC64E1B2F5305004FADE0 /* Images.xcassets */; };
 		415BC6521B2F5305004FADE0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415BC6501B2F5305004FADE0 /* LaunchScreen.xib */; };
 		4185BE8226396E82002706CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE8126396E82002706CF /* FirebaseAuth */; };
@@ -28,6 +25,8 @@
 		4185BE872639751E002706CF /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE862639751E002706CF /* XCGLogger */; };
 		4188EE9129CB9F13009EEC94 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 4188EE9029CB9F13009EEC94 /* Localize_Swift */; };
 		41983C7427EA0E7C001B524A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 41983C7327EA0E7C001B524A /* FirebaseAppCheck */; };
+		653BE40901B9485D9C807A04 /* TurnoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00D712EF8C5412CA3C4F1EE /* TurnoView.swift */; };
+		E6F1B4304FCE4821AA0F458A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646018F9DD34395BFA5FA4F /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		34F08B9027F54E748509DFD9 /* ConexionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConexionViewModel.swift; sourceTree = "<group>"; };
 		410088F61FBED8F60058B3F5 /* TurnoClaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnoClaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		410088F81FBED8F70058B3F5 /* TurnoClaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseUITests.swift; sourceTree = "<group>"; };
 		410088FA1FBED8F70058B3F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,9 +63,7 @@
 		411608781B517B88008C9A1E /* Licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Licenses; path = TurnoClase/Licenses; sourceTree = "<group>"; };
 		411608791B517B88008C9A1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = TurnoClase/Settings.bundle; sourceTree = "<group>"; };
 		413592BB221F814C0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		414EC8541B4C83CB0002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		414EC8551B4C83CB0002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		414EC8561B4C85260002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Main.strings; sourceTree = "<group>"; };
 		414EC8571B4C85260002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		414EC8631B4C8B1B0002492C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		414EC8651B4C8B570002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -73,13 +71,11 @@
 		415BC6421B2F5305004FADE0 /* TurnoClase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnoClase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415BC6461B2F5305004FADE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		415BC6471B2F5305004FADE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F646018F9DD34395BFA5FA4F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A00D712EF8C5412CA3C4F1EE /* TurnoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoView.swift; sourceTree = "<group>"; };
-		34F08B9027F54E748509DFD9 /* ConexionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConexionViewModel.swift; sourceTree = "<group>"; };
-		415BC64C1B2F5305004FADE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		415BC64E1B2F5305004FADE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		415BC6511B2F5305004FADE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4199FF0B1E32EF9500F9E42F /* TurnoClase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnoClase.entitlements; sourceTree = "<group>"; };
+		A00D712EF8C5412CA3C4F1EE /* TurnoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoView.swift; sourceTree = "<group>"; };
+		F646018F9DD34395BFA5FA4F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +167,6 @@
 		41BD61D41FB79521002385FE /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				415BC64B1B2F5305004FADE0 /* Main.storyboard */,
 				415BC64E1B2F5305004FADE0 /* Images.xcassets */,
 				415BC6501B2F5305004FADE0 /* LaunchScreen.xib */,
 				414EC8641B4C8B1B0002492C /* Localizable.strings */,
@@ -305,7 +300,6 @@
 			files = (
 				414EC8621B4C8B1B0002492C /* Localizable.strings in Resources */,
 				410D71021FA8D634009AC062 /* GoogleService-Info.plist in Resources */,
-				415BC64D1B2F5305004FADE0 /* Main.storyboard in Resources */,
 				415BC6521B2F5305004FADE0 /* LaunchScreen.xib in Resources */,
 				4116087A1B517B88008C9A1E /* Licenses in Resources */,
 				415BC64F1B2F5305004FADE0 /* Images.xcassets in Resources */,
@@ -355,16 +349,6 @@
 				414EC8661B4C8B580002492C /* eu */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		415BC64B1B2F5305004FADE0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				415BC64C1B2F5305004FADE0 /* Base */,
-				414EC8541B4C83CB0002492C /* es */,
-				414EC8561B4C85260002492C /* eu */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		415BC6501B2F5305004FADE0 /* LaunchScreen.xib */ = {

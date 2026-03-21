@@ -20,7 +20,6 @@
 //  Created by widemos on 19/6/15.
 //
 
-import UIKit
 import SwiftUI
 
 import XCGLogger
