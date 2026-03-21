@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ion Jaureguialzo Sarasola. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for TurnoClaseShared.
 FOUNDATION_EXPORT double TurnoClaseSharedVersionNumber;
