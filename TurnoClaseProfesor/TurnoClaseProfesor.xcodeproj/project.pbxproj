@@ -26,6 +26,7 @@
 		41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */; };
 		41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */; };
 		41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */; };
+		EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */; };
 		41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D51B34BCD5004AA55E /* Images.xcassets */; };
 		41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TurnoClase Teacher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F4C5CD1B34BCD5004AA55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseProfesorApp.swift; sourceTree = "<group>"; };
 		41F4C5D51B34BCD5004AA55E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41F4C5D81B34BCD6004AA55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,6 +174,7 @@
 				413C7A932F6EA850005B7D54 /* AulaViewModel.swift */,
 				413C7A912F6EA846005B7D54 /* ContentView.swift */,
 				41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */,
+				244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */,
 				41BD61D51FB79575002385FE /* UI */,
 				41F4C5CC1B34BCD5004AA55E /* Supporting Files */,
 			);
@@ -345,6 +348,7 @@
 				413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */,
 				413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */,
 				41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */,
+				EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

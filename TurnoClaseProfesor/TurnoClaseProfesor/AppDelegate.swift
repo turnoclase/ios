@@ -20,6 +20,7 @@
 //  Created by widemos on 19/6/15.
 //
 
+import UIKit
 import SwiftUI
 
 import XCGLogger
@@ -42,10 +43,7 @@ import Reachability
 
 let reachability = try! Reachability()
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
+class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -76,15 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "QUEUE_NOT_EMPTY_SOUND": true
         ])
 
-        // Configurar la ventana con SwiftUI
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = UIHostingController(rootView: ContentView())
-        self.window = window
-        window.makeKeyAndVisible()
-
         return true
     }
 
 }
-
-

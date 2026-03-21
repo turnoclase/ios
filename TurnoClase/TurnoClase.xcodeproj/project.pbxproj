@@ -18,6 +18,7 @@
 		414C7980221F991E003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		414EC8621B4C8B1B0002492C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414EC8641B4C8B1B0002492C /* Localizable.strings */; };
 		415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415BC6471B2F5305004FADE0 /* AppDelegate.swift */; };
+		E219507EA87345C2A468211E /* TurnoClaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA992EE80F34B76B762267F /* TurnoClaseApp.swift */; };
 		415BC64F1B2F5305004FADE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415BC64E1B2F5305004FADE0 /* Images.xcassets */; };
 		415BC6521B2F5305004FADE0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 415BC6501B2F5305004FADE0 /* LaunchScreen.xib */; };
 		4185BE8226396E82002706CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE8126396E82002706CF /* FirebaseAuth */; };
@@ -71,6 +72,7 @@
 		415BC6421B2F5305004FADE0 /* TurnoClase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnoClase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415BC6461B2F5305004FADE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		415BC6471B2F5305004FADE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6FA992EE80F34B76B762267F /* TurnoClaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseApp.swift; sourceTree = "<group>"; };
 		415BC64E1B2F5305004FADE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		415BC6511B2F5305004FADE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4199FF0B1E32EF9500F9E42F /* TurnoClase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnoClase.entitlements; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				415BC6471B2F5305004FADE0 /* AppDelegate.swift */,
+				6FA992EE80F34B76B762267F /* TurnoClaseApp.swift */,
 				F646018F9DD34395BFA5FA4F /* ContentView.swift */,
 				A00D712EF8C5412CA3C4F1EE /* TurnoView.swift */,
 				34F08B9027F54E748509DFD9 /* ConexionViewModel.swift */,
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */,
+				E219507EA87345C2A468211E /* TurnoClaseApp.swift in Sources */,
 				E6F1B4304FCE4821AA0F458A /* ContentView.swift in Sources */,
 				653BE40901B9485D9C807A04 /* TurnoView.swift in Sources */,
 				21F321278112493C82374791 /* ConexionViewModel.swift in Sources */,

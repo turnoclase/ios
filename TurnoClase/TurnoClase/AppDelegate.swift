@@ -20,7 +20,7 @@
 //  Created by widemos on 15/6/15.
 //
 
-import SwiftUI
+import UIKit
 
 import XCGLogger
 
@@ -37,10 +37,7 @@ let log = XCGLogger.default
 // Conexión a Firestore
 let db = Firestore.firestore()
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
+class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -65,12 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.cacheSettings = MemoryCacheSettings(garbageCollectorSettings: MemoryLRUGCSettings())
 
         db.settings = settings
-
-        // Configurar la ventana con SwiftUI
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = UIHostingController(rootView: ContentView())
-        self.window = window
-        window.makeKeyAndVisible()
 
         return true
     }
