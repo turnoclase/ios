@@ -17,6 +17,7 @@
 
 import SwiftUI
 import Localize_Swift
+import TurnoClaseShared
 
 // MARK: - Vista principal
 
@@ -40,16 +41,6 @@ struct ContentView: View {
 
     // Animación del botón siguiente
     @State private var opacidadBotonSiguiente: Double = 1.0
-
-    // Calcula el centro de un botón situado sobre el borde del círculo amarillo.
-    // ángulo: 0° = arriba, sentido horario.
-    private func posicionEnBorde(angulo: Double, centroX: CGFloat, centroY: CGFloat, radio: CGFloat) -> CGPoint {
-        let rad = (angulo - 90) * .pi / 180
-        return CGPoint(
-            x: centroX + radio * CGFloat(cos(rad)),
-            y: centroY + radio * CGFloat(sin(rad))
-        )
-    }
 
     var body: some View {
         GeometryReader { geo in
@@ -126,18 +117,14 @@ struct ContentView: View {
                 .accessibilityIdentifier("botonEnCola")
 
                 // Botón siguiente (azul, abajo-derecha)
-                Button {
+                BotónCircularIcono(
+                    simbolo: "arrow.right",
+                    colorFondo: Color(red: 0.063, green: 0.463, blue: 0.725),
+                    colorIcono: .white,
+                    tamanyo: tamanyoBoton
+                ) {
                     vm.feedbackTactilLigero()
                     vm.mostrarSiguiente(avanzarCola: true)
-                } label: {
-                    Circle()
-                        .fill(Color(red: 0.063, green: 0.463, blue: 0.725))
-                        .frame(width: tamanyoBoton, height: tamanyoBoton)
-                        .overlay(
-                            Image(systemName: "arrow.right")
-                                .font(.system(size: 22, weight: .medium))
-                                .foregroundColor(.white)
-                        )
                 }
                 .opacity(opacidadBotonSiguiente)
                 ._onButtonGesture(pressing: { pressing in
@@ -271,50 +258,6 @@ struct ContentView: View {
                 onCancelar: { mostrarDialogoTiempo = false }
             )
         }
-    }
-}
-
-// MARK: - Componentes reutilizables
-
-struct BotónCircular: View {
-    let titulo: String
-    let colorFondo: Color
-    let colorTexto: Color
-    let tamanyo: CGFloat
-    var fuente: Font = .system(size: 17, weight: .regular)
-    let accion: () -> Void
-
-    var body: some View {
-        Button(action: accion) {
-            Text(titulo)
-                .font(fuente)
-                .minimumScaleFactor(0.3)
-                .lineLimit(1)
-                .foregroundColor(colorTexto)
-                .frame(width: tamanyo, height: tamanyo)
-                .background(Circle().fill(colorFondo))
-        }
-    }
-}
-
-// MARK: - PageControl SwiftUI wrapper
-
-struct PageControlView: UIViewRepresentable {
-    let currentPage: Int
-    let totalPages: Int
-
-    func makeUIView(context: Context) -> UIPageControl {
-        let pc = UIPageControl()
-        pc.hidesForSinglePage = true
-        pc.isUserInteractionEnabled = false
-        pc.pageIndicatorTintColor = UIColor.tertiaryLabel
-        pc.currentPageIndicatorTintColor = UIColor.secondaryLabel
-        return pc
-    }
-
-    func updateUIView(_ uiView: UIPageControl, context: Context) {
-        uiView.numberOfPages = totalPages
-        uiView.currentPage = currentPage
     }
 }
 

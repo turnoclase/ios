@@ -15,6 +15,7 @@
 		41B50728221F883C00D12D33 /* OperadorOpcional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B50727221F883C00D12D33 /* OperadorOpcional.swift */; };
 		41B5072A221F895300D12D33 /* FondoCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B50729221F895300D12D33 /* FondoCircular.swift */; };
 		41B5072C221F8A4300D12D33 /* BotonGrafico.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B5072B221F8A4300D12D33 /* BotonGrafico.swift */; };
+		DECA36A194A347DCBF3512FC /* CirculoUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		41B50727221F883C00D12D33 /* OperadorOpcional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperadorOpcional.swift; sourceTree = "<group>"; };
 		41B50729221F895300D12D33 /* FondoCircular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FondoCircular.swift; sourceTree = "<group>"; };
 		41B5072B221F8A4300D12D33 /* BotonGrafico.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotonGrafico.swift; sourceTree = "<group>"; };
+		69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirculoUI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				41B50727221F883C00D12D33 /* OperadorOpcional.swift */,
 				41B50729221F895300D12D33 /* FondoCircular.swift */,
 				41B5072B221F8A4300D12D33 /* BotonGrafico.swift */,
+				69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */,
 				413592A2221F7FC30089E71C /* TurnoClaseShared.h */,
 				413592A3221F7FC30089E71C /* Info.plist */,
 			);
@@ -215,6 +218,7 @@
 			files = (
 				41B50728221F883C00D12D33 /* OperadorOpcional.swift in Sources */,
 				41B5072C221F8A4300D12D33 /* BotonGrafico.swift in Sources */,
+				DECA36A194A347DCBF3512FC /* CirculoUI.swift in Sources */,
 				41B5072A221F895300D12D33 /* FondoCircular.swift in Sources */,
 				413592BA221F80080089E71C /* Nombres.swift in Sources */,
 				413592DF221F86FE0089E71C /* Efectos.swift in Sources */,
