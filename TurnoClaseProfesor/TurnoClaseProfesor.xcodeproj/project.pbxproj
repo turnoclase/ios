@@ -1,751 +1,755 @@
 // !$*UTF8*$!
 {
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 54;
-	objects = {
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 54;
+    objects = {
 
 /* Begin PBXBuildFile section */
-		410D71001FA8D1B8009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */; };
-		411081552173FDF900ADD784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411081572173FDF900ADD784 /* Localizable.strings */; };
-		413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A912F6EA846005B7D54 /* ContentView.swift */; };
-		413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A932F6EA850005B7D54 /* AulaViewModel.swift */; };
-		4148914E26FF11E0008D9B9C /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4148914D26FF11E0008D9B9C /* Reachability */; };
-		414C7985221F998F003E97E4 /* TurnoClaseShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; };
-		414C7986221F998F003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		417450A9263B5D2A001E3421 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417450AB263B5D2A001E3421 /* InfoPlist.strings */; };
-		4185BE7B26396E35002706CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7A26396E35002706CF /* FirebaseAuth */; };
-		4185BE7D26396E35002706CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7C26396E35002706CF /* FirebaseFirestore */; };
-		4185BE7F26396E35002706CF /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7E26396E35002706CF /* FirebaseFunctions */; };
-		4185BE8A263975A8002706CF /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE89263975A8002706CF /* XCGLogger */; };
-		4188EE8E29CB9ED6009EEC94 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 4188EE8D29CB9ED6009EEC94 /* Localize_Swift */; };
-		41983C7727EA0E96001B524A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 41983C7627EA0E96001B524A /* FirebaseAppCheck */; };
-		41A59BDF1B51643B000E3C8E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A59BDE1B51643B000E3C8E /* Settings.bundle */; };
-		41A59BE21B516A20000E3C8E /* Licenses in Resources */ = {isa = PBXBuildFile; fileRef = 41A59BE11B516A20000E3C8E /* Licenses */; };
-		41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */; };
-		41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */; };
-		41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */; };
-		41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D51B34BCD5004AA55E /* Images.xcassets */; };
-		41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */; };
-		EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */; };
+        410D71001FA8D1B8009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */; };
+        411081552173FDF900ADD784 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 411081572173FDF900ADD784 /* Localizable.strings */; };
+        413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A912F6EA846005B7D54 /* ContentView.swift */; };
+        413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C7A932F6EA850005B7D54 /* AulaViewModel.swift */; };
+        4148914E26FF11E0008D9B9C /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 4148914D26FF11E0008D9B9C /* Reachability */; };
+        414C7985221F998F003E97E4 /* TurnoClaseShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; };
+        414C7986221F998F003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592C3221F84BD0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+        417450A9263B5D2A001E3421 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 417450AB263B5D2A001E3421 /* InfoPlist.strings */; };
+        4185BE7B26396E35002706CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7A26396E35002706CF /* FirebaseAuth */; };
+        4185BE7D26396E35002706CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7C26396E35002706CF /* FirebaseFirestore */; };
+        4185BE7F26396E35002706CF /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE7E26396E35002706CF /* FirebaseFunctions */; };
+        4185BE8A263975A8002706CF /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4185BE89263975A8002706CF /* XCGLogger */; };
+        4188EE8E29CB9ED6009EEC94 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 4188EE8D29CB9ED6009EEC94 /* Localize_Swift */; };
+        41983C7727EA0E96001B524A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 41983C7627EA0E96001B524A /* FirebaseAppCheck */; };
+        41A59BDF1B51643B000E3C8E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41A59BDE1B51643B000E3C8E /* Settings.bundle */; };
+        41A59BE21B516A20000E3C8E /* Licenses in Resources */ = {isa = PBXBuildFile; fileRef = 41A59BE11B516A20000E3C8E /* Licenses */; };
+        41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */; };
+        41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */; };
+        41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */; };
+        41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D51B34BCD5004AA55E /* Images.xcassets */; };
+        41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */; };
+        EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		41B669B41FC10B7300DEB965 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 41F4C5C11B34BCD5004AA55E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 41F4C5C81B34BCD5004AA55E;
-			remoteInfo = TurnoClaseProfesor;
-		};
+        41B669B41FC10B7300DEB965 /* PBXContainerItemProxy */ = {
+            isa = PBXContainerItemProxy;
+            containerPortal = 41F4C5C11B34BCD5004AA55E /* Project object */;
+            proxyType = 1;
+            remoteGlobalIDString = 41F4C5C81B34BCD5004AA55E;
+            remoteInfo = TurnoClaseProfesor;
+        };
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		410A3E351FC42F1500B3AC3D /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		414C7987221F998F003E97E4 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				414C7986221F998F003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        410A3E351FC42F1500B3AC3D /* Embed Watch Content */ = {
+            isa = PBXCopyFilesBuildPhase;
+            buildActionMask = 2147483647;
+            dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+            dstSubfolderSpec = 16;
+            files = (
+            );
+            name = "Embed Watch Content";
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        414C7987221F998F003E97E4 /* Embed Frameworks */ = {
+            isa = PBXCopyFilesBuildPhase;
+            buildActionMask = 2147483647;
+            dstPath = "";
+            dstSubfolderSpec = 10;
+            files = (
+                414C7986221F998F003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */,
+            );
+            name = "Embed Frameworks";
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseProfesorApp.swift; sourceTree = "<group>"; };
-		410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		411081562173FDF900ADD784 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		411081582173FDFF00ADD784 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Localizable.strings; sourceTree = "<group>"; };
-		411081592173FE0300ADD784 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		413592C3221F84BD0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		413C7A912F6EA846005B7D54 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		413C7A932F6EA850005B7D54 /* AulaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AulaViewModel.swift; sourceTree = "<group>"; };
-		41675B1F1B553EC1001696CE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		41675B211B553EE9001696CE /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		417450AA263B5D2A001E3421 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		417450AC263B5D31001E3421 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		417450AD263B5D35001E3421 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4199FF0C1E32F16500F9E42F /* TurnoClaseProfesor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnoClaseProfesor.entitlements; sourceTree = "<group>"; };
-		41A59BDE1B51643B000E3C8E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = TurnoClaseProfesor/Settings.bundle; sourceTree = "<group>"; };
-		41A59BE11B516A20000E3C8E /* Licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Licenses; path = TurnoClaseProfesor/Licenses; sourceTree = "<group>"; };
-		41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnoClaseProfesorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseProfesorUITests.swift; sourceTree = "<group>"; };
-		41B669B31FC10B7300DEB965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
-		41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TurnoClase Teacher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		41F4C5CD1B34BCD5004AA55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		41F4C5D51B34BCD5004AA55E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		41F4C5D81B34BCD6004AA55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+        244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseProfesorApp.swift; sourceTree = "<group>"; };
+        410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+        411081562173FDF900ADD784 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+        411081582173FDFF00ADD784 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/Localizable.strings; sourceTree = "<group>"; };
+        411081592173FE0300ADD784 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+        413592C3221F84BD0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+        413C7A912F6EA846005B7D54 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+        413C7A932F6EA850005B7D54 /* AulaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AulaViewModel.swift; sourceTree = "<group>"; };
+        41675B1F1B553EC1001696CE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+        41675B211B553EE9001696CE /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+        417450AA263B5D2A001E3421 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+        417450AC263B5D31001E3421 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+        417450AD263B5D35001E3421 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+        4199FF0C1E32F16500F9E42F /* TurnoClaseProfesor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TurnoClaseProfesor.entitlements; sourceTree = "<group>"; };
+        41A59BDE1B51643B000E3C8E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = TurnoClaseProfesor/Settings.bundle; sourceTree = "<group>"; };
+        41A59BE11B516A20000E3C8E /* Licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Licenses; path = TurnoClaseProfesor/Licenses; sourceTree = "<group>"; };
+        41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnoClaseProfesorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnoClaseProfesorUITests.swift; sourceTree = "<group>"; };
+        41B669B31FC10B7300DEB965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+        41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TurnoClase Teacher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+        41F4C5CD1B34BCD5004AA55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+        41F4C5D51B34BCD5004AA55E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+        41F4C5D81B34BCD6004AA55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		41B669AC1FC10B7300DEB965 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		41F4C5C61B34BCD5004AA55E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				41983C7727EA0E96001B524A /* FirebaseAppCheck in Frameworks */,
-				414C7985221F998F003E97E4 /* TurnoClaseShared.framework in Frameworks */,
-				4148914E26FF11E0008D9B9C /* Reachability in Frameworks */,
-				4188EE8E29CB9ED6009EEC94 /* Localize_Swift in Frameworks */,
-				4185BE7D26396E35002706CF /* FirebaseFirestore in Frameworks */,
-				4185BE7F26396E35002706CF /* FirebaseFunctions in Frameworks */,
-				4185BE7B26396E35002706CF /* FirebaseAuth in Frameworks */,
-				4185BE8A263975A8002706CF /* XCGLogger in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        41B669AC1FC10B7300DEB965 /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        41F4C5C61B34BCD5004AA55E /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                41983C7727EA0E96001B524A /* FirebaseAppCheck in Frameworks */,
+                414C7985221F998F003E97E4 /* TurnoClaseShared.framework in Frameworks */,
+                4148914E26FF11E0008D9B9C /* Reachability in Frameworks */,
+                4188EE8E29CB9ED6009EEC94 /* Localize_Swift in Frameworks */,
+                4185BE7D26396E35002706CF /* FirebaseFirestore in Frameworks */,
+                4185BE7F26396E35002706CF /* FirebaseFunctions in Frameworks */,
+                4185BE7B26396E35002706CF /* FirebaseAuth in Frameworks */,
+                4185BE8A263975A8002706CF /* XCGLogger in Frameworks */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		41A59BE01B516444000E3C8E /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				41A59BDE1B51643B000E3C8E /* Settings.bundle */,
-				41A59BE11B516A20000E3C8E /* Licenses */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		41B669B01FC10B7300DEB965 /* TurnoClaseProfesorUITests */ = {
-			isa = PBXGroup;
-			children = (
-				41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */,
-				41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */,
-				41B669B31FC10B7300DEB965 /* Info.plist */,
-			);
-			path = TurnoClaseProfesorUITests;
-			sourceTree = "<group>";
-		};
-		41BD61D51FB79575002385FE /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				41F4C5D51B34BCD5004AA55E /* Images.xcassets */,
-				41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */,
-				411081572173FDF900ADD784 /* Localizable.strings */,
-			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		41F4C5C01B34BCD5004AA55E = {
-			isa = PBXGroup;
-			children = (
-				41F4C5CB1B34BCD5004AA55E /* TurnoClaseProfesor */,
-				41B669B01FC10B7300DEB965 /* TurnoClaseProfesorUITests */,
-				41A59BE01B516444000E3C8E /* Resources */,
-				41F4C5CA1B34BCD5004AA55E /* Products */,
-				5031ED4ECEA45C73F5F6EF1B /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		41F4C5CA1B34BCD5004AA55E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */,
-				41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		41F4C5CB1B34BCD5004AA55E /* TurnoClaseProfesor */ = {
-			isa = PBXGroup;
-			children = (
-				413C7A932F6EA850005B7D54 /* AulaViewModel.swift */,
-				413C7A912F6EA846005B7D54 /* ContentView.swift */,
-				41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */,
-				244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */,
-				41BD61D51FB79575002385FE /* UI */,
-				41F4C5CC1B34BCD5004AA55E /* Supporting Files */,
-			);
-			path = TurnoClaseProfesor;
-			sourceTree = "<group>";
-		};
-		41F4C5CC1B34BCD5004AA55E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4199FF0C1E32F16500F9E42F /* TurnoClaseProfesor.entitlements */,
-				410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */,
-				41F4C5CD1B34BCD5004AA55E /* Info.plist */,
-				417450AB263B5D2A001E3421 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5031ED4ECEA45C73F5F6EF1B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				413592C3221F84BD0089E71C /* TurnoClaseShared.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
+        41A59BE01B516444000E3C8E /* Resources */ = {
+            isa = PBXGroup;
+            children = (
+                41A59BDE1B51643B000E3C8E /* Settings.bundle */,
+                41A59BE11B516A20000E3C8E /* Licenses */,
+            );
+            name = Resources;
+            sourceTree = "<group>";
+        };
+        41B669B01FC10B7300DEB965 /* TurnoClaseProfesorUITests */ = {
+            isa = PBXGroup;
+            children = (
+                41B669BB1FC10D3000DEB965 /* SnapshotHelper.swift */,
+                41B669B11FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift */,
+                41B669B31FC10B7300DEB965 /* Info.plist */,
+            );
+            path = TurnoClaseProfesorUITests;
+            sourceTree = "<group>";
+        };
+        41BD61D51FB79575002385FE /* UI */ = {
+            isa = PBXGroup;
+            children = (
+                41F4C5D51B34BCD5004AA55E /* Images.xcassets */,
+                41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */,
+                411081572173FDF900ADD784 /* Localizable.strings */,
+            );
+            name = UI;
+            sourceTree = "<group>";
+        };
+        41F4C5C01B34BCD5004AA55E = {
+            isa = PBXGroup;
+            children = (
+                41F4C5CB1B34BCD5004AA55E /* TurnoClaseProfesor */,
+                41B669B01FC10B7300DEB965 /* TurnoClaseProfesorUITests */,
+                41A59BE01B516444000E3C8E /* Resources */,
+                41F4C5CA1B34BCD5004AA55E /* Products */,
+                5031ED4ECEA45C73F5F6EF1B /* Frameworks */,
+            );
+            sourceTree = "<group>";
+        };
+        41F4C5CA1B34BCD5004AA55E /* Products */ = {
+            isa = PBXGroup;
+            children = (
+                41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */,
+                41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */,
+            );
+            name = Products;
+            sourceTree = "<group>";
+        };
+        41F4C5CB1B34BCD5004AA55E /* TurnoClaseProfesor */ = {
+            isa = PBXGroup;
+            children = (
+                413C7A932F6EA850005B7D54 /* AulaViewModel.swift */,
+                413C7A912F6EA846005B7D54 /* ContentView.swift */,
+                41F4C5CE1B34BCD5004AA55E /* AppDelegate.swift */,
+                244F9923773D4472B19A6DE9 /* TurnoClaseProfesorApp.swift */,
+                41BD61D51FB79575002385FE /* UI */,
+                41F4C5CC1B34BCD5004AA55E /* Supporting Files */,
+            );
+            path = TurnoClaseProfesor;
+            sourceTree = "<group>";
+        };
+        41F4C5CC1B34BCD5004AA55E /* Supporting Files */ = {
+            isa = PBXGroup;
+            children = (
+                4199FF0C1E32F16500F9E42F /* TurnoClaseProfesor.entitlements */,
+                410D70FF1FA8D1B8009AC062 /* GoogleService-Info.plist */,
+                41F4C5CD1B34BCD5004AA55E /* Info.plist */,
+                417450AB263B5D2A001E3421 /* InfoPlist.strings */,
+            );
+            name = "Supporting Files";
+            sourceTree = "<group>";
+        };
+        5031ED4ECEA45C73F5F6EF1B /* Frameworks */ = {
+            isa = PBXGroup;
+            children = (
+                413592C3221F84BD0089E71C /* TurnoClaseShared.framework */,
+            );
+            name = Frameworks;
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		41B669AE1FC10B7300DEB965 /* TurnoClaseProfesorUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 41B669B81FC10B7300DEB965 /* Build configuration list for PBXNativeTarget "TurnoClaseProfesorUITests" */;
-			buildPhases = (
-				41B669AB1FC10B7300DEB965 /* Sources */,
-				41B669AC1FC10B7300DEB965 /* Frameworks */,
-				41B669AD1FC10B7300DEB965 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				41B669B51FC10B7300DEB965 /* PBXTargetDependency */,
-			);
-			name = TurnoClaseProfesorUITests;
-			productName = TurnoClaseProfesorUITests;
-			productReference = 41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 41F4C5E81B34BCD6004AA55E /* Build configuration list for PBXNativeTarget "TurnoClaseProfesor" */;
-			buildPhases = (
-				41F4C5C51B34BCD5004AA55E /* Sources */,
-				41F4C5C61B34BCD5004AA55E /* Frameworks */,
-				41F4C5C71B34BCD5004AA55E /* Resources */,
-				410A3E351FC42F1500B3AC3D /* Embed Watch Content */,
-				414C7987221F998F003E97E4 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TurnoClaseProfesor;
-			packageProductDependencies = (
-				4185BE7A26396E35002706CF /* FirebaseAuth */,
-				4185BE7C26396E35002706CF /* FirebaseFirestore */,
-				4185BE7E26396E35002706CF /* FirebaseFunctions */,
-				4185BE89263975A8002706CF /* XCGLogger */,
-				4148914D26FF11E0008D9B9C /* Reachability */,
-				41983C7627EA0E96001B524A /* FirebaseAppCheck */,
-				4188EE8D29CB9ED6009EEC94 /* Localize_Swift */,
-			);
-			productName = TurnoClaseProfesor;
-			productReference = 41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */;
-			productType = "com.apple.product-type.application";
-		};
+        41B669AE1FC10B7300DEB965 /* TurnoClaseProfesorUITests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 41B669B81FC10B7300DEB965 /* Build configuration list for PBXNativeTarget "TurnoClaseProfesorUITests" */;
+            buildPhases = (
+                41B669AB1FC10B7300DEB965 /* Sources */,
+                41B669AC1FC10B7300DEB965 /* Frameworks */,
+                41B669AD1FC10B7300DEB965 /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+                41B669B51FC10B7300DEB965 /* PBXTargetDependency */,
+            );
+            name = TurnoClaseProfesorUITests;
+            productName = TurnoClaseProfesorUITests;
+            productReference = 41B669AF1FC10B7300DEB965 /* TurnoClaseProfesorUITests.xctest */;
+            productType = "com.apple.product-type.bundle.ui-testing";
+        };
+        41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 41F4C5E81B34BCD6004AA55E /* Build configuration list for PBXNativeTarget "TurnoClaseProfesor" */;
+            buildPhases = (
+                41F4C5C51B34BCD5004AA55E /* Sources */,
+                41F4C5C61B34BCD5004AA55E /* Frameworks */,
+                41F4C5C71B34BCD5004AA55E /* Resources */,
+                410A3E351FC42F1500B3AC3D /* Embed Watch Content */,
+                414C7987221F998F003E97E4 /* Embed Frameworks */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+            );
+            name = TurnoClaseProfesor;
+            packageProductDependencies = (
+                4185BE7A26396E35002706CF /* FirebaseAuth */,
+                4185BE7C26396E35002706CF /* FirebaseFirestore */,
+                4185BE7E26396E35002706CF /* FirebaseFunctions */,
+                4185BE89263975A8002706CF /* XCGLogger */,
+                4148914D26FF11E0008D9B9C /* Reachability */,
+                41983C7627EA0E96001B524A /* FirebaseAppCheck */,
+                4188EE8D29CB9ED6009EEC94 /* Localize_Swift */,
+            );
+            productName = TurnoClaseProfesor;
+            productReference = 41F4C5C91B34BCD5004AA55E /* TurnoClase Teacher.app */;
+            productType = "com.apple.product-type.application";
+        };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		41F4C5C11B34BCD5004AA55E /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 2600;
-				ORGANIZATIONNAME = "Ion Jaureguialzo Sarasola";
-				TargetAttributes = {
-					41B669AE1FC10B7300DEB965 = {
-						CreatedOnToolsVersion = 9.1;
-						LastSwiftMigration = 1020;
-						TestTargetID = 41F4C5C81B34BCD5004AA55E;
-					};
-					41F4C5C81B34BCD5004AA55E = {
-						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 1020;
-						SystemCapabilities = {
-							com.apple.InAppPurchase = {
-								enabled = 0;
-							};
-							com.apple.Push = {
-								enabled = 1;
-							};
-						};
-					};
-				};
-			};
-			buildConfigurationList = 41F4C5C41B34BCD5004AA55E /* Build configuration list for PBXProject "TurnoClaseProfesor" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = en;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-				es,
-				eu,
-			);
-			mainGroup = 41F4C5C01B34BCD5004AA55E;
-			packageReferences = (
-				4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */,
-				4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */,
-				4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
-			);
-			productRefGroup = 41F4C5CA1B34BCD5004AA55E /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */,
-				41B669AE1FC10B7300DEB965 /* TurnoClaseProfesorUITests */,
-			);
-		};
+        41F4C5C11B34BCD5004AA55E /* Project object */ = {
+            isa = PBXProject;
+            attributes = {
+                BuildIndependentTargetsInParallel = YES;
+                LastSwiftMigration = 0700;
+                LastSwiftUpdateCheck = 0910;
+                LastUpgradeCheck = 2600;
+                ORGANIZATIONNAME = "Ion Jaureguialzo Sarasola";
+                TargetAttributes = {
+                    41B669AE1FC10B7300DEB965 = {
+                        CreatedOnToolsVersion = 9.1;
+                        LastSwiftMigration = 1020;
+                        TestTargetID = 41F4C5C81B34BCD5004AA55E;
+                    };
+                    41F4C5C81B34BCD5004AA55E = {
+                        CreatedOnToolsVersion = 6.3.2;
+                        LastSwiftMigration = 1020;
+                        SystemCapabilities = {
+                            com.apple.InAppPurchase = {
+                                enabled = 0;
+                            };
+                            com.apple.Push = {
+                                enabled = 1;
+                            };
+                        };
+                    };
+                };
+            };
+            buildConfigurationList = 41F4C5C41B34BCD5004AA55E /* Build configuration list for PBXProject "TurnoClaseProfesor" */;
+            compatibilityVersion = "Xcode 3.2";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (
+                en,
+                Base,
+                es,
+                eu,
+            );
+            mainGroup = 41F4C5C01B34BCD5004AA55E;
+            packageReferences = (
+                4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+                4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */,
+                4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */,
+                4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+            );
+            productRefGroup = 41F4C5CA1B34BCD5004AA55E /* Products */;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (
+                41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */,
+                41B669AE1FC10B7300DEB965 /* TurnoClaseProfesorUITests */,
+            );
+        };
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		41B669AD1FC10B7300DEB965 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		41F4C5C71B34BCD5004AA55E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				410D71001FA8D1B8009AC062 /* GoogleService-Info.plist in Resources */,
-				417450A9263B5D2A001E3421 /* InfoPlist.strings in Resources */,
-				41A59BDF1B51643B000E3C8E /* Settings.bundle in Resources */,
-				411081552173FDF900ADD784 /* Localizable.strings in Resources */,
-				41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */,
-				41A59BE21B516A20000E3C8E /* Licenses in Resources */,
-				41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        41B669AD1FC10B7300DEB965 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        41F4C5C71B34BCD5004AA55E /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                410D71001FA8D1B8009AC062 /* GoogleService-Info.plist in Resources */,
+                417450A9263B5D2A001E3421 /* InfoPlist.strings in Resources */,
+                41A59BDF1B51643B000E3C8E /* Settings.bundle in Resources */,
+                411081552173FDF900ADD784 /* Localizable.strings in Resources */,
+                41F4C5D91B34BCD6004AA55E /* LaunchScreen.xib in Resources */,
+                41A59BE21B516A20000E3C8E /* Licenses in Resources */,
+                41F4C5D61B34BCD5004AA55E /* Images.xcassets in Resources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		41B669AB1FC10B7300DEB965 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */,
-				41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		41F4C5C51B34BCD5004AA55E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */,
-				413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */,
-				41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */,
-				EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        41B669AB1FC10B7300DEB965 /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                41B669B21FC10B7300DEB965 /* TurnoClaseProfesorUITests.swift in Sources */,
+                41B669BC1FC10D3000DEB965 /* SnapshotHelper.swift in Sources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        41F4C5C51B34BCD5004AA55E /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                413C7A942F6EA850005B7D54 /* AulaViewModel.swift in Sources */,
+                413C7A922F6EA846005B7D54 /* ContentView.swift in Sources */,
+                41F4C5CF1B34BCD5004AA55E /* AppDelegate.swift in Sources */,
+                EB157C94C823422F94CC18AA /* TurnoClaseProfesorApp.swift in Sources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		41B669B51FC10B7300DEB965 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */;
-			targetProxy = 41B669B41FC10B7300DEB965 /* PBXContainerItemProxy */;
-		};
+        41B669B51FC10B7300DEB965 /* PBXTargetDependency */ = {
+            isa = PBXTargetDependency;
+            target = 41F4C5C81B34BCD5004AA55E /* TurnoClaseProfesor */;
+            targetProxy = 41B669B41FC10B7300DEB965 /* PBXContainerItemProxy */;
+        };
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		411081572173FDF900ADD784 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				411081562173FDF900ADD784 /* es */,
-				411081582173FDFF00ADD784 /* eu */,
-				411081592173FE0300ADD784 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		417450AB263B5D2A001E3421 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				417450AA263B5D2A001E3421 /* en */,
-				417450AC263B5D31001E3421 /* eu */,
-				417450AD263B5D35001E3421 /* es */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				41F4C5D81B34BCD6004AA55E /* Base */,
-				41675B1F1B553EC1001696CE /* es */,
-				41675B211B553EE9001696CE /* eu */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
+        411081572173FDF900ADD784 /* Localizable.strings */ = {
+            isa = PBXVariantGroup;
+            children = (
+                411081562173FDF900ADD784 /* es */,
+                411081582173FDFF00ADD784 /* eu */,
+                411081592173FE0300ADD784 /* en */,
+            );
+            name = Localizable.strings;
+            sourceTree = "<group>";
+        };
+        417450AB263B5D2A001E3421 /* InfoPlist.strings */ = {
+            isa = PBXVariantGroup;
+            children = (
+                417450AA263B5D2A001E3421 /* en */,
+                417450AC263B5D31001E3421 /* eu */,
+                417450AD263B5D35001E3421 /* es */,
+            );
+            name = InfoPlist.strings;
+            sourceTree = "<group>";
+        };
+        41F4C5D71B34BCD6004AA55E /* LaunchScreen.xib */ = {
+            isa = PBXVariantGroup;
+            children = (
+                41F4C5D81B34BCD6004AA55E /* Base */,
+                41675B1F1B553EC1001696CE /* es */,
+                41675B211B553EE9001696CE /* eu */,
+            );
+            name = LaunchScreen.xib;
+            sourceTree = "<group>";
+        };
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		41B669B61FC10B7300DEB965 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TurnoClaseProfesorUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseProfesorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TurnoClaseProfesor;
-			};
-			name = Debug;
-		};
-		41B669B71FC10B7300DEB965 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TurnoClaseProfesorUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseProfesorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TurnoClaseProfesor;
-			};
-			name = Release;
-		};
-		41F4C5E61B34BCD6004AA55E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = RSEH385M54;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PROVISIONING_PROFILE = "a4a18b86-f33a-409b-8346-b97e7d7928c9";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		41F4C5E71B34BCD6004AA55E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = RSEH385M54;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "a4a18b86-f33a-409b-8346-b97e7d7928c9";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		41F4C5E91B34BCD6004AA55E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 85;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_DEBUG_DYLIB = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = TurnoClaseProfesor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 4.0.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
-				PRODUCT_NAME = "TurnoClase Teacher";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		41F4C5EA1B34BCD6004AA55E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 85;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_DEBUG_DYLIB = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = TurnoClaseProfesor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 4.0.0;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
-				PRODUCT_NAME = "TurnoClase Teacher";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
+        41B669B61FC10B7300DEB965 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+                CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+                CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+                CODE_SIGN_IDENTITY = "Apple Development";
+                CODE_SIGN_STYLE = Automatic;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu11;
+                INFOPLIST_FILE = TurnoClaseProfesorUITests/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                    "@loader_path/Frameworks",
+                );
+                PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseProfesorUITests;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                PROVISIONING_PROFILE = "";
+                PROVISIONING_PROFILE_SPECIFIER = "";
+                SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+                TEST_TARGET_NAME = TurnoClaseProfesor;
+            };
+            name = Debug;
+        };
+        41B669B71FC10B7300DEB965 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+                CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+                CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+                CODE_SIGN_IDENTITY = "Apple Development";
+                CODE_SIGN_STYLE = Automatic;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu11;
+                INFOPLIST_FILE = TurnoClaseProfesorUITests/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                    "@loader_path/Frameworks",
+                );
+                PRODUCT_BUNDLE_IDENTIFIER = con.jaureguialzo.TurnoClaseProfesorUITests;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                PROVISIONING_PROFILE = "";
+                PROVISIONING_PROFILE_SPECIFIER = "";
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+                TEST_TARGET_NAME = TurnoClaseProfesor;
+            };
+            name = Release;
+        };
+        41F4C5E61B34BCD6004AA55E /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+                CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_ENABLE_OBJC_ARC = YES;
+                CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_COMMA = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_EMPTY_BODY = YES;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+                CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+                CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+                CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+                CLANG_WARN_STRICT_PROTOTYPES = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN_UNREACHABLE_CODE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                DEVELOPMENT_TEAM = RSEH385M54;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                ENABLE_TESTABILITY = YES;
+                ENABLE_USER_SCRIPT_SANDBOXING = YES;
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_DYNAMIC_NO_PIC = NO;
+                GCC_NO_COMMON_BLOCKS = YES;
+                GCC_OPTIMIZATION_LEVEL = 0;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    "DEBUG=1",
+                    "$(inherited)",
+                );
+                GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+                GCC_WARN_UNUSED_FUNCTION = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+                MTL_ENABLE_DEBUG_INFO = YES;
+                ONLY_ACTIVE_ARCH = YES;
+                OTHER_SWIFT_FLAGS = "-D DEBUG";
+                PROVISIONING_PROFILE = "a4a18b86-f33a-409b-8346-b97e7d7928c9";
+                SDKROOT = iphoneos;
+                STRING_CATALOG_GENERATE_SYMBOLS = YES;
+                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+            };
+            name = Debug;
+        };
+        41F4C5E71B34BCD6004AA55E /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+                CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_ENABLE_OBJC_ARC = YES;
+                CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_COMMA = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_EMPTY_BODY = YES;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+                CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+                CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+                CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+                CLANG_WARN_STRICT_PROTOTYPES = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN_UNREACHABLE_CODE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ion Jaureguialzo Sarasola (CN85Y9YK74)";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                DEVELOPMENT_TEAM = RSEH385M54;
+                ENABLE_NS_ASSERTIONS = NO;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                ENABLE_USER_SCRIPT_SANDBOXING = YES;
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_NO_COMMON_BLOCKS = YES;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+                GCC_WARN_UNUSED_FUNCTION = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+                MTL_ENABLE_DEBUG_INFO = NO;
+                PROVISIONING_PROFILE = "a4a18b86-f33a-409b-8346-b97e7d7928c9";
+                SDKROOT = iphoneos;
+                STRING_CATALOG_GENERATE_SYMBOLS = YES;
+                SWIFT_COMPILATION_MODE = wholemodule;
+                SWIFT_OPTIMIZATION_LEVEL = "-O";
+                VALIDATE_PRODUCT = YES;
+            };
+            name = Release;
+        };
+        41F4C5E91B34BCD6004AA55E /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
+                CODE_SIGN_IDENTITY = "Apple Development";
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 85;
+                DEBUG_INFORMATION_FORMAT = dwarf;
+                ENABLE_APP_SANDBOX = YES;
+                ENABLE_DEBUG_DYLIB = YES;
+                ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)",
+                );
+                GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+                INFOPLIST_FILE = TurnoClaseProfesor/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                );
+                MARKETING_VERSION = 4.0.0;
+                ONLY_ACTIVE_ARCH = YES;
+                PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
+                PRODUCT_NAME = "TurnoClase Teacher";
+                PROVISIONING_PROFILE = "";
+                PROVISIONING_PROFILE_SPECIFIER = "";
+                SUPPORTS_MACCATALYST = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+            };
+            name = Debug;
+        };
+        41F4C5EA1B34BCD6004AA55E /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
+                CODE_SIGN_IDENTITY = "Apple Development";
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 85;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                ENABLE_APP_SANDBOX = YES;
+                ENABLE_DEBUG_DYLIB = YES;
+                ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)",
+                );
+                GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+                INFOPLIST_FILE = TurnoClaseProfesor/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                );
+                MARKETING_VERSION = 4.0.0;
+                ONLY_ACTIVE_ARCH = NO;
+                PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
+                PRODUCT_NAME = "TurnoClase Teacher";
+                PROVISIONING_PROFILE = "";
+                PROVISIONING_PROFILE_SPECIFIER = "";
+                SUPPORTS_MACCATALYST = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = "1,2";
+            };
+            name = Release;
+        };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		41B669B81FC10B7300DEB965 /* Build configuration list for PBXNativeTarget "TurnoClaseProfesorUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				41B669B61FC10B7300DEB965 /* Debug */,
-				41B669B71FC10B7300DEB965 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		41F4C5C41B34BCD5004AA55E /* Build configuration list for PBXProject "TurnoClaseProfesor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				41F4C5E61B34BCD6004AA55E /* Debug */,
-				41F4C5E71B34BCD6004AA55E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		41F4C5E81B34BCD6004AA55E /* Build configuration list for PBXNativeTarget "TurnoClaseProfesor" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				41F4C5E91B34BCD6004AA55E /* Debug */,
-				41F4C5EA1B34BCD6004AA55E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
+        41B669B81FC10B7300DEB965 /* Build configuration list for PBXNativeTarget "TurnoClaseProfesorUITests" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                41B669B61FC10B7300DEB965 /* Debug */,
+                41B669B71FC10B7300DEB965 /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        41F4C5C41B34BCD5004AA55E /* Build configuration list for PBXProject "TurnoClaseProfesor" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                41F4C5E61B34BCD6004AA55E /* Debug */,
+                41F4C5E71B34BCD6004AA55E /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        41F4C5E81B34BCD6004AA55E /* Build configuration list for PBXNativeTarget "TurnoClaseProfesor" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                41F4C5E91B34BCD6004AA55E /* Debug */,
+                41F4C5EA1B34BCD6004AA55E /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.0.0;
-			};
-		};
-		4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.1;
-			};
-		};
-		4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ijaureguialzo/Localize-Swift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
+        4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+            requirement = {
+                kind = upToNextMajorVersion;
+                minimumVersion = 5.0.0;
+            };
+        };
+        4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+            requirement = {
+                kind = upToNextMajorVersion;
+                minimumVersion = 11.0.0;
+            };
+        };
+        4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/DaveWoodCom/XCGLogger.git";
+            requirement = {
+                kind = upToNextMajorVersion;
+                minimumVersion = 7.0.1;
+            };
+        };
+        4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+            isa = XCRemoteSwiftPackageReference;
+            repositoryURL = "https://github.com/ijaureguialzo/Localize-Swift.git";
+            requirement = {
+                branch = master;
+                kind = branch;
+            };
+        };
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4148914D26FF11E0008D9B9C /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
-		};
-		4185BE7A26396E35002706CF /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		4185BE7C26396E35002706CF /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		4185BE7E26396E35002706CF /* FirebaseFunctions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFunctions;
-		};
-		4185BE89263975A8002706CF /* XCGLogger */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = XCGLogger;
-		};
-		4188EE8D29CB9ED6009EEC94 /* Localize_Swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */;
-			productName = Localize_Swift;
-		};
-		41983C7627EA0E96001B524A /* FirebaseAppCheck */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAppCheck;
-		};
+        4148914D26FF11E0008D9B9C /* Reachability */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4148914C26FF11E0008D9B9C /* XCRemoteSwiftPackageReference "Reachability" */;
+            productName = Reachability;
+        };
+        4185BE7A26396E35002706CF /* FirebaseAuth */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+            productName = FirebaseAuth;
+        };
+        4185BE7C26396E35002706CF /* FirebaseFirestore */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+            productName = FirebaseFirestore;
+        };
+        4185BE7E26396E35002706CF /* FirebaseFunctions */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+            productName = FirebaseFunctions;
+        };
+        4185BE89263975A8002706CF /* XCGLogger */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4185BE88263975A8002706CF /* XCRemoteSwiftPackageReference "XCGLogger" */;
+            productName = XCGLogger;
+        };
+        4188EE8D29CB9ED6009EEC94 /* Localize_Swift */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4188EE8C29CB9ED6009EEC94 /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+            productName = Localize_Swift;
+        };
+        41983C7627EA0E96001B524A /* FirebaseAppCheck */ = {
+            isa = XCSwiftPackageProductDependency;
+            package = 4185BE7926396E35002706CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+            productName = FirebaseAppCheck;
+        };
 /* End XCSwiftPackageProductDependency section */
-	};
-	rootObject = 41F4C5C11B34BCD5004AA55E /* Project object */;
+    };
+    rootObject = 41F4C5C11B34BCD5004AA55E /* Project object */;
 }
