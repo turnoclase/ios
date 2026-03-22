@@ -54,7 +54,7 @@ struct ContentView: View {
         .sheet(isPresented: $mostrarMenuAcciones) {
             MenuAccionesAula(
                 vm: vm,
-                onEtiquetar: { textoEtiqueta = ""; mostrarDialogoEtiqueta = true },
+                onEtiquetar: { textoEtiqueta = vm.etiquetaAula; mostrarDialogoEtiqueta = true },
                 onTiempo: { tiempoSeleccionado = vm.tiempoEspera; mostrarDialogoTiempo = true },
                 onConectar: { textoCodigo = ""; textoPIN = ""; mostrarDialogoConexion = true },
                 onBorrar: { mostrarDialogoBorrar = true },
