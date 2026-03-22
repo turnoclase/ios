@@ -64,13 +64,13 @@ struct ContentView: View {
                     VStack(spacing: 8) {
                         Text("AULA")
                             .font(.system(size: 13, weight: .regular))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                             .kerning(1)
 
                         TextField("BE131", text: $vm.codigoAula)
                             .multilineTextAlignment(.center)
                             .font(.system(size: 28, weight: .regular))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                             .padding(.vertical, 6)
                             .padding(.horizontal, 12)
                             .background(Color.white)
@@ -87,14 +87,14 @@ struct ContentView: View {
 
                         Text("NOMBRE")
                             .font(.system(size: 13, weight: .regular))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                             .kerning(1)
                             .padding(.top, 6)
 
                         TextField(vm.placeholder, text: $vm.nombreUsuario)
                             .multilineTextAlignment(.center)
                             .font(.system(size: 28, weight: .regular))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                             .padding(.vertical, 6)
                             .padding(.horizontal, 12)
                             .background(Color.white)

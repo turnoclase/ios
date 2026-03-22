@@ -54,10 +54,10 @@ struct TurnoView: View {
                                 Text(NSLocalizedString("ESPERA", comment: ""))
                                     .font(.system(size: 20))
                                     .multilineTextAlignment(.center)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.black)
                                 Text(String(format: "%02d:%02d", vm.minutosRestantes, vm.segundosRestantes))
                                     .font(.system(size: 48, weight: .thin, design: .monospaced))
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.black)
                             }
                             .padding(.horizontal, 20)
                         } else if vm.mostrarError {
@@ -65,7 +65,7 @@ struct TurnoView: View {
                             Text(NSLocalizedString("MENSAJE_ERROR", comment: ""))
                                 .font(.system(size: 22))
                                 .multilineTextAlignment(.center)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.black)
                                 .padding(.horizontal, 20)
                         } else {
                             // Mensaje de estado
@@ -74,7 +74,7 @@ struct TurnoView: View {
                                 .minimumScaleFactor(0.3)
                                 .lineLimit(2)
                                 .multilineTextAlignment(.center)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.black)
                                 .padding(.horizontal, 20)
                                 .frame(maxWidth: tamanyoCirculo - 32)
                         }
@@ -88,7 +88,7 @@ struct TurnoView: View {
                 BotónCircular(
                     titulo: vm.codigoAulaActual,
                     colorFondo: Color(red: 0.996, green: 0.773, blue: 0.180),
-                    colorTexto: .primary,
+                    colorTexto: .black,
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 13, weight: .regular)
                 ) { }
