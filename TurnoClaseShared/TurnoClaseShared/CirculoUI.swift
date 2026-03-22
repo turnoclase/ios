@@ -19,6 +19,15 @@
 
 import SwiftUI
 
+// MARK: - Utilidad: modificador condicional
+
+public extension View {
+    /// Permite aplicar un bloque de modificadores de forma condicional o según disponibilidad.
+    @ViewBuilder func modify<T: View>(@ViewBuilder _ transform: (Self) -> T) -> some View {
+        transform(self)
+    }
+}
+
 // MARK: - Posicionamiento sobre el borde de un círculo
 
 /// Calcula el punto central de un elemento situado sobre el borde de un círculo.
