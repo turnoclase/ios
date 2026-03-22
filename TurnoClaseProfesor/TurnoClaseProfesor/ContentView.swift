@@ -69,7 +69,7 @@ struct ContentView: View {
                         .font(.system(size: 51))
                         .minimumScaleFactor(0.2)
                         .lineLimit(1)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.black)
                         .padding(.horizontal, 16)
                         .frame(maxWidth: tamanyoCirculoPrincipal - 32)
                 }
@@ -94,7 +94,7 @@ struct ContentView: View {
                 BotónCircular(
                     titulo: vm.codigoAula,
                     colorFondo: Color(red: 0.875, green: 0.886, blue: 0.902),
-                    colorTexto: .primary,
+                    colorTexto: .black,
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 15, weight: .regular)
                 ) {
