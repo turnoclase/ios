@@ -20,8 +20,8 @@
 //  Created by widemos on 19/6/15.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 import XCGLogger
 
@@ -44,9 +44,7 @@ import Reachability
 let reachability = try! Reachability()
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         // Configurar XCGLogger
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLevel: .debug)
 
@@ -76,5 +74,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         return true
     }
-
 }

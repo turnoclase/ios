@@ -15,10 +15,10 @@
 // AulaViewModel.swift
 // TurnoClaseProfesor
 
-import Foundation
-import Combine
-import SwiftUI
 import AudioToolbox
+import Combine
+import Foundation
+import SwiftUI
 
 import FirebaseAuth
 import FirebaseFirestore
@@ -30,7 +30,6 @@ import TurnoClaseShared
 
 @MainActor
 class AulaViewModel: ObservableObject {
-
     // MARK: - Estado publicado
 
     @Published var codigoAula: String = "..."
@@ -41,6 +40,7 @@ class AulaViewModel: ObservableObject {
             actualizarPageControl()
         }
     }
+
     @Published var aulaActual: Int = 0
     @Published var mostrarIndicador: Bool = false
     @Published var invitado: Bool = false
@@ -116,7 +116,7 @@ class AulaViewModel: ObservableObject {
             mostrarIndicador = false
             numAulas = 0
 
-            Auth.auth().signInAnonymously() { [weak self] (result, error) in
+            Auth.auth().signInAnonymously { [weak self] result, error in
                 guard let self = self else { return }
                 if let resultado = result {
                     Task { @MainActor in
@@ -155,7 +155,7 @@ class AulaViewModel: ObservableObject {
     func conectarAula(posicion: Int = 0) {
         guard let uid = uid else { return }
         refMisAulas = db.collection("profesores").document(uid).collection("aulas")
-        refMisAulas?.order(by: "timestamp").getDocuments() { [weak self] (querySnapshot, error) in
+        refMisAulas?.order(by: "timestamp").getDocuments { [weak self] querySnapshot, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let error = error {
@@ -183,7 +183,7 @@ class AulaViewModel: ObservableObject {
 
     func crearAula() {
         mostrarIndicador = true
-        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] (result, error) in
+        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] result, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let error = error as NSError? {
@@ -214,7 +214,7 @@ class AulaViewModel: ObservableObject {
 
     func anyadirAula() {
         mostrarIndicador = true
-        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] (result, error) in
+        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] result, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let error = error as NSError? {
@@ -300,7 +300,7 @@ class AulaViewModel: ObservableObject {
     func mostrarSiguiente(avanzarCola: Bool = false) {
         log.info("Mostrando el siguiente alumno...")
         guard let refAula = refAula else { return }
-        refAula.collection("cola").order(by: "timestamp").getDocuments() { [weak self] (querySnapshot, error) in
+        refAula.collection("cola").order(by: "timestamp").getDocuments { [weak self] querySnapshot, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let error = error {
@@ -309,18 +309,18 @@ class AulaViewModel: ObservableObject {
                 }
                 if let docs = querySnapshot?.documents, docs.count > 0 {
                     let refPosicion = docs[0].reference
-                    refPosicion.getDocument { [weak self] (document, error) in
+                    refPosicion.getDocument { [weak self] document, error in
                         guard let self = self else { return }
                         Task { @MainActor in
                             if let posicion = document?.data() {
-                                db.collection("alumnos").document(posicion["alumno"] as! String).getDocument { [weak self] (document, error) in
+                                db.collection("alumnos").document(posicion["alumno"] as! String).getDocument { [weak self] document, error in
                                     guard let self = self else { return }
                                     Task { @MainActor in
                                         if let document = document, document.exists, let alumno = document.data() {
                                             self.nombreAlumno = alumno["nombre"] as? String ?? "?"
                                             if avanzarCola {
                                                 self.refAula?.collection("espera").document(posicion["alumno"] as! String).setData([
-                                                    "timestamp": FieldValue.serverTimestamp()
+                                                    "timestamp": FieldValue.serverTimestamp(),
                                                 ]) { error in
                                                     if let error = error {
                                                         log.error("Error al añadir el documento: \(error.localizedDescription)")
@@ -353,7 +353,7 @@ class AulaViewModel: ObservableObject {
         db.collectionGroup("aulas")
             .whereField("codigo", isEqualTo: codigo.uppercased())
             .whereField("pin", isEqualTo: pin)
-            .getDocuments() { [weak self] (querySnapshot, error) in
+            .getDocuments { [weak self] querySnapshot, error in
                 guard let self = self else { return }
                 Task { @MainActor in
                     if let error = error {
@@ -392,14 +392,14 @@ class AulaViewModel: ObservableObject {
     func borrarAulaReconectar(codigo: String) {
         mostrarIndicador = true
         desconectarListeners()
-        refMisAulas?.whereField("codigo", isEqualTo: codigo.uppercased()).getDocuments() { [weak self] (querySnapshot, error) in
+        refMisAulas?.whereField("codigo", isEqualTo: codigo.uppercased()).getDocuments { [weak self] querySnapshot, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let error = error {
                     log.error("Error al recuperar datos: \(error.localizedDescription)")
                     return
                 }
-                querySnapshot?.documents.first?.reference.delete() { [weak self] error in
+                querySnapshot?.documents.first?.reference.delete { [weak self] error in
                     guard let self = self else { return }
                     Task { @MainActor in
                         if let error = error {
@@ -448,7 +448,7 @@ class AulaViewModel: ObservableObject {
     // MARK: - Navegación entre aulas
 
     func aulaAnterior() {
-        if !invitado && numAulas > 1 && aulaActual > 0 {
+        if !invitado, numAulas > 1, aulaActual > 0 {
             aulaActual -= 1
             log.debug("Aula anterior")
             desconectarListeners()
@@ -457,7 +457,7 @@ class AulaViewModel: ObservableObject {
     }
 
     func aulaSiguiente() {
-        if !invitado && numAulas > 1 && aulaActual < numAulas - 1 {
+        if !invitado, numAulas > 1, aulaActual < numAulas - 1 {
             aulaActual += 1
             log.debug("Aula siguiente")
             desconectarListeners()
@@ -479,7 +479,7 @@ class AulaViewModel: ObservableObject {
 
     private func actualizarContador(_ recuento: Int) {
         let sonidoActivado = UserDefaults.standard.bool(forKey: "QUEUE_NOT_EMPTY_SOUND")
-        if sonidoActivado && recuentoAnterior == 0 && recuento == 1 {
+        if sonidoActivado, recuentoAnterior == 0, recuento == 1 {
             #if targetEnvironment(macCatalyst)
             AudioServicesPlaySystemSound(SystemSoundID(0x00001000))
             #else

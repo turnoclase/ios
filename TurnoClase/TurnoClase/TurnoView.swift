@@ -21,7 +21,6 @@ import SwiftUI
 import TurnoClaseShared
 
 struct TurnoView: View {
-
     @ObservedObject var vm: ConexionViewModel
     @State private var opacidadBotonActualizar: Double = 1.0
 
@@ -91,9 +90,9 @@ struct TurnoView: View {
                     colorTexto: .black,
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 13, weight: .regular)
-                ) { }
-                .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
-                .accessibilityIdentifier("botonCodigoAula")
+                ) {}
+                    .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
+                    .accessibilityIdentifier("botonCodigoAula")
 
                 // Botón cancelar (rojo, -60°)
                 BotónCircularIcono(

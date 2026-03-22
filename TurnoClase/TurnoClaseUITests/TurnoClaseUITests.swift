@@ -9,7 +9,6 @@
 import XCTest
 
 class TurnoClaseUITests: XCTestCase {
-
     override func setUp() {
         super.setUp()
 
@@ -55,7 +54,5 @@ class TurnoClaseUITests: XCTestCase {
 
         app.buttons["botonActualizar"].tap()
         snapshot("05-Terminado")
-
     }
-
 }

@@ -19,7 +19,6 @@ import SwiftUI
 
 @main
 struct TurnoClaseApp: App {
-
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {

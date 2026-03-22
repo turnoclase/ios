@@ -9,7 +9,6 @@
 import Foundation
 
 public class Nombres {
-
     // REF: Nombres más frecuentes: http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177009&menu=ultiDatos&idp=1254734710990
 
     static let nombres_es = [
@@ -423,7 +422,6 @@ public class Nombres {
     // REF: Elemento aleatorio de un array: https://stackoverflow.com/a/24101606/5136913
 
     public class func aleatorio() -> String {
-
         if NSLocale.preferredLanguages[0].range(of: "es") != nil {
             let index = Int(arc4random_uniform(UInt32(nombres_es.count)))
             return nombres_es[index]
@@ -432,5 +430,4 @@ public class Nombres {
             return nombres_en[index]
         }
     }
-
 }

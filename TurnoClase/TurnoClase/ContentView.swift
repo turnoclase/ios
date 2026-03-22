@@ -21,7 +21,6 @@ import SwiftUI
 import TurnoClaseShared
 
 struct ContentView: View {
-
     @StateObject private var vm = ConexionViewModel()
     @FocusState private var campoActivo: Campo?
 

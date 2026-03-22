@@ -15,10 +15,10 @@
 // ConexionViewModel.swift
 // TurnoClase
 
-import Foundation
-import Combine
-import SwiftUI
 import AudioToolbox
+import Combine
+import Foundation
+import SwiftUI
 
 import FirebaseAuth
 import FirebaseFirestore
@@ -39,16 +39,18 @@ enum EstadoTurno {
 
 @MainActor
 class ConexionViewModel: ObservableObject {
-
     // MARK: Datos de entrada (pantalla inicial)
+
     @Published var codigoAula: String = ""
     @Published var nombreUsuario: String = ""
     @Published var placeholder: String = ""
 
     // MARK: Estado de navegación
+
     @Published var mostrandoTurno: Bool = false
 
     // MARK: Estado pantalla de turno
+
     @Published var codigoAulaActual: String = ""
     @Published var estadoTurno: EstadoTurno = .enCola(posicion: 0)
 
@@ -60,6 +62,7 @@ class ConexionViewModel: ObservableObject {
     @Published var mostrarError: Bool = false
 
     // MARK: Propiedades internas
+
     var uid: String?
     var refAula: DocumentReference?
     var refPosicion: DocumentReference?
@@ -70,8 +73,8 @@ class ConexionViewModel: ObservableObject {
     var atendido = false
     var timer: Timer?
     var ultimaPeticion: Date?
-    var segundosEspera = 300  // 5 minutos por defecto
-    var n = 2  // Para Fastlane snapshot
+    var segundosEspera = 300 // 5 minutos por defecto
+    var n = 2 // Para Fastlane snapshot
 
     // MARK: - Inicialización (pantalla inicial)
 
@@ -114,7 +117,7 @@ class ConexionViewModel: ObservableObject {
             return
         }
 
-        Auth.auth().signInAnonymously() { [weak self] (result, error) in
+        Auth.auth().signInAnonymously { [weak self] result, error in
             guard let self = self else { return }
             Task { @MainActor in
                 if let resultado = result {
@@ -151,7 +154,7 @@ class ConexionViewModel: ObservableObject {
         db.collectionGroup("aulas")
             .whereField("codigo", isEqualTo: codigo)
             .limit(to: 1)
-            .getDocuments() { [weak self] (querySnapshot, error) in
+            .getDocuments { [weak self] querySnapshot, error in
                 guard let self = self else { return }
                 Task { @MainActor in
                     if let error = error {
@@ -174,11 +177,12 @@ class ConexionViewModel: ObservableObject {
 
     private func conectarListenerAula(_ document: QueryDocumentSnapshot) {
         guard listenerAula == nil else { return }
-        listenerAula = document.reference.addSnapshotListener { [weak self] documentSnapshot, error in
+        listenerAula = document.reference.addSnapshotListener { [weak self] documentSnapshot, _ in
             guard let self = self else { return }
             Task { @MainActor in
                 if documentSnapshot?.exists == true,
-                   documentSnapshot?.data()?["codigo"] as? String == self.codigoAulaActual {
+                   documentSnapshot?.data()?["codigo"] as? String == self.codigoAulaActual
+                {
                     self.refAula = documentSnapshot?.reference
                     self.segundosEspera = ((documentSnapshot?.data()?["espera"] as? Int) ?? 5) * 60
                     self.conectarListenerCola()
@@ -225,7 +229,7 @@ class ConexionViewModel: ObservableObject {
         refAula.collection("cola")
             .whereField("alumno", isEqualTo: uid)
             .limit(to: 1)
-            .getDocuments() { [weak self] (resultados, error) in
+            .getDocuments { [weak self] resultados, error in
                 guard let self = self else { return }
                 Task { @MainActor in
                     if let error = error {
@@ -241,7 +245,7 @@ class ConexionViewModel: ObservableObject {
         guard let refAula = refAula, let uid = uid else { return }
         let docs = querySnapshot?.documents ?? []
 
-        if pedirTurno && docs.isEmpty {
+        if pedirTurno, docs.isEmpty {
             pedirTurno = false
             log.info("Alumno no encontrado, lo añadimos")
             recuperarUltimaPeticion {
@@ -281,7 +285,7 @@ class ConexionViewModel: ObservableObject {
         } else {
             log.info("La cola se ha vaciado")
             recuperarUltimaPeticion {
-                if self.atendido && !(self.tiempoEsperaRestante() > 0) {
+                if self.atendido, !(self.tiempoEsperaRestante() > 0) {
                     self.estadoTurno = .volverAEmpezar
                     self.mostrarBotonActualizar = true
                     self.mostrarCronometro = false
@@ -306,13 +310,13 @@ class ConexionViewModel: ObservableObject {
             actualizarUI()
             return
         }
-        refPosicion.getDocument { [weak self] (document, _) in
+        refPosicion.getDocument { [weak self] document, _ in
             guard let self = self else { return }
             Task { @MainActor in
                 if let datos = document?.data(), let timestamp = datos["timestamp"] as? Timestamp {
                     refAula.collection("cola")
                         .whereField("timestamp", isLessThanOrEqualTo: timestamp)
-                        .getDocuments() { [weak self] (querySnapshot, _) in
+                        .getDocuments { [weak self] querySnapshot, _ in
                             guard let self = self else { return }
                             Task { @MainActor in
                                 let posicion = querySnapshot?.documents.count ?? 0
@@ -380,7 +384,7 @@ class ConexionViewModel: ObservableObject {
 
     private func abandonarCola() {
         if let refPosicion = refPosicion {
-            refPosicion.delete() { [weak self] _ in
+            refPosicion.delete { [weak self] _ in
                 Task { @MainActor in
                     self?.mostrandoTurno = false
                 }
@@ -436,7 +440,7 @@ class ConexionViewModel: ObservableObject {
 
     private func recuperarUltimaPeticion(completado: @escaping () -> Void) {
         guard let uid = uid, let refAula = refAula else { completado(); return }
-        refAula.collection("espera").document(uid).getDocument() { [weak self] (document, error) in
+        refAula.collection("espera").document(uid).getDocument { [weak self] document, _ in
             guard let self = self else { return }
             Task { @MainActor in
                 if let datos = document?.data(), let stamp = datos["timestamp"] as? Timestamp {
@@ -450,7 +454,7 @@ class ConexionViewModel: ObservableObject {
     private func borrarUltimaPeticion() {
         ultimaPeticion = nil
         guard let uid = uid, let refAula = refAula else { return }
-        refAula.collection("espera").document(uid).delete() { error in
+        refAula.collection("espera").document(uid).delete { error in
             if let error = error {
                 log.error("Error al borrar última petición: \(error.localizedDescription)")
             }

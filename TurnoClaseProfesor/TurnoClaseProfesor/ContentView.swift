@@ -15,14 +15,13 @@
 // ContentView.swift
 // TurnoClaseProfesor
 
-import SwiftUI
 import Localize_Swift
+import SwiftUI
 import TurnoClaseShared
 
 // MARK: - Vista principal
 
 struct ContentView: View {
-
     @StateObject private var vm = AulaViewModel()
 
     // Diálogos
@@ -49,7 +48,9 @@ struct ContentView: View {
             onMostrarMenu: { mostrarMenuAcciones = true }
         )
         .onAppear { vm.iniciar() }
+
         // MARK: - Menú de acciones (sheet nativo, evita bug de constraints en Catalyst)
+
         .sheet(isPresented: $mostrarMenuAcciones) {
             MenuAccionesAula(
                 vm: vm,
@@ -68,7 +69,9 @@ struct ContentView: View {
                 }
             }
         }
+
         // MARK: - Diálogo confirmar borrado
+
         .alert("Borrar aula".localized(), isPresented: $mostrarDialogoBorrar) {
             Button("Ok".localized(), role: .destructive) {
                 vm.borrarAulaReconectar(codigo: vm.codigoAula)
@@ -77,7 +80,9 @@ struct ContentView: View {
         } message: {
             Text("Esta acción vaciará la cola de espera.".localized())
         }
+
         // MARK: - Diálogo error de conexión
+
         .alert("Error de conexión".localized(), isPresented: $mostrarDialogoError) {
             Button("Ok".localized()) {}
         } message: {
@@ -89,7 +94,9 @@ struct ContentView: View {
                 vm.alertaActiva = nil
             }
         }
+
         // MARK: - Diálogo conectar a otra aula
+
         .sheet(isPresented: $mostrarDialogoConexion) {
             DialogoConexion(
                 textoCodigo: $textoCodigo,
@@ -105,7 +112,9 @@ struct ContentView: View {
                 onCancelar: { mostrarDialogoConexion = false }
             )
         }
+
         // MARK: - Diálogo etiquetar aula
+
         .sheet(isPresented: $mostrarDialogoEtiqueta) {
             DialogoEtiqueta(
                 textoEtiqueta: $textoEtiqueta,
@@ -116,7 +125,9 @@ struct ContentView: View {
                 onCancelar: { mostrarDialogoEtiqueta = false }
             )
         }
+
         // MARK: - Diálogo tiempo de espera
+
         .sheet(isPresented: $mostrarDialogoTiempo) {
             DialogoTiempoEspera(
                 tiempos: vm.tiempos,

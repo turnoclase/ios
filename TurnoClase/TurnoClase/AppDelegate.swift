@@ -38,9 +38,7 @@ let log = XCGLogger.default
 let db = Firestore.firestore()
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         // Configurar XCGLogger
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLevel: .debug)
 
@@ -65,5 +63,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         return true
     }
-
 }

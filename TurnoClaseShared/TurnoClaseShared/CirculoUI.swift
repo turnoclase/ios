@@ -23,7 +23,7 @@ import SwiftUI
 
 public extension View {
     /// Permite aplicar un bloque de modificadores de forma condicional o según disponibilidad.
-    @ViewBuilder func modify<T: View>(@ViewBuilder _ transform: (Self) -> T) -> some View {
+    func modify<T: View>(@ViewBuilder _ transform: (Self) -> T) -> some View {
         transform(self)
     }
 }

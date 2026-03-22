@@ -9,7 +9,6 @@
 import XCTest
 
 class TurnoClaseProfesorUITests: XCTestCase {
-
     override func setUp() {
         super.setUp()
 
@@ -57,5 +56,4 @@ class TurnoClaseProfesorUITests: XCTestCase {
         app.buttons["botonCodigoAula"].tap()
         snapshot("05-Menu")
     }
-
 }
