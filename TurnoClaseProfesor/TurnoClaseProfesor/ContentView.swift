@@ -44,10 +44,10 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let tamanyoCirculoPrincipal: CGFloat = min(geo.size.width, geo.size.height) * 0.65
+            let tamanyoCirculoPrincipal: CGFloat = min(geo.size.width, geo.size.height) * 0.70
             let tamanyoBoton: CGFloat = 72
-            let centroX = geo.size.width / 2 - 7
-            let centroY = geo.size.height / 2
+            let centroX = geo.size.width / 2 + 8
+            let centroY = geo.size.height / 2 - 12
             let radio = tamanyoCirculoPrincipal / 2
 
             ZStack {
