@@ -330,7 +330,12 @@ private struct MenuAccionesAula: View {
                         Button(role: .destructive) {
                             onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onBorrar() }
                         } label: {
-                            Label("Borrar aula".localized(), systemImage: "trash")
+                            Label {
+                                Text("Borrar aula".localized())
+                            } icon: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
                         }
                     }
 
