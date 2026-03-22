@@ -359,7 +359,12 @@ private struct MenuAccionesAula: View {
                     Button(role: .destructive) {
                         onCerrar(); vm.desconectarAula()
                     } label: {
-                        Label("Desconectar del aula".localized(), systemImage: "xmark.circle")
+                        Label {
+                            Text("Desconectar del aula".localized())
+                        } icon: {
+                            Image(systemName: "xmark.circle")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
             }
