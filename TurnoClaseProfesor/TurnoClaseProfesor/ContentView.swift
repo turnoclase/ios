@@ -353,7 +353,7 @@ private struct MenuAccionesAula: View {
                     Button {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onConectar() }
                     } label: {
-                        Label("Conectar a otra aula".localized(), systemImage: "arrow.triangle.2.circlepath")
+                        Label("Conectar a otra aula".localized(), systemImage: "link.circle")
                     }
                 } else if vm.invitado {
                     Button(role: .destructive) {
