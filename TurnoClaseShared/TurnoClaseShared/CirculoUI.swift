@@ -63,16 +63,30 @@ public struct BotónCircular: View {
         self.accion = accion
     }
 
+    @State private var pulsado = false
+
     public var body: some View {
-        Button(action: accion) {
-            Text(titulo)
-                .font(fuente)
-                .minimumScaleFactor(0.3)
-                .lineLimit(1)
-                .foregroundColor(colorTexto)
-                .frame(width: tamanyo, height: tamanyo)
-                .background(Circle().fill(colorFondo))
-        }
+        Circle()
+            .fill(colorFondo)
+            .frame(width: tamanyo, height: tamanyo)
+            .overlay(
+                Text(titulo)
+                    .font(fuente)
+                    .minimumScaleFactor(0.3)
+                    .lineLimit(1)
+                    .foregroundColor(colorTexto)
+                    .opacity(pulsado ? 0.3 : 1.0)
+                    .animation(.easeInOut(duration: 0.15), value: pulsado)
+            )
+            .contentShape(Circle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in pulsado = true }
+                    .onEnded { _ in
+                        pulsado = false
+                        accion()
+                    }
+            )
     }
 }
 
@@ -100,17 +114,28 @@ public struct BotónCircularIcono: View {
         self.accion = accion
     }
 
+    @State private var pulsado = false
+
     public var body: some View {
-        Button(action: accion) {
-            Circle()
-                .fill(colorFondo)
-                .frame(width: tamanyo, height: tamanyo)
-                .overlay(
-                    Image(systemName: simbolo)
-                        .font(.system(size: tamanyo * 0.32, weight: .medium))
-                        .foregroundColor(colorIcono)
-                )
-        }
+        Circle()
+            .fill(colorFondo)
+            .frame(width: tamanyo, height: tamanyo)
+            .overlay(
+                Image(systemName: simbolo)
+                    .font(.system(size: tamanyo * 0.32, weight: .medium))
+                    .foregroundColor(colorIcono)
+                    .opacity(pulsado ? 0.3 : 1.0)
+                    .animation(.easeInOut(duration: 0.15), value: pulsado)
+            )
+            .contentShape(Circle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in pulsado = true }
+                    .onEnded { _ in
+                        pulsado = false
+                        accion()
+                    }
+            )
     }
 }
 
