@@ -41,10 +41,10 @@ struct ContentView: View {
 
     private var pantallaInicial: some View {
         GeometryReader { geo in
-            let tamanyoCirculo: CGFloat = min(geo.size.width, geo.size.height) * 0.65
+            let tamanyoCirculo: CGFloat = min(geo.size.width, geo.size.height) * 0.70
             let tamanyoBoton: CGFloat = 72
-            let centroX = geo.size.width / 2
-            let centroY = geo.size.height / 2
+            let centroX = geo.size.width / 2 + 8
+            let centroY = geo.size.height / 2 - 12
 
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
