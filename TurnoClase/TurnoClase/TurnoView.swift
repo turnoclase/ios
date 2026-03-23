@@ -80,13 +80,13 @@ struct TurnoView: View {
                     }
                 }
                 .frame(width: tamanyoCirculo, height: tamanyoCirculo)
-                .background(Circle().fill(Color(red: 0.875, green: 0.886, blue: 0.902).opacity(0.6)))
+                .background(Circle().foregroundColor(.gris))
                 .position(x: centroX, y: centroY)
 
                 // Botón código de aula (amarillo, 30°)
                 BotónCircular(
                     titulo: vm.codigoAulaActual,
-                    colorFondo: Color(red: 0.996, green: 0.773, blue: 0.180),
+                    colorFondo: .amarillo,
                     colorTexto: .black,
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 13, weight: .regular)
@@ -97,7 +97,7 @@ struct TurnoView: View {
                 // Botón cancelar (rojo, -60°)
                 BotónCircularIcono(
                     simbolo: "xmark",
-                    colorFondo: Color(red: 0.925, green: 0.263, blue: 0.220),
+                    colorFondo: .rojo,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
                 ) {
@@ -110,7 +110,7 @@ struct TurnoView: View {
                 // Botón actualizar (azul, 150°)
                 BotónCircularIcono(
                     simbolo: "arrow.clockwise",
-                    colorFondo: Color(red: 0.063, green: 0.463, blue: 0.725),
+                    colorFondo: .azul,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
                 ) {

@@ -112,14 +112,14 @@ struct ContentView: View {
                     .frame(maxWidth: tamanyoCirculo - 16)
                 }
                 .frame(width: tamanyoCirculo, height: tamanyoCirculo)
-                .background(Circle().fill(Color(red: 0.875, green: 0.886, blue: 0.902).opacity(0.6)))
+                .background(Circle().foregroundColor(.gris))
                 .position(x: centroX, y: centroY)
                 .onTapGesture { campoActivo = nil }
 
                 // Botón siguiente (azul, sobre el borde a 150°)
                 BotónCircularIcono(
                     simbolo: "arrow.right",
-                    colorFondo: Color(red: 0.063, green: 0.463, blue: 0.725),
+                    colorFondo: .azul,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
                 ) {

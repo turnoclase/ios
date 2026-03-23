@@ -12,6 +12,8 @@
 		413592B0221F7FC30089E71C /* TurnoClaseShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 413592A2221F7FC30089E71C /* TurnoClaseShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		413592BA221F80080089E71C /* Nombres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413592B9221F80080089E71C /* Nombres.swift */; };
 		41B50728221F883C00D12D33 /* OperadorOpcional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B50727221F883C00D12D33 /* OperadorOpcional.swift */; };
+		41DF9F5A2F71FD34005FED7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41DF9F592F71FD34005FED7C /* Assets.xcassets */; };
+		41DF9F5C2F71FF06005FED7C /* Colores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DF9F5B2F71FF03005FED7C /* Colores.swift */; };
 		DECA36A194A347DCBF3512FC /* CirculoUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		413592AF221F7FC30089E71C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		413592B9221F80080089E71C /* Nombres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nombres.swift; sourceTree = "<group>"; };
 		41B50727221F883C00D12D33 /* OperadorOpcional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperadorOpcional.swift; sourceTree = "<group>"; };
+		41DF9F592F71FD34005FED7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		41DF9F5B2F71FF03005FED7C /* Colores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colores.swift; sourceTree = "<group>"; };
 		69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirculoUI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,11 +81,13 @@
 		413592A1221F7FC30089E71C /* TurnoClaseShared */ = {
 			isa = PBXGroup;
 			children = (
+				41DF9F5B2F71FF03005FED7C /* Colores.swift */,
 				413592B9221F80080089E71C /* Nombres.swift */,
 				41B50727221F883C00D12D33 /* OperadorOpcional.swift */,
 				69E0E42F9CBF4A7A9D0B222B /* CirculoUI.swift */,
 				413592A2221F7FC30089E71C /* TurnoClaseShared.h */,
 				413592A3221F7FC30089E71C /* Info.plist */,
+				41DF9F592F71FD34005FED7C /* Assets.xcassets */,
 			);
 			path = TurnoClaseShared;
 			sourceTree = "<group>";
@@ -190,6 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41DF9F5A2F71FD34005FED7C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +217,7 @@
 				41B50728221F883C00D12D33 /* OperadorOpcional.swift in Sources */,
 				DECA36A194A347DCBF3512FC /* CirculoUI.swift in Sources */,
 				413592BA221F80080089E71C /* Nombres.swift in Sources */,
+				41DF9F5C2F71FF06005FED7C /* Colores.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

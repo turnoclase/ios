@@ -410,7 +410,7 @@ private struct PantallaPrincipal: View {
                         .frame(maxWidth: tamanyoCirculoPrincipal - 32)
                 }
                 .frame(width: tamanyoCirculoPrincipal, height: tamanyoCirculoPrincipal)
-                .background(Circle().fill(Color(red: 0.996, green: 0.773, blue: 0.180)))
+                .background(Circle().foregroundColor(.amarillo))
                 .position(x: centroX, y: centroY)
                 .gesture(
                     DragGesture(minimumDistance: 30)
@@ -423,7 +423,7 @@ private struct PantallaPrincipal: View {
                 // Botón código de aula (gris, -60°)
                 BotónCircular(
                     titulo: vm.codigoAula,
-                    colorFondo: Color(red: 0.875, green: 0.886, blue: 0.902),
+                    colorFondo: .gris,
                     colorTexto: .black,
                     tamanyo: tamanyoBoton,
                     fuente: .system(size: 15, weight: .regular)
@@ -437,7 +437,7 @@ private struct PantallaPrincipal: View {
                 // Botón número en cola (rojo, 30°)
                 BotónCircular(
                     titulo: "\(vm.enCola)",
-                    colorFondo: Color(red: 0.925, green: 0.263, blue: 0.220),
+                    colorFondo: .rojo,
                     colorTexto: .white,
                     tamanyo: tamanyoBoton
                 ) {
@@ -449,7 +449,7 @@ private struct PantallaPrincipal: View {
                 // Botón siguiente (azul, 150°)
                 BotónCircularIcono(
                     simbolo: "arrow.right",
-                    colorFondo: Color(red: 0.063, green: 0.463, blue: 0.725),
+                    colorFondo: .azul,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
                 ) {
