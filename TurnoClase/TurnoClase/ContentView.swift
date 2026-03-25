@@ -60,19 +60,21 @@ struct ContentView: View {
                         .opacity(0.04)
 
                     // Campos de texto
-                    VStack(spacing: 8) {
+                    VStack(spacing: 3) {
                         Text("AULA")
-                            .font(.system(size: 13, weight: .regular))
+                            .font(.system(size: 17, weight: .regular))
                             .foregroundColor(.black)
                             .kerning(1)
 
                         TextField("BE131", text: $vm.codigoAula)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 28, weight: .regular))
+                            .font(.system(size: 22, weight: .regular))
                             .foregroundColor(.black)
-                            .padding(.vertical, 6)
+                            .padding(.vertical, 3)
                             .padding(.horizontal, 12)
-                            .background(Color.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 100)
+                                    .fill(Color.white))
                             .autocapitalization(.allCharacters)
                             .autocorrectionDisabled(true)
                             .keyboardType(.asciiCapable)
@@ -85,18 +87,20 @@ struct ContentView: View {
                             .onSubmit { campoActivo = .nombre }
 
                         Text("NOMBRE")
-                            .font(.system(size: 13, weight: .regular))
+                            .font(.system(size: 17, weight: .regular))
                             .foregroundColor(.black)
                             .kerning(1)
-                            .padding(.top, 6)
+                            .padding(.top, 12)
 
                         TextField(vm.placeholder, text: $vm.nombreUsuario)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 28, weight: .regular))
+                            .font(.system(size: 22, weight: .regular))
                             .foregroundColor(.black)
-                            .padding(.vertical, 6)
+                            .padding(.vertical, 3)
                             .padding(.horizontal, 12)
-                            .background(Color.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 100)
+                                    .fill(Color.white))
                             .autocapitalization(.words)
                             .submitLabel(.go)
                             .focused($campoActivo, equals: .nombre)
@@ -109,6 +113,7 @@ struct ContentView: View {
                             }
                     }
                     .padding(.horizontal, 24)
+                    .padding(.bottom, 12)
                     .frame(maxWidth: tamanyoCirculo - 16)
                 }
                 .frame(width: tamanyoCirculo, height: tamanyoCirculo)
