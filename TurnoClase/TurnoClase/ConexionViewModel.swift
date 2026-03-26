@@ -72,6 +72,7 @@ class ConexionViewModel: ObservableObject {
     var listenerPosicion: ListenerRegistration?
     var pedirTurno = true
     var atendido = false
+    var encolando = false
     var timer: Timer?
     var ultimaPeticion: Date?
     var segundosEspera = 300 // 5 minutos por defecto
@@ -117,6 +118,12 @@ class ConexionViewModel: ObservableObject {
             mostrandoTurno = true
             return
         }
+
+        // Resetear estado interno por si venimos de un ciclo anterior
+        pedirTurno = true
+        atendido = false
+        encolando = false
+        reiniciarCronometro()
 
         Task {
             do {
@@ -241,61 +248,35 @@ class ConexionViewModel: ObservableObject {
         guard let refAula = refAula, let uid = uid else { return }
         let docs = querySnapshot.documents
 
-        if pedirTurno, docs.isEmpty {
+        if !docs.isEmpty {
+            // El alumno ya está en la cola
+            log.info("Alumno encontrado, ya está en la cola")
             pedirTurno = false
+            refPosicion = docs[0].reference
+            conectarListenerPosicion(docs[0].reference)
+            actualizarPantalla()
+        } else if pedirTurno || !atendido {
+            // No está en cola y debe encolarse (primera petición o reconexión sin haber sido atendido)
+            guard !encolando else { return }
+            pedirTurno = false
+            encolando = true
             log.info("Alumno no encontrado, lo añadimos")
             Task {
                 await recuperarUltimaPeticion()
-                if !(tiempoEsperaRestante() > 0) {
+                if tiempoEsperaRestante() > 0 {
+                    encolando = false
+                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
+                    mostrarCronometro = true
+                    mostrarBotonActualizar = false
+                    mostrarError = false
+                    iniciarCronometro()
+                    actualizarUI()
+                } else {
                     mostrarCronometro = false
                     mostrarBotonActualizar = false
                     mostrarError = false
                     reiniciarCronometro()
                     borrarUltimaPeticion()
-                    do {
-                        let ref = try await refAula.collection("cola").addDocument(data: [
-                            "alumno": uid,
-                            "timestamp": FieldValue.serverTimestamp(),
-                        ])
-                        refPosicion = ref
-                        conectarListenerPosicion(ref)
-                        actualizarPantalla()
-                    } catch {
-                        log.error("Error al añadir el documento: \(error.localizedDescription)")
-                    }
-                } else {
-                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
-                    mostrarCronometro = true
-                    mostrarBotonActualizar = false
-                    mostrarError = false
-                    iniciarCronometro()
-                    actualizarUI()
-                }
-            }
-        } else if !docs.isEmpty {
-            log.info("Alumno encontrado, ya está en la cola")
-            refPosicion = docs[0].reference
-            conectarListenerPosicion(docs[0].reference)
-            actualizarPantalla()
-        } else {
-            log.info("La cola se ha vaciado")
-            Task {
-                await recuperarUltimaPeticion()
-                if tiempoEsperaRestante() > 0 {
-                    // Hay que esperar: mostrar cronómetro
-                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
-                    mostrarCronometro = true
-                    mostrarBotonActualizar = false
-                    mostrarError = false
-                    iniciarCronometro()
-                    actualizarUI()
-                } else {
-                    // No hay tiempo de espera: pedir turno automáticamente
-                    log.info("Sin tiempo de espera, pidiendo turno automáticamente")
-                    reiniciarCronometro()
-                    borrarUltimaPeticion()
-                    atendido = false
-                    pedirTurno = true
                     do {
                         let ref = try await refAula.collection("cola").addDocument(data: [
                             "alumno": uid,
@@ -308,6 +289,32 @@ class ConexionViewModel: ObservableObject {
                     } catch {
                         log.error("Error al añadir el documento: \(error.localizedDescription)")
                     }
+                    encolando = false
+                }
+            }
+        } else {
+            // El alumno fue atendido (borrado de la cola por el profesor)
+            log.info("La cola se ha vaciado tras ser atendido")
+            Task {
+                await recuperarUltimaPeticion()
+                if segundosEspera > 0, tiempoEsperaRestante() > 0 {
+                    // Hay que esperar: mostrar cronómetro
+                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
+                    mostrarCronometro = true
+                    mostrarBotonActualizar = false
+                    mostrarError = false
+                    iniciarCronometro()
+                    actualizarUI()
+                } else {
+                    // Sin tiempo de espera o tiempo expirado: mostrar botón
+                    log.info("Mostrando botón para volver a pedir turno")
+                    reiniciarCronometro()
+                    borrarUltimaPeticion()
+                    estadoTurno = .volverAEmpezar
+                    mostrarCronometro = false
+                    mostrarBotonActualizar = true
+                    mostrarError = false
+                    cargando = false
                 }
             }
         }
@@ -386,6 +393,7 @@ class ConexionViewModel: ObservableObject {
             desconectarListeners()
             atendido = false
             pedirTurno = true
+            encolando = false
             encolarAlumno(codigo: codigoAulaActual)
         } else {
             log.info("Ya tenemos turno")
