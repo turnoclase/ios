@@ -316,9 +316,12 @@ private struct MenuAccionesAula: View {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onEtiquetar() }
                     } label: {
                         Label {
-                            Text(vm.etiquetaAula.count > 0
-                                ? String(format: "» %@ «", vm.etiquetaAula)
-                                : "Etiquetar aula".localized())
+                            if vm.etiquetaAula.count > 0 {
+                                Text(String(format: "» %@ «", vm.etiquetaAula))
+                                    .fontWeight(.bold)
+                            } else {
+                                Text("Etiquetar aula".localized())
+                            }
                         } icon: {
                             Image(systemName: "tag")
                                 .foregroundColor(.azul)
