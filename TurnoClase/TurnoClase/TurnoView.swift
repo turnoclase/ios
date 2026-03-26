@@ -85,7 +85,8 @@ struct TurnoView: View {
                     imagen: .equis,
                     colorFondo: .rojo,
                     colorIcono: .white,
-                    tamanyo: tamanyoBoton
+                    tamanyo: tamanyoBoton,
+                    tamanyoFuente: 36
                 ) {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     vm.cancelar()

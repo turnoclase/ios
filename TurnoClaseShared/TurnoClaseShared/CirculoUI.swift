@@ -117,6 +117,7 @@ public struct BotónCircularIcono: View {
     public let colorFondo: Color
     public let colorIcono: Color
     public let tamanyo: CGFloat
+    public let tamanyoFuente: CGFloat
     public let accion: () -> Void
 
     public init(
@@ -124,12 +125,14 @@ public struct BotónCircularIcono: View {
         colorFondo: Color,
         colorIcono: Color,
         tamanyo: CGFloat,
+        tamanyoFuente: CGFloat = 42,
         accion: @escaping () -> Void
     ) {
         self.imagen = imagen
         self.colorFondo = colorFondo
         self.colorIcono = colorIcono
         self.tamanyo = tamanyo
+        self.tamanyoFuente = tamanyoFuente
         self.accion = accion
     }
 
@@ -141,7 +144,7 @@ public struct BotónCircularIcono: View {
             .frame(width: tamanyo, height: tamanyo)
             .overlay(
                 imagen
-                    .font(.system(size: 42, weight: .medium))
+                    .font(.system(size: tamanyoFuente, weight: .medium))
                     .foregroundColor(colorIcono)
                     .opacity(pulsado ? 0.3 : 1.0)
                     .animation(.easeInOut(duration: 0.15), value: pulsado)
