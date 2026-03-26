@@ -394,11 +394,11 @@ private struct PantallaPrincipal: View {
 
                 // Círculo principal amarillo
                 ZStack {
-                    Image("Fondo")
+                    Image.persona
                         .resizable()
                         .scaledToFit()
-                        .frame(width: tamanyoCirculoPrincipal * 0.85,
-                               height: tamanyoCirculoPrincipal * 0.85)
+                        .frame(width: tamanyoCirculoPrincipal * 0.60,
+                               height: tamanyoCirculoPrincipal * 0.60)
                         .opacity(0.025)
 
                     Text(vm.nombreAlumno)

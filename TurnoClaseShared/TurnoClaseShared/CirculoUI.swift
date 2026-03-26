@@ -24,9 +24,10 @@ import SwiftUI
 private class BundleToken {}
 
 public extension Image {
-    static let flecha = Image("Flecha", bundle: Bundle(for: BundleToken.self))
-    static let equis = Image("Equis", bundle: Bundle(for: BundleToken.self))
+    static let flecha   = Image("Flecha",   bundle: Bundle(for: BundleToken.self))
+    static let equis    = Image("Equis",    bundle: Bundle(for: BundleToken.self))
     static let recargar = Image("Recargar", bundle: Bundle(for: BundleToken.self))
+    static let persona  = Image("Persona",  bundle: Bundle(for: BundleToken.self))
 }
 
 // MARK: - Utilidad: modificador condicional

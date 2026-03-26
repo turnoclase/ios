@@ -51,13 +51,13 @@ struct ContentView: View {
 
                 // Círculo gris principal
                 ZStack {
-                    // Imagen de fondo tenue
-                    Image("Fondo")
+                    // Símbolo de fondo tenue
+                    Image.persona
                         .resizable()
                         .scaledToFit()
-                        .frame(width: tamanyoCirculo * 0.85,
-                               height: tamanyoCirculo * 0.85)
-                        .opacity(0.04)
+                        .frame(width: tamanyoCirculo * 0.60,
+                               height: tamanyoCirculo * 0.60)
+                        .opacity(0.025)
 
                     // Campos de texto
                     VStack(spacing: 3) {
