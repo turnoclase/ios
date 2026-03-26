@@ -117,20 +117,18 @@ class ConexionViewModel: ObservableObject {
             return
         }
 
-        Auth.auth().signInAnonymously { [weak self] result, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let resultado = result {
-                    self.uid = resultado.user.uid
-                    log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
-                    self.actualizarAlumno(nombre: nombre)
-                    self.encolarAlumno(codigo: codigo)
-                    self.mostrandoTurno = true
-                } else {
-                    log.error("Error de inicio de sesión: \(error!.localizedDescription)")
-                    self.estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
-                    self.mostrandoTurno = true
-                }
+        Task {
+            do {
+                let resultado = try await Auth.auth().signInAnonymously()
+                uid = resultado.user.uid
+                log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
+                actualizarAlumno(nombre: nombre)
+                encolarAlumno(codigo: codigo)
+                mostrandoTurno = true
+            } catch {
+                log.error("Error de inicio de sesión: \(error.localizedDescription)")
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                mostrandoTurno = true
             }
         }
     }
@@ -139,11 +137,12 @@ class ConexionViewModel: ObservableObject {
 
     private func actualizarAlumno(nombre: String) {
         guard let uid = uid else { return }
-        db.collection("alumnos").document(uid).setData(["nombre": nombre], merge: true) { error in
-            if let error = error {
-                log.error("Error al actualizar el alumno: \(error.localizedDescription)")
-            } else {
+        Task {
+            do {
+                try await db.collection("alumnos").document(uid).setData(["nombre": nombre], merge: true)
                 log.info("Alumno actualizado")
+            } catch {
+                log.error("Error al actualizar el alumno: \(error.localizedDescription)")
             }
         }
     }
@@ -151,26 +150,24 @@ class ConexionViewModel: ObservableObject {
     // MARK: - Buscar aula y encolar
 
     func encolarAlumno(codigo: String) {
-        db.collectionGroup("aulas")
-            .whereField("codigo", isEqualTo: codigo)
-            .limit(to: 1)
-            .getDocuments { [weak self] querySnapshot, error in
-                guard let self = self else { return }
-                Task { @MainActor in
-                    if let error = error {
-                        log.error("Error al recuperar datos: \(error.localizedDescription)")
-                        return
-                    }
-                    if let doc = querySnapshot?.documents.first {
-                        log.info("Conectado a aula existente")
-                        self.conectarListenerAula(doc)
-                    } else {
-                        log.error("Aula no encontrada")
-                        self.estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
-                        self.actualizarUI()
-                    }
+        Task {
+            do {
+                let querySnapshot = try await db.collectionGroup("aulas")
+                    .whereField("codigo", isEqualTo: codigo)
+                    .limit(to: 1)
+                    .getDocuments()
+                if let doc = querySnapshot.documents.first {
+                    log.info("Conectado a aula existente")
+                    conectarListenerAula(doc)
+                } else {
+                    log.error("Aula no encontrada")
+                    estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                    actualizarUI()
                 }
+            } catch {
+                log.error("Error al recuperar datos: \(error.localizedDescription)")
             }
+        }
     }
 
     // MARK: - Listeners
@@ -226,55 +223,52 @@ class ConexionViewModel: ObservableObject {
 
     private func buscarAlumnoEnCola() {
         guard let uid = uid, let refAula = refAula else { return }
-        refAula.collection("cola")
-            .whereField("alumno", isEqualTo: uid)
-            .limit(to: 1)
-            .getDocuments { [weak self] resultados, error in
-                guard let self = self else { return }
-                Task { @MainActor in
-                    if let error = error {
-                        log.error("Error al recuperar datos: \(error.localizedDescription)")
-                    } else {
-                        self.procesarCola(resultados)
-                    }
-                }
+        Task {
+            do {
+                let resultados = try await refAula.collection("cola")
+                    .whereField("alumno", isEqualTo: uid)
+                    .limit(to: 1)
+                    .getDocuments()
+                procesarCola(resultados)
+            } catch {
+                log.error("Error al recuperar datos: \(error.localizedDescription)")
             }
+        }
     }
 
-    private func procesarCola(_ querySnapshot: QuerySnapshot?) {
+    private func procesarCola(_ querySnapshot: QuerySnapshot) {
         guard let refAula = refAula, let uid = uid else { return }
-        let docs = querySnapshot?.documents ?? []
+        let docs = querySnapshot.documents
 
         if pedirTurno, docs.isEmpty {
             pedirTurno = false
             log.info("Alumno no encontrado, lo añadimos")
-            recuperarUltimaPeticion {
-                if !(self.tiempoEsperaRestante() > 0) {
-                    self.mostrarBotonActualizar = true
-                    self.mostrarCronometro = false
-                    self.mostrarError = false
-                    self.reiniciarCronometro()
-                    self.borrarUltimaPeticion()
-                    self.refPosicion = refAula.collection("cola").addDocument(data: [
-                        "alumno": uid,
-                        "timestamp": FieldValue.serverTimestamp()
-                    ]) { error in
-                        if let error = error {
-                            log.error("Error al añadir el documento: \(error.localizedDescription)")
-                        } else {
-                            if let ref = self.refPosicion {
-                                self.conectarListenerPosicion(ref)
-                            }
-                            self.actualizarPantalla()
-                        }
+            Task {
+                await recuperarUltimaPeticion()
+                if !(tiempoEsperaRestante() > 0) {
+                    mostrarBotonActualizar = true
+                    mostrarCronometro = false
+                    mostrarError = false
+                    reiniciarCronometro()
+                    borrarUltimaPeticion()
+                    do {
+                        let ref = try await refAula.collection("cola").addDocument(data: [
+                            "alumno": uid,
+                            "timestamp": FieldValue.serverTimestamp(),
+                        ])
+                        refPosicion = ref
+                        conectarListenerPosicion(ref)
+                        actualizarPantalla()
+                    } catch {
+                        log.error("Error al añadir el documento: \(error.localizedDescription)")
                     }
                 } else {
-                    self.estadoTurno = .esperando(segundosRestantes: self.tiempoEsperaRestante())
-                    self.mostrarCronometro = true
-                    self.mostrarBotonActualizar = false
-                    self.mostrarError = false
-                    self.iniciarCronometro()
-                    self.actualizarUI()
+                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
+                    mostrarCronometro = true
+                    mostrarBotonActualizar = false
+                    mostrarError = false
+                    iniciarCronometro()
+                    actualizarUI()
                 }
             }
         } else if !docs.isEmpty {
@@ -284,22 +278,23 @@ class ConexionViewModel: ObservableObject {
             actualizarPantalla()
         } else {
             log.info("La cola se ha vaciado")
-            recuperarUltimaPeticion {
-                if self.atendido, !(self.tiempoEsperaRestante() > 0) {
-                    self.estadoTurno = .volverAEmpezar
-                    self.mostrarBotonActualizar = true
-                    self.mostrarCronometro = false
-                    self.mostrarError = false
-                    self.reiniciarCronometro()
-                    self.borrarUltimaPeticion()
+            Task {
+                await recuperarUltimaPeticion()
+                if atendido, !(tiempoEsperaRestante() > 0) {
+                    estadoTurno = .volverAEmpezar
+                    mostrarBotonActualizar = true
+                    mostrarCronometro = false
+                    mostrarError = false
+                    reiniciarCronometro()
+                    borrarUltimaPeticion()
                 } else {
-                    self.estadoTurno = .esperando(segundosRestantes: self.tiempoEsperaRestante())
-                    self.mostrarCronometro = true
-                    self.mostrarBotonActualizar = false
-                    self.mostrarError = false
-                    self.iniciarCronometro()
+                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
+                    mostrarCronometro = true
+                    mostrarBotonActualizar = false
+                    mostrarError = false
+                    iniciarCronometro()
                 }
-                self.actualizarUI()
+                actualizarUI()
             }
         }
     }
@@ -310,26 +305,24 @@ class ConexionViewModel: ObservableObject {
             actualizarUI()
             return
         }
-        refPosicion.getDocument { [weak self] document, _ in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let datos = document?.data(), let timestamp = datos["timestamp"] as? Timestamp {
-                    refAula.collection("cola")
-                        .whereField("timestamp", isLessThanOrEqualTo: timestamp)
-                        .getDocuments { [weak self] querySnapshot, _ in
-                            guard let self = self else { return }
-                            Task { @MainActor in
-                                let posicion = querySnapshot?.documents.count ?? 0
-                                log.info("Posición en la cola: \(posicion)")
-                                if posicion > 1 {
-                                    self.estadoTurno = .enCola(posicion: posicion - 1)
-                                } else if posicion == 1 {
-                                    self.estadoTurno = .esTuTurno
-                                }
-                                self.actualizarUI()
-                            }
-                        }
+        Task {
+            do {
+                let document = try await refPosicion.getDocument()
+                guard let datos = document.data(),
+                      let timestamp = datos["timestamp"] as? Timestamp else { return }
+                let querySnapshot = try await refAula.collection("cola")
+                    .whereField("timestamp", isLessThanOrEqualTo: timestamp)
+                    .getDocuments()
+                let posicion = querySnapshot.documents.count
+                log.info("Posición en la cola: \(posicion)")
+                if posicion > 1 {
+                    estadoTurno = .enCola(posicion: posicion - 1)
+                } else if posicion == 1 {
+                    estadoTurno = .esTuTurno
                 }
+                actualizarUI()
+            } catch {
+                log.error("Error al actualizar pantalla: \(error.localizedDescription)")
             }
         }
     }
@@ -383,13 +376,14 @@ class ConexionViewModel: ObservableObject {
     // MARK: - Abandono de cola
 
     private func abandonarCola() {
-        if let refPosicion = refPosicion {
-            refPosicion.delete { [weak self] _ in
-                Task { @MainActor in
-                    self?.mostrandoTurno = false
+        Task {
+            do {
+                if let refPosicion = refPosicion {
+                    try await refPosicion.delete()
                 }
+            } catch {
+                log.error("Error al abandonar la cola: \(error.localizedDescription)")
             }
-        } else {
             mostrandoTurno = false
         }
     }
@@ -438,24 +432,25 @@ class ConexionViewModel: ObservableObject {
 
     // MARK: - Última petición (tiempo de espera)
 
-    private func recuperarUltimaPeticion(completado: @escaping () -> Void) {
-        guard let uid = uid, let refAula = refAula else { completado(); return }
-        refAula.collection("espera").document(uid).getDocument { [weak self] document, _ in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let datos = document?.data(), let stamp = datos["timestamp"] as? Timestamp {
-                    self.ultimaPeticion = stamp.dateValue()
-                }
-                completado()
+    private func recuperarUltimaPeticion() async {
+        guard let uid = uid, let refAula = refAula else { return }
+        do {
+            let document = try await refAula.collection("espera").document(uid).getDocument()
+            if let datos = document.data(), let stamp = datos["timestamp"] as? Timestamp {
+                ultimaPeticion = stamp.dateValue()
             }
+        } catch {
+            log.error("Error al recuperar última petición: \(error.localizedDescription)")
         }
     }
 
     private func borrarUltimaPeticion() {
         ultimaPeticion = nil
         guard let uid = uid, let refAula = refAula else { return }
-        refAula.collection("espera").document(uid).delete { error in
-            if let error = error {
+        Task {
+            do {
+                try await refAula.collection("espera").document(uid).delete()
+            } catch {
                 log.error("Error al borrar última petición: \(error.localizedDescription)")
             }
         }

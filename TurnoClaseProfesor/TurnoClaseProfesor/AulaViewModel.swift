@@ -155,26 +155,24 @@ class AulaViewModel: ObservableObject {
     func conectarAula(posicion: Int = 0) {
         guard let uid = uid else { return }
         refMisAulas = db.collection("profesores").document(uid).collection("aulas")
-        refMisAulas?.order(by: "timestamp").getDocuments { [weak self] querySnapshot, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let error = error {
-                    log.error("Error al recuperar la lista de aulas \(error.localizedDescription)")
-                    self.actualizarAulaUI(codigo: "?", enCola: 0)
-                } else {
-                    let total = querySnapshot?.documents.count ?? 0
-                    self.numAulas = total
-                    if posicion >= 0 && posicion < total {
-                        if let seleccionada = querySnapshot?.documents[posicion] {
-                            log.info("Conectado a aula existente")
-                            self.refAula = seleccionada.reference
-                            self.conectarListener()
-                        }
-                    } else {
-                        log.info("Creando nueva aula...")
-                        self.crearAula()
+        Task {
+            do {
+                let querySnapshot = try await refMisAulas?.order(by: "timestamp").getDocuments()
+                let total = querySnapshot?.documents.count ?? 0
+                numAulas = total
+                if posicion >= 0 && posicion < total {
+                    if let seleccionada = querySnapshot?.documents[posicion] {
+                        log.info("Conectado a aula existente")
+                        refAula = seleccionada.reference
+                        conectarListener()
                     }
+                } else {
+                    log.info("Creando nueva aula...")
+                    crearAula()
                 }
+            } catch {
+                log.error("Error al recuperar la lista de aulas \(error.localizedDescription)")
+                actualizarAulaUI(codigo: "?", enCola: 0)
             }
         }
     }
@@ -183,61 +181,48 @@ class AulaViewModel: ObservableObject {
 
     func crearAula() {
         mostrarIndicador = true
-        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] result, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let error = error as NSError? {
-                    if error.domain == FunctionsErrorDomain { log.error(error.localizedDescription) }
-                }
-                if let codigo = (result?.data as? [String: Any])?["codigo"] as? String {
+        Task {
+            do {
+                let result = try await functions.httpsCallable("nuevoCodigo").call(["keepalive": false])
+                if let codigo = (result.data as? [String: Any])?["codigo"] as? String {
                     log.info("Nuevo código de aula: \(codigo)")
-                    self.refAula = self.refMisAulas?.addDocument(data: [
+                    let datos: [String: Any] = [
                         "codigo": codigo,
                         "timestamp": FieldValue.serverTimestamp(),
                         "pin": String(format: "%04d", Int.random(in: 0...9999)),
                         "espera": 5,
-                    ]) { error in
-                        Task { @MainActor in
-                            if let error = error {
-                                log.error("Error al crear el aula: \(error.localizedDescription)")
-                            } else {
-                                log.info("Aula creada")
-                                self.numAulas += 1
-                                self.conectarListener()
-                            }
-                        }
-                    }
+                    ]
+                    let ref = try await refMisAulas?.addDocument(data: datos)
+                    refAula = ref
+                    log.info("Aula creada")
+                    numAulas += 1
+                    conectarListener()
                 }
+            } catch {
+                log.error("Error al crear el aula: \(error.localizedDescription)")
             }
         }
     }
 
     func anyadirAula() {
         mostrarIndicador = true
-        functions.httpsCallable("nuevoCodigo").call(["keepalive": false]) { [weak self] result, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let error = error as NSError? {
-                    if error.domain == FunctionsErrorDomain { log.error(error.localizedDescription) }
-                }
-                if let codigo = (result?.data as? [String: Any])?["codigo"] as? String {
+        Task {
+            do {
+                let result = try await functions.httpsCallable("nuevoCodigo").call(["keepalive": false])
+                if let codigo = (result.data as? [String: Any])?["codigo"] as? String {
                     log.info("Nuevo código de aula: \(codigo)")
-                    self.refMisAulas?.addDocument(data: [
+                    let datos: [String: Any] = [
                         "codigo": codigo,
                         "timestamp": FieldValue.serverTimestamp(),
                         "pin": String(format: "%04d", Int.random(in: 0...9999)),
                         "espera": 5,
-                    ]) { error in
-                        Task { @MainActor in
-                            if let error = error {
-                                log.error("Error al crear el aula: \(error.localizedDescription)")
-                            } else {
-                                log.info("Aula creada")
-                                self.numAulas += 1
-                            }
-                        }
-                    }
+                    ]
+                    try await refMisAulas?.addDocument(data: datos)
+                    log.info("Aula creada")
+                    numAulas += 1
                 }
+            } catch {
+                log.error("Error al crear el aula: \(error.localizedDescription)")
             }
         }
     }
@@ -300,47 +285,34 @@ class AulaViewModel: ObservableObject {
     func mostrarSiguiente(avanzarCola: Bool = false) {
         log.info("Mostrando el siguiente alumno...")
         guard let refAula = refAula else { return }
-        refAula.collection("cola").order(by: "timestamp").getDocuments { [weak self] querySnapshot, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let error = error {
-                    log.error("Error al recuperar datos: \(error.localizedDescription)")
+        Task {
+            do {
+                let querySnapshot = try await refAula.collection("cola").order(by: "timestamp").getDocuments()
+                let docs = querySnapshot.documents
+                guard docs.count > 0 else {
+                    log.info("Cola vacía")
+                    nombreAlumno = codigoAula != "?" ? "" : "No hay conexión de red".localized()
                     return
                 }
-                if let docs = querySnapshot?.documents, docs.count > 0 {
-                    let refPosicion = docs[0].reference
-                    refPosicion.getDocument { [weak self] document, error in
-                        guard let self = self else { return }
-                        Task { @MainActor in
-                            if let posicion = document?.data() {
-                                db.collection("alumnos").document(posicion["alumno"] as! String).getDocument { [weak self] document, error in
-                                    guard let self = self else { return }
-                                    Task { @MainActor in
-                                        if let document = document, document.exists, let alumno = document.data() {
-                                            self.nombreAlumno = alumno["nombre"] as? String ?? "?"
-                                            if avanzarCola {
-                                                self.refAula?.collection("espera").document(posicion["alumno"] as! String).setData([
-                                                    "timestamp": FieldValue.serverTimestamp(),
-                                                ]) { error in
-                                                    if let error = error {
-                                                        log.error("Error al añadir el documento: \(error.localizedDescription)")
-                                                    }
-                                                }
-                                                refPosicion.delete()
-                                            }
-                                        } else {
-                                            log.error("El alumno no existe")
-                                            self.nombreAlumno = "?"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                let refPosicion = docs[0].reference
+                let posicionDoc = try await refPosicion.getDocument()
+                guard let posicion = posicionDoc.data(),
+                      let alumnoId = posicion["alumno"] as? String else { return }
+                let alumnoDoc = try await db.collection("alumnos").document(alumnoId).getDocument()
+                if alumnoDoc.exists, let alumno = alumnoDoc.data() {
+                    nombreAlumno = alumno["nombre"] as? String ?? "?"
+                    if avanzarCola {
+                        try await refAula.collection("espera").document(alumnoId).setData([
+                            "timestamp": FieldValue.serverTimestamp(),
+                        ])
+                        try await refPosicion.delete()
                     }
                 } else {
-                    log.info("Cola vacía")
-                    self.nombreAlumno = self.codigoAula != "?" ? "" : "No hay conexión de red".localized()
+                    log.error("El alumno no existe")
+                    nombreAlumno = "?"
                 }
+            } catch {
+                log.error("Error al recuperar datos: \(error.localizedDescription)")
             }
         }
     }
@@ -350,33 +322,31 @@ class AulaViewModel: ObservableObject {
     func buscarAula(codigo: String?, pin: String?) {
         guard let codigo = codigo, let pin = pin else { return }
         log.debug("Buscando UID del aula: \(codigo):\(pin)")
-        db.collectionGroup("aulas")
-            .whereField("codigo", isEqualTo: codigo.uppercased())
-            .whereField("pin", isEqualTo: pin)
-            .getDocuments { [weak self] querySnapshot, error in
-                guard let self = self else { return }
-                Task { @MainActor in
-                    if let error = error {
-                        log.error("Error al recuperar datos: \(error.localizedDescription)")
-                        return
+        Task {
+            do {
+                let querySnapshot = try await db.collectionGroup("aulas")
+                    .whereField("codigo", isEqualTo: codigo.uppercased())
+                    .whereField("pin", isEqualTo: pin)
+                    .getDocuments()
+                if querySnapshot.documents.count > 0 {
+                    log.info("Aula encontrada: \(codigo)")
+                    UserDefaults.standard.set(codigo, forKey: "codigoAulaConectada")
+                    UserDefaults.standard.set(pin, forKey: "pinConectada")
+                    desconectarListeners()
+                    invitado = true
+                    refAula = querySnapshot.documents.first?.reference
+                    conectarListener()
+                } else {
+                    log.error("Aula no encontrada")
+                    if UserDefaults.standard.string(forKey: "codigoAulaConectada") == nil {
+                        alertaActiva = .errorConexion
                     }
-                    if let documents = querySnapshot?.documents, documents.count > 0 {
-                        log.info("Aula encontrada: \(codigo)")
-                        UserDefaults.standard.set(codigo, forKey: "codigoAulaConectada")
-                        UserDefaults.standard.set(pin, forKey: "pinConectada")
-                        self.desconectarListeners()
-                        self.invitado = true
-                        self.refAula = documents.first?.reference
-                        self.conectarListener()
-                    } else {
-                        log.error("Aula no encontrada")
-                        if UserDefaults.standard.string(forKey: "codigoAulaConectada") == nil {
-                            self.alertaActiva = .errorConexion
-                        }
-                        self.desconectarAula()
-                    }
+                    desconectarAula()
                 }
+            } catch {
+                log.error("Error al recuperar datos: \(error.localizedDescription)")
             }
+        }
     }
 
     func desconectarAula() {
@@ -392,28 +362,21 @@ class AulaViewModel: ObservableObject {
     func borrarAulaReconectar(codigo: String) {
         mostrarIndicador = true
         desconectarListeners()
-        refMisAulas?.whereField("codigo", isEqualTo: codigo.uppercased()).getDocuments { [weak self] querySnapshot, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let error = error {
-                    log.error("Error al recuperar datos: \(error.localizedDescription)")
-                    return
+        Task {
+            do {
+                let querySnapshot = try await refMisAulas?
+                    .whereField("codigo", isEqualTo: codigo.uppercased())
+                    .getDocuments()
+                guard let ref = querySnapshot?.documents.first?.reference else { return }
+                try await ref.delete()
+                log.info("Aula borrada")
+                numAulas -= 1
+                if aulaActual == numAulas {
+                    aulaActual = max(0, aulaActual - 1)
                 }
-                querySnapshot?.documents.first?.reference.delete { [weak self] error in
-                    guard let self = self else { return }
-                    Task { @MainActor in
-                        if let error = error {
-                            log.error("Error al borrar el aula: \(error.localizedDescription)")
-                        } else {
-                            log.info("Aula borrada")
-                            self.numAulas -= 1
-                            if self.aulaActual == self.numAulas {
-                                self.aulaActual = max(0, self.aulaActual - 1)
-                            }
-                            self.conectarAula(posicion: self.aulaActual)
-                        }
-                    }
-                }
+                conectarAula(posicion: aulaActual)
+            } catch {
+                log.error("Error al borrar el aula: \(error.localizedDescription)")
             }
         }
     }
@@ -422,11 +385,12 @@ class AulaViewModel: ObservableObject {
 
     func actualizarEtiqueta(_ nuevaEtiqueta: String) {
         etiquetaAula = nuevaEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines)
-        refAula?.updateData(["etiqueta": etiquetaAula]) { error in
-            if let error = error {
-                log.error("Error al actualizar el aula: \(error.localizedDescription)")
-            } else {
+        Task {
+            do {
+                try await refAula?.updateData(["etiqueta": etiquetaAula])
                 log.info("Aula actualizada")
+            } catch {
+                log.error("Error al actualizar el aula: \(error.localizedDescription)")
             }
         }
     }
@@ -436,11 +400,12 @@ class AulaViewModel: ObservableObject {
     func actualizarTiempoEspera(_ tiempo: Int) {
         tiempoEspera = tiempo
         log.info("Establecer tiempo de espera en \(tiempo) minutos...")
-        refAula?.updateData(["espera": tiempo]) { error in
-            if let error = error {
-                log.error("Error al actualizar el aula: \(error.localizedDescription)")
-            } else {
+        Task {
+            do {
+                try await refAula?.updateData(["espera": tiempo])
                 log.info("Aula actualizada")
+            } catch {
+                log.error("Error al actualizar el aula: \(error.localizedDescription)")
             }
         }
     }
