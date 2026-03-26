@@ -198,6 +198,7 @@ struct DialogoEtiqueta: View {
 
     var puedeGuardar: Bool {
         textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
+            || textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count == 0
     }
 
     var body: some View {
