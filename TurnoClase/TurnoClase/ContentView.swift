@@ -83,7 +83,7 @@ struct ContentView: View {
                             .kerning(1)
                             .padding(.top, 12)
 
-                        TextField(vm.placeholder, text: $vm.nombreUsuario)
+                        TextField("", text: $vm.nombreUsuario)
                             .multilineTextAlignment(.center)
                             .font(.system(size: 22, weight: .regular))
                             .foregroundColor(.black)
@@ -93,6 +93,16 @@ struct ContentView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 100)
                                     .fill(Color.white)
+                            )
+                            .overlay(
+                                Group {
+                                    if vm.nombreUsuario.isEmpty {
+                                        Text(vm.placeholder)
+                                            .font(.system(size: 22, weight: .regular))
+                                            .foregroundColor(Color(white: 0.8))
+                                            .allowsHitTesting(false)
+                                    }
+                                }
                             )
                             .autocapitalization(.words)
                             .submitLabel(.go)
@@ -158,6 +168,10 @@ struct CampoAula: UIViewRepresentable {
         field.keyboardType = .asciiCapable
         field.returnKeyType = .next
         field.placeholder = "BE131"
+        field.attributedPlaceholder = NSAttributedString(
+            string: "BE131",
+            attributes: [.foregroundColor: UIColor(white: 0.8, alpha: 1)]
+        )
         field.backgroundColor = .clear
         field.addTarget(context.coordinator,
                         action: #selector(Coordinator.textChanged(_:)),
