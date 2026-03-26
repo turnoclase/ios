@@ -357,8 +357,8 @@ private struct MenuAccionesAula: View {
                                 Text("Borrar aula".localized())
                             } icon: {
                                 Image(systemName: "trash")
-                                    .foregroundColor(.rojo)
                             }
+                            .foregroundColor(.rojo)
                         }
                     }
 
@@ -380,8 +380,8 @@ private struct MenuAccionesAula: View {
                             Text("Desconectar del aula".localized())
                         } icon: {
                             Image(systemName: "xmark.circle")
-                                .foregroundColor(.rojo)
                         }
+                        .foregroundColor(.rojo)
                     }
                 }
             }
