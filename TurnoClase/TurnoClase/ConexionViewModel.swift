@@ -60,6 +60,7 @@ class ConexionViewModel: ObservableObject {
     @Published var mostrarCronometro: Bool = false
     @Published var mostrarBotonActualizar: Bool = false
     @Published var mostrarError: Bool = false
+    @Published var cargando: Bool = true
 
     // MARK: Propiedades internas
 
@@ -333,14 +334,19 @@ class ConexionViewModel: ObservableObject {
                 } else if posicion == 1 {
                     estadoTurno = .esTuTurno
                 }
+                cargando = false
                 actualizarUI()
             } catch {
                 log.error("Error al actualizar pantalla: \(error.localizedDescription)")
+                cargando = false
+                log.error("Error al actualizar pantalla: \(error.localizedDescription)")
+                cargando = false
             }
         }
     }
 
     private func actualizarUI() {
+        cargando = false
         switch estadoTurno {
         case .esperando:
             mostrarCronometro = true
@@ -376,6 +382,7 @@ class ConexionViewModel: ObservableObject {
         }
         if atendido {
             log.info("Pidiendo nuevo turno")
+            cargando = true
             desconectarListeners()
             atendido = false
             pedirTurno = true

@@ -46,7 +46,9 @@ struct TurnoView: View {
 
                     // Contenido central
                     Group {
-                        if vm.mostrarError {
+                        if vm.cargando {
+                            AnimacionPuntos(color: .black, tamanyo: 10)
+                        } else if vm.mostrarError {
                             // Error
                             Text(NSLocalizedString("MENSAJE_ERROR", comment: ""))
                                 .font(.system(size: 22))

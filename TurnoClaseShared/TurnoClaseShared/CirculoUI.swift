@@ -162,6 +162,42 @@ public struct BotónCircularIcono: View {
     }
 }
 
+// MARK: - Animación de tres puntos en onda
+
+/// Tres puntos que suben y bajan en onda, para indicar estado de espera/carga.
+public struct AnimacionPuntos: View {
+    public let color: Color
+    public let tamanyo: CGFloat
+
+    public init(color: Color = .black, tamanyo: CGFloat = 14) {
+        self.color = color
+        self.tamanyo = tamanyo
+    }
+
+    @State private var animar = false
+
+    private let delays: [Double] = [0, 0.18, 0.36]
+
+    public var body: some View {
+        HStack(spacing: tamanyo * 0.8) {
+            ForEach(0 ..< 3, id: \.self) { i in
+                Circle()
+                    .fill(color)
+                    .frame(width: tamanyo, height: tamanyo)
+                    .offset(y: animar ? -tamanyo * 0.9 : tamanyo * 0.9)
+                    .animation(
+                        .easeInOut(duration: 0.5)
+                            .repeatForever(autoreverses: true)
+                            .delay(delays[i]),
+                        value: animar
+                    )
+            }
+        }
+        .onAppear { animar = true }
+        .onDisappear { animar = false }
+    }
+}
+
 // MARK: - PageControl SwiftUI wrapper
 
 /// Wrapper de UIPageControl para usar en SwiftUI.
