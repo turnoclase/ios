@@ -152,6 +152,7 @@ struct CampoAula: UIViewRepresentable {
         field.delegate = context.coordinator
         field.textAlignment = .center
         field.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        field.textColor = .black
         field.autocapitalizationType = .allCharacters
         field.autocorrectionType = .no
         field.keyboardType = .asciiCapable
