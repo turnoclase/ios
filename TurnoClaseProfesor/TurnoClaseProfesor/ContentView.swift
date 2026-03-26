@@ -426,7 +426,6 @@ private struct PantallaPrincipal: View {
                     colorFondo: .gris,
                     colorTexto: .black,
                     tamanyo: tamanyoBoton,
-                    fuente: .system(size: 15, weight: .regular)
                 ) {
                     vm.feedbackTactilLigero()
                     onMostrarMenu()

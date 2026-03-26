@@ -89,7 +89,6 @@ struct TurnoView: View {
                     colorFondo: .amarillo,
                     colorTexto: .black,
                     tamanyo: tamanyoBoton,
-                    fuente: .system(size: 15, weight: .regular)
                 ) {}
                     .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
                     .accessibilityIdentifier("botonCodigoAula")
