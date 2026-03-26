@@ -63,6 +63,9 @@ class AulaViewModel: ObservableObject {
     lazy var functions = Functions.functions(region: "europe-west1")
     let tiempos = [0, 1, 2, 3, 5, 10, 15, 20, 30, 45, 60]
 
+    // Para evitar actualizaciones del listener mientras se avanza la cola
+    var avanzandoCola: Bool = false
+
     // Para test UI
     var n = 2
 
@@ -251,8 +254,10 @@ class AulaViewModel: ObservableObject {
                                     } else {
                                         let count = querySnapshot?.documents.count ?? 0
                                         self.actualizarContador(count)
-                                        self.mostrarSiguiente()
-                                        self.feedbackTactilNotificacion()
+                                        if !self.avanzandoCola {
+                                            self.mostrarSiguiente()
+                                            self.feedbackTactilNotificacion()
+                                        }
                                     }
                                 }
                             }
@@ -285,6 +290,7 @@ class AulaViewModel: ObservableObject {
     func mostrarSiguiente(avanzarCola: Bool = false) {
         log.info("Mostrando el siguiente alumno...")
         guard let refAula = refAula else { return }
+        if avanzarCola { avanzandoCola = true }
         Task {
             do {
                 let querySnapshot = try await refAula.collection("cola").order(by: "timestamp").getDocuments()
@@ -292,28 +298,69 @@ class AulaViewModel: ObservableObject {
                 guard docs.count > 0 else {
                     log.info("Cola vacía")
                     nombreAlumno = codigoAula != "?" ? "" : "No hay conexión de red".localized()
+                    avanzandoCola = false
                     return
                 }
                 let refPosicion = docs[0].reference
                 let posicionDoc = try await refPosicion.getDocument()
                 guard let posicion = posicionDoc.data(),
-                      let alumnoId = posicion["alumno"] as? String else { return }
+                      let alumnoId = posicion["alumno"] as? String
+                else {
+                    avanzandoCola = false
+                    return
+                }
                 let alumnoDoc = try await db.collection("alumnos").document(alumnoId).getDocument()
                 if alumnoDoc.exists, let alumno = alumnoDoc.data() {
-                    nombreAlumno = alumno["nombre"] as? String ?? "?"
                     if avanzarCola {
+                        // Mover el alumno actual a espera y borrarlo de la cola
                         try await refAula.collection("espera").document(alumnoId).setData([
                             "timestamp": FieldValue.serverTimestamp(),
                         ])
                         try await refPosicion.delete()
+                        avanzandoCola = false
+                        // Mostrar el siguiente alumno en cola (si lo hay)
+                        await mostrarSiguienteDesdeFirestore(refAula: refAula, docs: docs)
+                    } else {
+                        nombreAlumno = alumno["nombre"] as? String ?? "?"
                     }
                 } else {
                     log.error("El alumno no existe")
                     nombreAlumno = "?"
+                    avanzandoCola = false
                 }
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
+                avanzandoCola = false
             }
+        }
+    }
+
+    // Muestra el siguiente alumno en la cola (el que queda tras avanzar)
+    private func mostrarSiguienteDesdeFirestore(refAula: DocumentReference, docs: [QueryDocumentSnapshot]) async {
+        // Si había más de un alumno, el siguiente es docs[1]
+        guard docs.count > 1 else {
+            log.info("No hay más alumnos en cola")
+            nombreAlumno = ""
+            return
+        }
+        do {
+            let refSiguiente = docs[1].reference
+            let siguienteDoc = try await refSiguiente.getDocument()
+            guard let posicion = siguienteDoc.data(),
+                  let alumnoId = posicion["alumno"] as? String
+            else {
+                nombreAlumno = ""
+                return
+            }
+            let alumnoDoc = try await db.collection("alumnos").document(alumnoId).getDocument()
+            if alumnoDoc.exists, let alumno = alumnoDoc.data() {
+                nombreAlumno = alumno["nombre"] as? String ?? "?"
+            } else {
+                nombreAlumno = ""
+            }
+        } catch {
+            log.error("Error al recuperar el siguiente alumno: \(error.localizedDescription)")
+            nombreAlumno = ""
         }
     }
 
