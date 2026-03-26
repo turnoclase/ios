@@ -315,25 +315,37 @@ private struct MenuAccionesAula: View {
                     Button {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onEtiquetar() }
                     } label: {
-                        Label(
-                            vm.etiquetaAula.count > 0
+                        Label {
+                            Text(vm.etiquetaAula.count > 0
                                 ? String(format: "» %@ «", vm.etiquetaAula)
-                                : "Etiquetar aula".localized(),
-                            systemImage: "tag"
-                        )
+                                : "Etiquetar aula".localized())
+                        } icon: {
+                            Image(systemName: "tag")
+                                .foregroundColor(.azul)
+                        }
                     }
 
                     Button {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onTiempo() }
                     } label: {
-                        Label("Establecer tiempo de espera".localized(), systemImage: "timer")
+                        Label {
+                            Text("Establecer tiempo de espera".localized())
+                        } icon: {
+                            Image(systemName: "timer")
+                                .foregroundColor(.azul)
+                        }
                     }
 
                     if vm.numAulas < vm.MAX_AULAS {
                         Button {
                             onCerrar(); vm.anyadirAula()
                         } label: {
-                            Label("Añadir aula".localized(), systemImage: "plus.circle")
+                            Label {
+                                Text("Añadir aula".localized())
+                            } icon: {
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.azul)
+                            }
                         }
                     }
 
@@ -345,7 +357,7 @@ private struct MenuAccionesAula: View {
                                 Text("Borrar aula".localized())
                             } icon: {
                                 Image(systemName: "trash")
-                                    .foregroundColor(.red)
+                                    .foregroundColor(.rojo)
                             }
                         }
                     }
@@ -353,7 +365,12 @@ private struct MenuAccionesAula: View {
                     Button {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onConectar() }
                     } label: {
-                        Label("Conectar a otra aula".localized(), systemImage: "link.circle")
+                        Label {
+                            Text("Conectar a otra aula".localized())
+                        } icon: {
+                            Image(systemName: "link.circle")
+                                .foregroundColor(.azul)
+                        }
                     }
                 } else if vm.invitado {
                     Button(role: .destructive) {
@@ -363,7 +380,7 @@ private struct MenuAccionesAula: View {
                             Text("Desconectar del aula".localized())
                         } icon: {
                             Image(systemName: "xmark.circle")
-                                .foregroundColor(.red)
+                                .foregroundColor(.rojo)
                         }
                     }
                 }
