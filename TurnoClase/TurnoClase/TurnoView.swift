@@ -88,7 +88,7 @@ struct TurnoView: View {
                     titulo: vm.codigoAulaActual,
                     colorFondo: .amarillo,
                     colorTexto: .black,
-                    tamanyo: tamanyoBoton,
+                    tamanyo: tamanyoBoton
                 ) {}
                     .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
                     .accessibilityIdentifier("botonCodigoAula")
@@ -139,7 +139,7 @@ struct TurnoView: View {
         case .esTuTurno:
             return NSLocalizedString("ES_TU_TURNO", comment: "")
         case .volverAEmpezar:
-            return NSLocalizedString("VOLVER_A_EMPEZAR", comment: "")
+            return NSLocalizedString("ES_TU_TURNO", comment: "")
         case .esperando:
             return NSLocalizedString("ESPERA", comment: "")
         case .error(let msg):

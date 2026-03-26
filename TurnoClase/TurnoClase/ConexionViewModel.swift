@@ -246,8 +246,8 @@ class ConexionViewModel: ObservableObject {
             Task {
                 await recuperarUltimaPeticion()
                 if !(tiempoEsperaRestante() > 0) {
-                    mostrarBotonActualizar = true
                     mostrarCronometro = false
+                    mostrarBotonActualizar = false
                     mostrarError = false
                     reiniciarCronometro()
                     borrarUltimaPeticion()
@@ -280,21 +280,34 @@ class ConexionViewModel: ObservableObject {
             log.info("La cola se ha vaciado")
             Task {
                 await recuperarUltimaPeticion()
-                if atendido, !(tiempoEsperaRestante() > 0) {
-                    estadoTurno = .volverAEmpezar
-                    mostrarBotonActualizar = true
-                    mostrarCronometro = false
-                    mostrarError = false
-                    reiniciarCronometro()
-                    borrarUltimaPeticion()
-                } else {
+                if tiempoEsperaRestante() > 0 {
+                    // Hay que esperar: mostrar cronómetro
                     estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
                     mostrarCronometro = true
                     mostrarBotonActualizar = false
                     mostrarError = false
                     iniciarCronometro()
+                    actualizarUI()
+                } else {
+                    // No hay tiempo de espera: pedir turno automáticamente
+                    log.info("Sin tiempo de espera, pidiendo turno automáticamente")
+                    reiniciarCronometro()
+                    borrarUltimaPeticion()
+                    atendido = false
+                    pedirTurno = true
+                    do {
+                        let ref = try await refAula.collection("cola").addDocument(data: [
+                            "alumno": uid,
+                            "timestamp": FieldValue.serverTimestamp(),
+                        ])
+                        refPosicion = ref
+                        desconectarListenerPosicion()
+                        conectarListenerPosicion(ref)
+                        actualizarPantalla()
+                    } catch {
+                        log.error("Error al añadir el documento: \(error.localizedDescription)")
+                    }
                 }
-                actualizarUI()
             }
         }
     }
@@ -339,7 +352,7 @@ class ConexionViewModel: ObservableObject {
             mostrarError = true
         default:
             mostrarCronometro = false
-            mostrarBotonActualizar = true
+            mostrarBotonActualizar = false
             mostrarError = false
         }
     }
@@ -394,6 +407,11 @@ class ConexionViewModel: ObservableObject {
         listenerPosicion?.remove(); listenerPosicion = nil
     }
 
+    private func desconectarListenerPosicion() {
+        listenerPosicion?.remove()
+        listenerPosicion = nil
+    }
+
     // MARK: - Cronómetro
 
     func iniciarCronometro() {
@@ -421,12 +439,29 @@ class ConexionViewModel: ObservableObject {
             minutosRestantes = restante / 60
             segundosRestantes = restante % 60
         } else {
+            // El tiempo de espera ha expirado: ocultar cronómetro y pedir turno automáticamente
             reiniciarCronometro()
             borrarUltimaPeticion()
-            estadoTurno = .volverAEmpezar
-            atendido = true
-            mostrarBotonActualizar = true
             mostrarCronometro = false
+            mostrarBotonActualizar = false
+            mostrarError = false
+            atendido = false
+            pedirTurno = true
+            guard let refAula = refAula, let uid = uid else { return }
+            Task {
+                do {
+                    let ref = try await refAula.collection("cola").addDocument(data: [
+                        "alumno": uid,
+                        "timestamp": FieldValue.serverTimestamp(),
+                    ])
+                    refPosicion = ref
+                    desconectarListenerPosicion()
+                    conectarListenerPosicion(ref)
+                    actualizarPantalla()
+                } catch {
+                    log.error("Error al añadir el documento: \(error.localizedDescription)")
+                }
+            }
         }
     }
 
