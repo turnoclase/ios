@@ -141,7 +141,7 @@ public struct BotónCircularIcono: View {
             .frame(width: tamanyo, height: tamanyo)
             .overlay(
                 imagen
-                    .font(.system(size: tamanyo * 0.32, weight: .medium))
+                    .font(.system(size: 42, weight: .medium))
                     .foregroundColor(colorIcono)
                     .opacity(pulsado ? 0.3 : 1.0)
                     .animation(.easeInOut(duration: 0.15), value: pulsado)
