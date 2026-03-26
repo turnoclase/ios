@@ -19,6 +19,7 @@
 
 import SwiftUI
 import TurnoClaseShared
+import UIKit
 
 struct ContentView: View {
     @StateObject private var vm = ConexionViewModel()
@@ -67,26 +68,14 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .kerning(1)
 
-                        TextField("BE131", text: $vm.codigoAula)
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 22, weight: .regular))
-                            .foregroundColor(.black)
+                        CampoAula(texto: $vm.codigoAula, alEnviar: { campoActivo = .nombre })
+                            .frame(height: 36)
                             .padding(.vertical, 3)
                             .padding(.horizontal, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 100)
                                     .fill(Color.white)
                             )
-                            .autocapitalization(.allCharacters)
-                            .autocorrectionDisabled(true)
-                            .keyboardType(.asciiCapable)
-                            .submitLabel(.next)
-                            .focused($campoActivo, equals: .aula)
-                            .onChange(of: vm.codigoAula) { v in
-                                if v.count > 5 { vm.codigoAula = String(v.prefix(5)) }
-                                vm.codigoAula = v.uppercased()
-                            }
-                            .onSubmit { campoActivo = .nombre }
 
                         Text("NOMBRE")
                             .font(.system(size: 17, weight: .regular))
@@ -98,6 +87,7 @@ struct ContentView: View {
                             .multilineTextAlignment(.center)
                             .font(.system(size: 22, weight: .regular))
                             .foregroundColor(.black)
+                            .frame(height: 36)
                             .padding(.vertical, 3)
                             .padding(.horizontal, 12)
                             .background(
@@ -145,4 +135,74 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+// MARK: - CampoAula
+
+struct CampoAula: UIViewRepresentable {
+    @Binding var texto: String
+    var alEnviar: () -> Void
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> UITextField {
+        let field = UITextField()
+        field.delegate = context.coordinator
+        field.textAlignment = .center
+        field.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        field.autocapitalizationType = .allCharacters
+        field.autocorrectionType = .no
+        field.keyboardType = .asciiCapable
+        field.returnKeyType = .next
+        field.placeholder = "BE131"
+        field.backgroundColor = .clear
+        field.addTarget(context.coordinator,
+                        action: #selector(Coordinator.textChanged(_:)),
+                        for: .editingChanged)
+        return field
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        if uiView.text != texto {
+            uiView.text = texto
+        }
+    }
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: CampoAula
+
+        init(_ parent: CampoAula) {
+            self.parent = parent
+        }
+
+        func textField(_ textField: UITextField,
+                       shouldChangeCharactersIn range: NSRange,
+                       replacementString string: String) -> Bool
+        {
+            let actual = (textField.text ?? "") as NSString
+            let nuevo = actual.replacingCharacters(in: range, with: string)
+            let procesado = String(nuevo.uppercased().prefix(5))
+            if procesado != nuevo {
+                textField.text = procesado
+                parent.texto = procesado
+                return false
+            }
+            return true
+        }
+
+        @objc func textChanged(_ sender: UITextField) {
+            let procesado = String((sender.text ?? "").uppercased().prefix(5))
+            parent.texto = procesado
+            if sender.text != procesado {
+                sender.text = procesado
+            }
+        }
+
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            parent.alEnviar()
+            return true
+        }
+    }
 }

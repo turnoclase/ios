@@ -94,7 +94,7 @@ class ConexionViewModel: ObservableObject {
     }
 
     var puedeConectar: Bool {
-        codigoAula.count >= 5 && nombreEfectivo.count >= 2
+        codigoAula.count == 5 && nombreUsuario.count >= 2
     }
 
     var nombreEfectivo: String {
