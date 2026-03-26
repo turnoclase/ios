@@ -26,6 +26,7 @@
 "PIN para compartir este aula: %@" = "Gela partekatzeko PIN kodea: %@";
 "Siguiente" = "Hurrengoa";
 "Tiempo de espera (minutos)" = "Itxaroteko denbora (minutuak)";
+"Tiempo de espera: %d minutos" = "Itxaroteko denbora: %d minutu";
 
 "Añadir aula" = "Gela bat gehitu";
 "Borrar aula" = "Gela ezabatu";

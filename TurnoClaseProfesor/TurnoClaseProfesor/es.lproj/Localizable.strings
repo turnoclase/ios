@@ -26,6 +26,7 @@
 "PIN para compartir este aula: %@" = "PIN para compartir este aula: %@";
 "Siguiente" = "Siguiente";
 "Tiempo de espera (minutos)" = "Tiempo de espera (minutos)";
+"Tiempo de espera: %d minutos" = "Tiempo de espera: %d minutos";
 
 "Añadir aula" = "Añadir aula";
 "Borrar aula" = "Borrar aula";

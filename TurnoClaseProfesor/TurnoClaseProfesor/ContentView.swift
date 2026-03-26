@@ -329,7 +329,7 @@ private struct MenuAccionesAula: View {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onTiempo() }
                     } label: {
                         Label {
-                            Text("Establecer tiempo de espera".localized())
+                            Text(String(format: "Tiempo de espera: %d minutos".localized(), vm.tiempoEspera))
                         } icon: {
                             Image(systemName: "timer")
                                 .foregroundColor(.azul)
