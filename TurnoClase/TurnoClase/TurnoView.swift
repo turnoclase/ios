@@ -22,7 +22,6 @@ import TurnoClaseShared
 
 struct TurnoView: View {
     @ObservedObject var vm: ConexionViewModel
-    @State private var opacidadBotonActualizar: Double = 1.0
 
     var body: some View {
         GeometryReader { geo in
@@ -47,19 +46,7 @@ struct TurnoView: View {
 
                     // Contenido central
                     Group {
-                        if vm.mostrarCronometro {
-                            // Cronómetro
-                            VStack(spacing: 4) {
-                                Text(NSLocalizedString("ESPERA", comment: ""))
-                                    .font(.system(size: 20))
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(.black)
-                                Text(String(format: "%02d:%02d", vm.minutosRestantes, vm.segundosRestantes))
-                                    .font(.system(size: 48, weight: .thin, design: .monospaced))
-                                    .foregroundColor(.black)
-                            }
-                            .padding(.horizontal, 20)
-                        } else if vm.mostrarError {
+                        if vm.mostrarError {
                             // Error
                             Text(NSLocalizedString("MENSAJE_ERROR", comment: ""))
                                 .font(.system(size: 22))
@@ -106,26 +93,32 @@ struct TurnoView: View {
                 .position(posicionEnBorde(angulo: -60, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonCancelar")
 
-                // Botón actualizar (azul, 150°)
-                BotónCircularIcono(
-                    simbolo: "arrow.clockwise",
-                    colorFondo: .azul,
-                    colorIcono: .white,
-                    tamanyo: tamanyoBoton
-                ) {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    vm.actualizar()
-                }
-                .opacity(opacidadBotonActualizar)
-                ._onButtonGesture(pressing: { pressing in
-                    withAnimation(.linear(duration: pressing ? 0.1 : 0.3)) {
-                        opacidadBotonActualizar = pressing ? 0.15 : 1.0
+                // Botón actualizar/cronómetro (azul, 150°)
+                if vm.mostrarCronometro {
+                    BotónCircular(
+                        titulo: String(format: "%02d:%02d", vm.minutosRestantes, vm.segundosRestantes),
+                        colorFondo: .azul,
+                        colorTexto: .white,
+                        tamanyo: tamanyoBoton,
+                        fuente: .system(size: 17, weight: .regular, design: .monospaced)
+                    ) {}
+                        .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
+                        .accessibilityIdentifier("botonActualizar")
+                } else {
+                    BotónCircularIcono(
+                        simbolo: "arrow.clockwise",
+                        colorFondo: .azul,
+                        colorIcono: .white,
+                        tamanyo: tamanyoBoton
+                    ) {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        vm.actualizar()
                     }
-                }, perform: {})
-                .opacity(vm.mostrarBotonActualizar ? 1.0 : 0.0)
-                .disabled(!vm.mostrarBotonActualizar)
-                .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
-                .accessibilityIdentifier("botonActualizar")
+                    .opacity(vm.mostrarBotonActualizar ? 1.0 : 0.0)
+                    .disabled(!vm.mostrarBotonActualizar)
+                    .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
+                    .accessibilityIdentifier("botonActualizar")
+                }
             }
         }
     }
