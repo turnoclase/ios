@@ -57,6 +57,7 @@ struct ContentView: View {
                         .scaledToFit()
                         .frame(width: tamanyoCirculo * 0.60,
                                height: tamanyoCirculo * 0.60)
+                        .foregroundColor(.black)
                         .opacity(0.025)
 
                     // Campos de texto

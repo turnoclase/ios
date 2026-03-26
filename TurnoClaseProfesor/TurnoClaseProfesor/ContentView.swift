@@ -399,6 +399,7 @@ private struct PantallaPrincipal: View {
                         .scaledToFit()
                         .frame(width: tamanyoCirculoPrincipal * 0.60,
                                height: tamanyoCirculoPrincipal * 0.60)
+                        .foregroundColor(.black)
                         .opacity(0.025)
 
                     Text(vm.nombreAlumno)
