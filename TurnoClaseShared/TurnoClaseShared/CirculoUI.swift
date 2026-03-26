@@ -19,6 +19,16 @@
 
 import SwiftUI
 
+// MARK: - Imágenes del bundle de TurnoClaseShared
+
+private class BundleToken {}
+
+public extension Image {
+    static let flecha = Image("Flecha", bundle: Bundle(for: BundleToken.self))
+    static let equis = Image("Equis", bundle: Bundle(for: BundleToken.self))
+    static let recargar = Image("Recargar", bundle: Bundle(for: BundleToken.self))
+}
+
 // MARK: - Utilidad: modificador condicional
 
 public extension View {
@@ -99,24 +109,24 @@ public struct BotónCircular: View {
     }
 }
 
-// MARK: - Botón circular con símbolo SF
+// MARK: - Botón circular con símbolo SF o asset personalizado
 
-/// Botón circular que muestra un símbolo SF Symbols en lugar de texto.
+/// Botón circular que muestra una imagen (SF Symbol o asset del catálogo) en lugar de texto.
 public struct BotónCircularIcono: View {
-    public let simbolo: String
+    public let imagen: Image
     public let colorFondo: Color
     public let colorIcono: Color
     public let tamanyo: CGFloat
     public let accion: () -> Void
 
     public init(
-        simbolo: String,
+        imagen: Image,
         colorFondo: Color,
         colorIcono: Color,
         tamanyo: CGFloat,
         accion: @escaping () -> Void
     ) {
-        self.simbolo = simbolo
+        self.imagen = imagen
         self.colorFondo = colorFondo
         self.colorIcono = colorIcono
         self.tamanyo = tamanyo
@@ -130,7 +140,7 @@ public struct BotónCircularIcono: View {
             .fill(colorFondo)
             .frame(width: tamanyo, height: tamanyo)
             .overlay(
-                Image(systemName: simbolo)
+                imagen
                     .font(.system(size: tamanyo * 0.32, weight: .medium))
                     .foregroundColor(colorIcono)
                     .opacity(pulsado ? 0.3 : 1.0)

@@ -82,7 +82,7 @@ struct TurnoView: View {
 
                 // Botón cancelar (rojo, -60°)
                 BotónCircularIcono(
-                    simbolo: "xmark",
+                    imagen: .equis,
                     colorFondo: .rojo,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
@@ -106,7 +106,7 @@ struct TurnoView: View {
                         .accessibilityIdentifier("botonActualizar")
                 } else {
                     BotónCircularIcono(
-                        simbolo: "arrow.clockwise",
+                        imagen: .recargar,
                         colorFondo: .azul,
                         colorIcono: .white,
                         tamanyo: tamanyoBoton

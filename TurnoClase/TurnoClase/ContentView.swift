@@ -123,7 +123,7 @@ struct ContentView: View {
 
                 // Botón siguiente (azul, sobre el borde a 150°)
                 BotónCircularIcono(
-                    simbolo: "arrow.right",
+                    imagen: .flecha,
                     colorFondo: .azul,
                     colorIcono: .white,
                     tamanyo: tamanyoBoton
