@@ -132,7 +132,7 @@ struct TurnoView: View {
         case .esTuTurno:
             return NSLocalizedString("ES_TU_TURNO", comment: "")
         case .volverAEmpezar:
-            return NSLocalizedString("ES_TU_TURNO", comment: "")
+            return NSLocalizedString("VOLVER_A_EMPEZAR", comment: "")
         case .esperando:
             return NSLocalizedString("ESPERA", comment: "")
         case .error(let msg):

@@ -439,29 +439,14 @@ class ConexionViewModel: ObservableObject {
             minutosRestantes = restante / 60
             segundosRestantes = restante % 60
         } else {
-            // El tiempo de espera ha expirado: ocultar cronómetro y pedir turno automáticamente
+            // El tiempo de espera ha expirado: mostrar mensaje y dejar que el usuario pulse el botón
             reiniciarCronometro()
             borrarUltimaPeticion()
+            estadoTurno = .volverAEmpezar
             mostrarCronometro = false
-            mostrarBotonActualizar = false
+            mostrarBotonActualizar = true
             mostrarError = false
-            atendido = false
-            pedirTurno = true
-            guard let refAula = refAula, let uid = uid else { return }
-            Task {
-                do {
-                    let ref = try await refAula.collection("cola").addDocument(data: [
-                        "alumno": uid,
-                        "timestamp": FieldValue.serverTimestamp(),
-                    ])
-                    refPosicion = ref
-                    desconectarListenerPosicion()
-                    conectarListenerPosicion(ref)
-                    actualizarPantalla()
-                } catch {
-                    log.error("Error al añadir el documento: \(error.localizedDescription)")
-                }
-            }
+            atendido = true
         }
     }
 
