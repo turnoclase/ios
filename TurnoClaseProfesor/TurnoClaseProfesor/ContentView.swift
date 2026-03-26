@@ -425,7 +425,7 @@ private struct PantallaPrincipal: View {
                     titulo: vm.codigoAula,
                     colorFondo: .gris,
                     colorTexto: .black,
-                    tamanyo: tamanyoBoton,
+                    tamanyo: tamanyoBoton
                 ) {
                     vm.feedbackTactilLigero()
                     onMostrarMenu()

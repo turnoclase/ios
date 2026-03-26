@@ -74,7 +74,8 @@ struct ContentView: View {
                             .padding(.horizontal, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.white))
+                                    .fill(Color.white)
+                            )
                             .autocapitalization(.allCharacters)
                             .autocorrectionDisabled(true)
                             .keyboardType(.asciiCapable)
@@ -100,7 +101,8 @@ struct ContentView: View {
                             .padding(.horizontal, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.white))
+                                    .fill(Color.white)
+                            )
                             .autocapitalization(.words)
                             .submitLabel(.go)
                             .focused($campoActivo, equals: .nombre)
