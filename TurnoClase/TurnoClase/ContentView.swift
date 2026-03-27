@@ -157,7 +157,9 @@ struct CampoTexto: View {
     var botonEnvio: SubmitLabel = .go
 
     var body: some View {
-        TextField(placeholder, text: $texto)
+        TextField("", text: $texto,
+                  prompt: Text(placeholder)
+                      .foregroundColor(.gray.opacity(0.8)))
             .multilineTextAlignment(.center)
             .font(.system(size: 22, weight: .regular))
             .foregroundColor(.black)
