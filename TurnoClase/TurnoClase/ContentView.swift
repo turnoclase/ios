@@ -68,14 +68,24 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .kerning(1)
 
-                        CampoAula(texto: $vm.codigoAula, alEnviar: { campoActivo = .nombre })
-                            .frame(height: 36)
-                            .padding(.vertical, 3)
-                            .padding(.horizontal, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.white)
-                            )
+                        CampoTexto(
+                            texto: $vm.codigoAula,
+                            placeholder: "BE131",
+                            limite: 5,
+                            capitalizacion: .characters,
+                            forzarMayusculas: true,
+                            teclado: .asciiCapable,
+                            botonEnvio: .next
+                        )
+                        .focused($campoActivo, equals: .aula)
+                        .onSubmit { campoActivo = .nombre }
+                        .frame(height: 36)
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 100)
+                                .fill(Color.white)
+                        )
 
                         Text("NOMBRE")
                             .font(.system(size: 17, weight: .regular))
@@ -83,37 +93,25 @@ struct ContentView: View {
                             .kerning(1)
                             .padding(.top, 12)
 
-                        TextField("", text: $vm.nombreUsuario)
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 22, weight: .regular))
-                            .foregroundColor(.black)
-                            .frame(height: 36)
-                            .padding(.vertical, 3)
-                            .padding(.horizontal, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.white)
-                            )
-                            .overlay(
-                                Group {
-                                    if vm.nombreUsuario.isEmpty {
-                                        Text(vm.placeholder)
-                                            .font(.system(size: 22, weight: .regular))
-                                            .foregroundColor(Color(white: 0.8))
-                                            .allowsHitTesting(false)
-                                    }
-                                }
-                            )
-                            .autocapitalization(.words)
-                            .submitLabel(.go)
-                            .focused($campoActivo, equals: .nombre)
-                            .onChange(of: vm.nombreUsuario) { v in
-                                if v.count > 15 { vm.nombreUsuario = String(v.prefix(15)) }
-                            }
-                            .onSubmit {
-                                campoActivo = nil
-                                if vm.puedeConectar { vm.conectar() }
-                            }
+                        CampoTexto(
+                            texto: $vm.nombreUsuario,
+                            placeholder: vm.placeholder,
+                            limite: 15,
+                            capitalizacion: .words,
+                            botonEnvio: .go
+                        )
+                        .focused($campoActivo, equals: .nombre)
+                        .onSubmit {
+                            campoActivo = nil
+                            if vm.puedeConectar { vm.conectar() }
+                        }
+                        .frame(height: 36)
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 100)
+                                .fill(Color.white)
+                        )
                     }
                     .padding(.horizontal, 24)
                     .padding(.bottom, 12)
@@ -147,77 +145,44 @@ struct ContentView: View {
     ContentView()
 }
 
-// MARK: - CampoAula
+// MARK: - CampoTexto
 
-struct CampoAula: UIViewRepresentable {
+struct CampoTexto: View {
     @Binding var texto: String
-    var alEnviar: () -> Void
+    var placeholder: String
+    var limite: Int
+    var capitalizacion: TextInputAutocapitalization = .never
+    var forzarMayusculas: Bool = false
+    var teclado: UIKeyboardType = .default
+    var botonEnvio: SubmitLabel = .go
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    func makeUIView(context: Context) -> UITextField {
-        let field = UITextField()
-        field.delegate = context.coordinator
-        field.textAlignment = .center
-        field.font = UIFont.systemFont(ofSize: 22, weight: .regular)
-        field.textColor = .black
-        field.autocapitalizationType = .allCharacters
-        field.autocorrectionType = .no
-        field.keyboardType = .asciiCapable
-        field.returnKeyType = .next
-        field.placeholder = "BE131"
-        field.attributedPlaceholder = NSAttributedString(
-            string: "BE131",
-            attributes: [.foregroundColor: UIColor(white: 0.8, alpha: 1)]
-        )
-        field.backgroundColor = .clear
-        field.addTarget(context.coordinator,
-                        action: #selector(Coordinator.textChanged(_:)),
-                        for: .editingChanged)
-        return field
-    }
-
-    func updateUIView(_ uiView: UITextField, context: Context) {
-        if uiView.text != texto {
-            uiView.text = texto
-        }
-    }
-
-    class Coordinator: NSObject, UITextFieldDelegate {
-        var parent: CampoAula
-
-        init(_ parent: CampoAula) {
-            self.parent = parent
-        }
-
-        func textField(_ textField: UITextField,
-                       shouldChangeCharactersIn range: NSRange,
-                       replacementString string: String) -> Bool
-        {
-            let actual = (textField.text ?? "") as NSString
-            let nuevo = actual.replacingCharacters(in: range, with: string)
-            let procesado = String(nuevo.uppercased().prefix(5))
-            if procesado != nuevo {
-                textField.text = procesado
-                parent.texto = procesado
-                return false
+    var body: some View {
+        TextField("", text: $texto)
+            .multilineTextAlignment(.center)
+            .font(.system(size: 22, weight: .regular))
+            .foregroundColor(.black)
+            .textInputAutocapitalization(capitalizacion)
+            .autocorrectionDisabled()
+            .keyboardType(teclado)
+            .submitLabel(botonEnvio)
+            .onChange(of: texto) { nuevo in
+                let procesado: String
+                if forzarMayusculas {
+                    procesado = String(nuevo.uppercased().prefix(limite))
+                } else {
+                    procesado = String(nuevo.prefix(limite))
+                }
+                if procesado != nuevo {
+                    texto = procesado
+                }
             }
-            return true
-        }
-
-        @objc func textChanged(_ sender: UITextField) {
-            let procesado = String((sender.text ?? "").uppercased().prefix(5))
-            parent.texto = procesado
-            if sender.text != procesado {
-                sender.text = procesado
+            .overlay(alignment: .center) {
+                if texto.isEmpty {
+                    Text(placeholder)
+                        .font(.system(size: 22, weight: .regular))
+                        .foregroundColor(Color(white: 0.8))
+                        .allowsHitTesting(false)
+                }
             }
-        }
-
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            parent.alEnviar()
-            return true
-        }
     }
 }
