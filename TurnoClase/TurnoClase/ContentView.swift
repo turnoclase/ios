@@ -157,7 +157,7 @@ struct CampoTexto: View {
     var botonEnvio: SubmitLabel = .go
 
     var body: some View {
-        TextField("", text: $texto)
+        TextField(placeholder, text: $texto)
             .multilineTextAlignment(.center)
             .font(.system(size: 22, weight: .regular))
             .foregroundColor(.black)
@@ -174,14 +174,6 @@ struct CampoTexto: View {
                 }
                 if procesado != nuevo {
                     texto = procesado
-                }
-            }
-            .overlay(alignment: .center) {
-                if texto.isEmpty {
-                    Text(placeholder)
-                        .font(.system(size: 22, weight: .regular))
-                        .foregroundColor(Color(white: 0.8))
-                        .allowsHitTesting(false)
                 }
             }
     }
