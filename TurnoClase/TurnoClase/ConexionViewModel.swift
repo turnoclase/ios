@@ -123,6 +123,9 @@ class ConexionViewModel: ObservableObject {
         pedirTurno = true
         atendido = false
         encolando = false
+        cargando = true
+        mostrarError = false
+        estadoTurno = .enCola(posicion: 0)
         reiniciarCronometro()
 
         Task {
