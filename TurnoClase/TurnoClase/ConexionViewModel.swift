@@ -25,6 +25,21 @@ import FirebaseFirestore
 
 import TurnoClaseShared
 
+// MARK: - Timeout
+
+private func withTimeout<T: Sendable>(segundos: Double, operacion: @escaping @Sendable () async throws -> T) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { group in
+        group.addTask { try await operacion() }
+        group.addTask {
+            try await Task.sleep(nanoseconds: UInt64(segundos * 1_000_000_000))
+            throw URLError(.timedOut)
+        }
+        let resultado = try await group.next()!
+        group.cancelAll()
+        return resultado
+    }
+}
+
 // MARK: - Estado de la pantalla de turno
 
 enum EstadoTurno {
@@ -130,7 +145,9 @@ class ConexionViewModel: ObservableObject {
 
         Task {
             do {
-                let resultado = try await Auth.auth().signInAnonymously()
+                let resultado = try await withTimeout(segundos: 10) {
+                    try await Auth.auth().signInAnonymously()
+                }
                 uid = resultado.user.uid
                 log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
                 actualizarAlumno(nombre: nombre)
@@ -140,6 +157,7 @@ class ConexionViewModel: ObservableObject {
                 log.error("Error de inicio de sesión: \(error.localizedDescription)")
                 estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
                 mostrandoTurno = true
+                actualizarUI()
             }
         }
     }
@@ -163,10 +181,12 @@ class ConexionViewModel: ObservableObject {
     func encolarAlumno(codigo: String) {
         Task {
             do {
-                let querySnapshot = try await db.collectionGroup("aulas")
-                    .whereField("codigo", isEqualTo: codigo)
-                    .limit(to: 1)
-                    .getDocuments()
+                let querySnapshot = try await withTimeout(segundos: 10) {
+                    try await db.collectionGroup("aulas")
+                        .whereField("codigo", isEqualTo: codigo)
+                        .limit(to: 1)
+                        .getDocuments(source: .server)
+                }
                 if let doc = querySnapshot.documents.first {
                     log.info("Conectado a aula existente")
                     conectarListenerAula(doc)
@@ -177,6 +197,8 @@ class ConexionViewModel: ObservableObject {
                 }
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                actualizarUI()
             }
         }
     }
@@ -239,10 +261,12 @@ class ConexionViewModel: ObservableObject {
                 let resultados = try await refAula.collection("cola")
                     .whereField("alumno", isEqualTo: uid)
                     .limit(to: 1)
-                    .getDocuments()
+                    .getDocuments(source: .server)
                 procesarCola(resultados)
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                actualizarUI()
             }
         }
     }
@@ -331,12 +355,12 @@ class ConexionViewModel: ObservableObject {
         }
         Task {
             do {
-                let document = try await refPosicion.getDocument()
+                let document = try await refPosicion.getDocument(source: .server)
                 guard let datos = document.data(),
                       let timestamp = datos["timestamp"] as? Timestamp else { return }
                 let querySnapshot = try await refAula.collection("cola")
                     .whereField("timestamp", isLessThanOrEqualTo: timestamp)
-                    .getDocuments()
+                    .getDocuments(source: .server)
                 let posicion = querySnapshot.documents.count
                 log.info("Posición en la cola: \(posicion)")
                 if posicion > 1 {
@@ -407,15 +431,15 @@ class ConexionViewModel: ObservableObject {
     // MARK: - Abandono de cola
 
     private func abandonarCola() {
-        Task {
-            do {
-                if let refPosicion = refPosicion {
-                    try await refPosicion.delete()
-                }
-            } catch {
-                log.error("Error al abandonar la cola: \(error.localizedDescription)")
+        // Volver atrás de inmediato, sin esperar a la red
+        mostrandoTurno = false
+
+        // Intentar borrar la posición en segundo plano (best-effort)
+        guard let refPosicion = refPosicion else { return }
+        Task.detached {
+            try? await withTimeout(segundos: 5) {
+                try await refPosicion.delete()
             }
-            mostrandoTurno = false
         }
     }
 
