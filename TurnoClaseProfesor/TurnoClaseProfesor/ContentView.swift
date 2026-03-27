@@ -305,7 +305,8 @@ private struct MenuAccionesAula: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             }
-            .padding(.vertical, 16)
+            .padding(.top, 32)
+            .padding(.bottom, 24)
             .padding(.horizontal, 20)
 
             Divider()
