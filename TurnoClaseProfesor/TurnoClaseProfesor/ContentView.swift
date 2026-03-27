@@ -290,7 +290,7 @@ private struct MenuAccionesAula: View {
     }
 
     var subtitulo: String {
-        guard vm.codigoAula != "?" else { return "No hay conexión de red".localized() }
+        guard vm.codigoAula != "?" else { return "Error de conexión".localized() }
         return String(format: "Aula %@".localized(), vm.codigoAula)
     }
 
@@ -424,13 +424,25 @@ private struct PantallaPrincipal: View {
                         .foregroundColor(.black)
                         .opacity(0.025)
 
-                    Text(vm.nombreAlumno)
-                        .font(.system(size: 51))
-                        .minimumScaleFactor(0.2)
-                        .lineLimit(1)
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 16)
-                        .frame(maxWidth: tamanyoCirculoPrincipal - 32)
+                    Group {
+                        if vm.cargando {
+                            AnimacionPuntos(color: .black, tamanyo: 10)
+                        } else if vm.errorRed {
+                            Text("No hay conexión de red".localized())
+                                .font(.system(size: 22))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 20)
+                        } else {
+                            Text(vm.nombreAlumno)
+                                .font(.system(size: 51))
+                                .minimumScaleFactor(0.2)
+                                .lineLimit(1)
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 16)
+                                .frame(maxWidth: tamanyoCirculoPrincipal - 32)
+                        }
+                    }
                 }
                 .frame(width: tamanyoCirculoPrincipal, height: tamanyoCirculoPrincipal)
                 .background(Circle().foregroundColor(.amarillo))
@@ -478,8 +490,10 @@ private struct PantallaPrincipal: View {
                     vm.feedbackTactilLigero()
                     vm.mostrarSiguiente(avanzarCola: true)
                 }
-                .opacity(opacidadBotonSiguiente)
+                .disabled(vm.errorRed)
+                .opacity(vm.errorRed ? 0.4 : opacidadBotonSiguiente)
                 ._onButtonGesture(pressing: { pressing in
+                    guard !vm.cargando, !vm.errorRed else { return }
                     withAnimation(.linear(duration: pressing ? 0.1 : 0.3)) {
                         opacidadBotonSiguiente = pressing ? 0.15 : 1.0
                     }
