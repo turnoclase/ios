@@ -11,3 +11,5 @@ VOLVER_A_EMPEZAR="Sakatu ⟳ txanda eskatzeko";
 ESPERA="Itxaron txanda eskatzeko...";
 MENSAJE_ERROR="Gela zenbakia egiaztatu,\nez dirudi zuzena.";
 MENSAJE_ERROR_RED="Sare konexiorik ez.\nSakatu ⟳ berriro saiatzeko";
+AULA="Ikasgela";
+NOMBRE="Izena";

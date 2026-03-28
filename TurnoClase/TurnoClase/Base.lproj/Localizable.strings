@@ -11,3 +11,5 @@ VOLVER_A_EMPEZAR="Press ⟳ to request a turn";
 ESPERA="Wait to request another turn...";
 MENSAJE_ERROR="Check classroom number,\nit doesn't seem to be correct.";
 MENSAJE_ERROR_RED="No network connection.\nPress ⟳ to retry";
+AULA="Classroom";
+NOMBRE="Name";

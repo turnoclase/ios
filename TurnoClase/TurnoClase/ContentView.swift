@@ -63,7 +63,7 @@ struct ContentView: View {
 
                     // Campos de texto
                     VStack(spacing: 3) {
-                        Text("AULA")
+                        Text(NSLocalizedString("AULA", comment: "").uppercased())
                             .font(.system(size: 17, weight: .regular))
                             .foregroundColor(.black)
                             .kerning(1)
@@ -87,7 +87,7 @@ struct ContentView: View {
                                 .fill(Color.white)
                         )
 
-                        Text("NOMBRE")
+                        Text(NSLocalizedString("NOMBRE", comment: "").uppercased())
                             .font(.system(size: 17, weight: .regular))
                             .foregroundColor(.black)
                             .kerning(1)
