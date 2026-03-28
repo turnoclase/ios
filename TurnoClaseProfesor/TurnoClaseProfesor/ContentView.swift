@@ -142,6 +142,54 @@ struct ContentView: View {
     }
 }
 
+// MARK: - Botones circulares de acción para iOS 26
+
+/// Botón circular con imagen de sistema, estilo iOS 26.
+@available(iOS 26, *)
+private struct BotonCircularAccion: View {
+    let sistemaImagen: String
+    let colorFondo: Color
+    let colorIcono: Color
+    let accion: () -> Void
+
+    var body: some View {
+        Button(action: accion) {
+            Image(systemName: sistemaImagen)
+                .foregroundColor(colorIcono)
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Cabecera con icono para iOS 26
+
+/// Cabecera estilo iOS 26: icono grande centrado + título debajo.
+@available(iOS 26, *)
+private struct CabeceraDialogo26: View {
+    let sistemaImagen: String
+    let colorIcono: Color
+    let titulo: String
+
+    var body: some View {
+        VStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(colorIcono.opacity(0.15))
+                    .frame(width: 72, height: 72)
+                Image(systemName: sistemaImagen)
+                    .font(.system(size: 34, weight: .medium))
+                    .foregroundColor(colorIcono)
+            }
+            Text(titulo)
+                .font(.title2.bold())
+                .multilineTextAlignment(.center)
+        }
+        .padding(.top, 24)
+        .padding(.bottom, 8)
+        .frame(maxWidth: .infinity)
+    }
+}
+
 // MARK: - Diálogo Conectar a otra aula
 
 struct DialogoConexion: View {
@@ -155,8 +203,73 @@ struct DialogoConexion: View {
     }
 
     var body: some View {
-        NavigationView {
+        if #available(iOS 26, *) {
+            DialogoConexion26(
+                textoCodigo: $textoCodigo,
+                textoPIN: $textoPIN,
+                onConectar: onConectar,
+                onCancelar: onCancelar
+            )
+        } else {
+            NavigationView {
+                Form {
+                    Section {
+                        TextField("Código de aula".localized(), text: $textoCodigo)
+                            .autocapitalization(.allCharacters)
+                            .autocorrectionDisabled(true)
+                            .keyboardType(.asciiCapable)
+                            .onChange(of: textoCodigo) { v in
+                                if v.count > 5 { textoCodigo = String(v.prefix(5)) }
+                            }
+                        TextField("PIN".localized(), text: $textoPIN)
+                            .keyboardType(.numberPad)
+                            .onChange(of: textoPIN) { v in
+                                if v.count > 4 { textoPIN = String(v.prefix(4)) }
+                            }
+                    }
+                }
+                .navigationTitle("Conectar a otra aula".localized())
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar".localized()) { onCancelar() }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Conectar".localized()) {
+                            onConectar(textoCodigo, textoPIN)
+                        }
+                        .disabled(!puedeConectar)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@available(iOS 26, *)
+private struct DialogoConexion26: View {
+    @Binding var textoCodigo: String
+    @Binding var textoPIN: String
+    let onConectar: (String, String) -> Void
+    let onCancelar: () -> Void
+
+    var puedeConectar: Bool {
+        textoCodigo.count >= 5 && textoPIN.count >= 4
+    }
+
+    var body: some View {
+        NavigationStack {
             Form {
+                Section {
+                    CabeceraDialogo26(
+                        sistemaImagen: "link.circle.fill",
+                        colorIcono: .azul,
+                        titulo: "Conectar a otra aula".localized()
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
+
                 Section {
                     TextField("Código de aula".localized(), text: $textoCodigo)
                         .autocapitalization(.allCharacters)
@@ -172,17 +285,25 @@ struct DialogoConexion: View {
                         }
                 }
             }
-            .navigationTitle("Conectar a otra aula".localized())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar".localized()) { onCancelar() }
+                    BotonCircularAccion(
+                        sistemaImagen: "xmark",
+                        colorFondo: Color(.systemGray5),
+                        colorIcono: .primary,
+                        accion: onCancelar
+                    )
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Conectar".localized()) {
-                        onConectar(textoCodigo, textoPIN)
-                    }
-                    .disabled(!puedeConectar)
+                    BotonCircularAccion(
+                        sistemaImagen: "checkmark",
+                        colorFondo: puedeConectar ? .azul : Color(.systemGray4),
+                        colorIcono: puedeConectar ? .white : Color(.systemGray2),
+                        accion: {
+                            if puedeConectar { onConectar(textoCodigo, textoPIN) }
+                        }
+                    )
                 }
             }
         }
@@ -202,8 +323,66 @@ struct DialogoEtiqueta: View {
     }
 
     var body: some View {
-        NavigationView {
+        if #available(iOS 26, *) {
+            DialogoEtiqueta26(
+                textoEtiqueta: $textoEtiqueta,
+                onGuardar: onGuardar,
+                onCancelar: onCancelar
+            )
+        } else {
+            NavigationView {
+                Form {
+                    Section {
+                        TextField("Etiqueta".localized(), text: $textoEtiqueta)
+                            .autocapitalization(.sentences)
+                            .keyboardType(.asciiCapable)
+                            .onChange(of: textoEtiqueta) { v in
+                                if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
+                            }
+                    }
+                }
+                .navigationTitle("Etiquetar aula".localized())
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar".localized()) { onCancelar() }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Guardar".localized()) {
+                            onGuardar(textoEtiqueta)
+                        }
+                        .disabled(!puedeGuardar)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@available(iOS 26, *)
+private struct DialogoEtiqueta26: View {
+    @Binding var textoEtiqueta: String
+    let onGuardar: (String) -> Void
+    let onCancelar: () -> Void
+
+    var puedeGuardar: Bool {
+        textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
+            || textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count == 0
+    }
+
+    var body: some View {
+        NavigationStack {
             Form {
+                Section {
+                    CabeceraDialogo26(
+                        sistemaImagen: "tag.fill",
+                        colorIcono: .azul,
+                        titulo: "Etiquetar aula".localized()
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
+
                 Section {
                     TextField("Etiqueta".localized(), text: $textoEtiqueta)
                         .autocapitalization(.sentences)
@@ -213,17 +392,25 @@ struct DialogoEtiqueta: View {
                         }
                 }
             }
-            .navigationTitle("Etiquetar aula".localized())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar".localized()) { onCancelar() }
+                    BotonCircularAccion(
+                        sistemaImagen: "xmark",
+                        colorFondo: Color(.systemGray5),
+                        colorIcono: .primary,
+                        accion: onCancelar
+                    )
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar".localized()) {
-                        onGuardar(textoEtiqueta)
-                    }
-                    .disabled(!puedeGuardar)
+                    BotonCircularAccion(
+                        sistemaImagen: "checkmark",
+                        colorFondo: puedeGuardar ? .azul : Color(.systemGray4),
+                        colorIcono: puedeGuardar ? .white : Color(.systemGray2),
+                        accion: {
+                            if puedeGuardar { onGuardar(textoEtiqueta) }
+                        }
+                    )
                 }
             }
         }
@@ -249,23 +436,95 @@ struct DialogoTiempoEspera: View {
     }
 
     var body: some View {
-        NavigationView {
-            Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
-                ForEach(tiempos, id: \.self) { t in
-                    Text("\(t)").tag(t)
+        if #available(iOS 26, *) {
+            DialogoTiempoEspera26(
+                tiempos: tiempos,
+                tiempoActual: tiempoActual,
+                onGuardar: onGuardar,
+                onCancelar: onCancelar
+            )
+        } else {
+            NavigationView {
+                Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
+                    ForEach(tiempos, id: \.self) { t in
+                        Text("\(t)").tag(t)
+                    }
+                }
+                .pickerStyle(.wheel)
+                .navigationTitle("Tiempo de espera (minutos)".localized())
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar".localized()) { onCancelar() }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Guardar".localized()) {
+                            onGuardar(seleccion)
+                        }
+                    }
                 }
             }
-            .pickerStyle(.wheel)
-            .navigationTitle("Tiempo de espera (minutos)".localized())
+        }
+    }
+}
+
+@available(iOS 26, *)
+private struct DialogoTiempoEspera26: View {
+    let tiempos: [Int]
+    let tiempoActual: Int
+    let onGuardar: (Int) -> Void
+    let onCancelar: () -> Void
+
+    @State private var seleccion: Int
+
+    init(tiempos: [Int], tiempoActual: Int, onGuardar: @escaping (Int) -> Void, onCancelar: @escaping () -> Void) {
+        self.tiempos = tiempos
+        self.tiempoActual = tiempoActual
+        self.onGuardar = onGuardar
+        self.onCancelar = onCancelar
+        _seleccion = State(initialValue: tiempoActual)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    CabeceraDialogo26(
+                        sistemaImagen: "timer",
+                        colorIcono: .azul,
+                        titulo: "Tiempo de espera (minutos)".localized()
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
+
+                Section {
+                    Picker("", selection: $seleccion) {
+                        ForEach(tiempos, id: \.self) { t in
+                            Text("\(t)").tag(t)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(height: 180)
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar".localized()) { onCancelar() }
+                    BotonCircularAccion(
+                        sistemaImagen: "xmark",
+                        colorFondo: Color(.systemGray5),
+                        colorIcono: .primary,
+                        accion: onCancelar
+                    )
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar".localized()) {
-                        onGuardar(seleccion)
-                    }
+                    BotonCircularAccion(
+                        sistemaImagen: "checkmark",
+                        colorFondo: .azul,
+                        colorIcono: .white,
+                        accion: { onGuardar(seleccion) }
+                    )
                 }
             }
         }
