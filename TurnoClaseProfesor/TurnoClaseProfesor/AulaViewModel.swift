@@ -65,6 +65,7 @@ class AulaViewModel: ObservableObject {
 
     @Published var cargando: Bool = true
     @Published var errorRed: Bool = false
+    @Published var reintentando: Bool = false
 
     /// Duración mínima (en segundos) que se muestra la animación de carga.
     var duracionMinimaCarga: Double = 1.0
@@ -511,14 +512,59 @@ class AulaViewModel: ObservableObject {
     // MARK: - Reintentar conexión
 
     func reintentar() {
-        errorRed = false
+        guard !reintentando else { return }
+        reintentando = true
+        // No tocamos errorRed aquí: el icono de recargar se mantiene hasta que
+        // conectarListener() confirme éxito y ponga errorRed = false.
         desconectarListeners()
-        let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
-        let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
-        if !codigoAulaConectada.isEmpty, !pinConectada.isEmpty {
-            buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
-        } else {
-            conectarAula(posicion: aulaActual)
+        iniciarCarga()
+
+        // Si ya tenemos uid, reconectamos directamente (el fallo fue sólo de red/Firestore)
+        if uid != nil {
+            let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
+            let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
+            if !codigoAulaConectada.isEmpty, !pinConectada.isEmpty {
+                buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
+            } else {
+                conectarAula(posicion: aulaActual)
+            }
+            reintentando = false
+            return
+        }
+
+        // Si uid es nil (AppCheck o Auth fallaron), repetimos el signIn completo
+        Auth.auth().signInAnonymously { [weak self] result, error in
+            guard let self = self else { return }
+            if let resultado = result {
+                Task { @MainActor in
+                    self.uid = resultado.user.uid
+
+                    let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
+                    if !uidAnterior.isEmpty && uidAnterior != self.uid {
+                        self.uid = uidAnterior
+                        log.info("Ya estaba registrado con UID: \(uidAnterior)")
+                    } else {
+                        UserDefaults.standard.set(self.uid, forKey: "uidAnterior")
+                    }
+
+                    let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
+                    let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
+                    if !codigoAulaConectada.isEmpty && !pinConectada.isEmpty {
+                        self.buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
+                    } else {
+                        self.conectarAula(posicion: self.aulaActual)
+                    }
+                    self.reintentando = false
+                }
+            } else {
+                Task { @MainActor in
+                    log.error("Error al reintentar sign-in: \(error?.localizedDescription ?? "desconocido")")
+                    self.terminarCarga()
+                    self.reintentando = false
+                    // errorRed ya era true, no hace falta cambiarlo
+                    self.actualizarAulaUI(codigo: "?", enCola: 0)
+                }
+            }
         }
     }
 
