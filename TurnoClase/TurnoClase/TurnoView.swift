@@ -51,7 +51,7 @@ struct TurnoView: View {
                             AnimacionPuntos(color: .black, tamanyo: 10)
                         } else if vm.mostrarError {
                             // Error
-                            Text(NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                            Text(mensajeCentro)
                                 .font(.system(size: 22))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.black)
@@ -108,6 +108,19 @@ struct TurnoView: View {
                     ) {}
                         .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
                         .accessibilityIdentifier("botonActualizar")
+                } else if vm.errorRed {
+                    // Error de red: botón de recargar para reintentar conexión
+                    BotónCircularIcono(
+                        imagen: .recargar,
+                        colorFondo: .azul,
+                        colorIcono: .white,
+                        tamanyo: tamanyoBoton
+                    ) {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        vm.reintentar()
+                    }
+                    .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
+                    .accessibilityIdentifier("botonActualizar")
                 } else {
                     BotónCircularIcono(
                         imagen: .recargar,
@@ -128,6 +141,14 @@ struct TurnoView: View {
     }
 
     // MARK: - Helpers
+
+    /// Texto del centro del círculo cuando hay error.
+    /// Si es error de red muestra el mensaje de red; si no, el genérico de aula no encontrada.
+    private var mensajeCentro: String {
+        vm.errorRed
+            ? NSLocalizedString("MENSAJE_ERROR_RED", comment: "")
+            : NSLocalizedString("MENSAJE_ERROR", comment: "")
+    }
 
     private var mensajeEstado: String {
         switch vm.estadoTurno {

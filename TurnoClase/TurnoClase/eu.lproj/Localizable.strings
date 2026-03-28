@@ -9,4 +9,5 @@
 ES_TU_TURNO="Zure txanda da!";
 VOLVER_A_EMPEZAR="Sakatu ⟳ txanda eskatzeko";
 ESPERA="Itxaron txanda eskatzeko...";
-MENSAJE_ERROR="Gela zenbakia edo\nsare konexioa egiaztatu";
+MENSAJE_ERROR="Gela zenbakia egiaztatu,\nez dirudi zuzena.";
+MENSAJE_ERROR_RED="Sare konexiorik ez.\nSakatu ⟳ berriro saiatzeko";

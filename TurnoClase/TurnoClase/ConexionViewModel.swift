@@ -77,6 +77,10 @@ class ConexionViewModel: ObservableObject {
     @Published var mostrarError: Bool = false
     @Published var cargando: Bool = true
 
+    /// true cuando el fallo es de red/auth (se muestra el botón de recargar).
+    /// false cuando el fallo es por aula no encontrada (solo se muestra el mensaje de error).
+    @Published var errorRed: Bool = false
+
     /// Duración mínima (en segundos) que se muestra la animación de carga.
     var duracionMinimaCarga: Double = 1.0
 
@@ -167,6 +171,7 @@ class ConexionViewModel: ObservableObject {
         encolando = false
         iniciarCarga()
         mostrarError = false
+        errorRed = false
         estadoTurno = .enCola(posicion: 0)
         reiniciarCronometro()
 
@@ -182,7 +187,8 @@ class ConexionViewModel: ObservableObject {
                 mostrandoTurno = true
             } catch {
                 log.error("Error de inicio de sesión: \(error.localizedDescription)")
-                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                errorRed = true
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
                 mostrandoTurno = true
                 actualizarUI()
             }
@@ -219,12 +225,14 @@ class ConexionViewModel: ObservableObject {
                     conectarListenerAula(doc)
                 } else {
                     log.error("Aula no encontrada")
+                    errorRed = false
                     estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
                     actualizarUI()
                 }
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
-                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                errorRed = true
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
                 actualizarUI()
             }
         }
@@ -292,7 +300,8 @@ class ConexionViewModel: ObservableObject {
                 procesarCola(resultados)
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
-                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                errorRed = true
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
                 actualizarUI()
             }
         }
@@ -421,10 +430,41 @@ class ConexionViewModel: ObservableObject {
             mostrarCronometro = false
             mostrarBotonActualizar = false
             mostrarError = false
+            errorRed = false
         }
     }
 
     // MARK: - Botones de la pantalla de turno
+
+    /// Reintenta la conexión cuando hubo un error de red/auth.
+    /// Repite el sign-in anónimo y vuelve a encolar al alumno.
+    func reintentar() {
+        log.info("Reintentando conexión...")
+        errorRed = false
+        mostrarError = false
+        iniciarCarga()
+        desconectarListeners()
+
+        let codigo = codigoAulaActual
+        let nombre = nombreEfectivo
+
+        Task {
+            do {
+                let resultado = try await withTimeout(segundos: 10) {
+                    try await Auth.auth().signInAnonymously()
+                }
+                uid = resultado.user.uid
+                log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
+                actualizarAlumno(nombre: nombre)
+                encolarAlumno(codigo: codigo)
+            } catch {
+                log.error("Error de inicio de sesión al reintentar: \(error.localizedDescription)")
+                errorRed = true
+                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
+                actualizarUI()
+            }
+        }
+    }
 
     func cancelar() {
         log.info("Cancelando...")

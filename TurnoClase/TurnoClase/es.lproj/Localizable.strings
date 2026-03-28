@@ -9,4 +9,5 @@
 ES_TU_TURNO="¡Es tu turno!";
 VOLVER_A_EMPEZAR="Pulsa ⟳ para pedir turno";
 ESPERA="Espera para pedir turno...";
-MENSAJE_ERROR="Verifica el número de aula\no la conexión de red";
+MENSAJE_ERROR="Verifica el número de aula,\nno parece correcto.";
+MENSAJE_ERROR_RED="Sin conexión de red.\nPulsa ⟳ para reintentar";
