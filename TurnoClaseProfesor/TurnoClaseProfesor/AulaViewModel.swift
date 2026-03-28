@@ -43,6 +43,15 @@ private func withTimeout<T: Sendable>(segundos: Double, operacion: @escaping @Se
     }
 }
 
+// MARK: - Modelo de alumno en cola
+
+struct AlumnoCola: Identifiable {
+    let id: String // ID del documento en la subcolección "cola"
+    let alumnoId: String // ID del documento en "alumnos"
+    let nombre: String
+    let timestamp: Timestamp?
+}
+
 @MainActor
 class AulaViewModel: ObservableObject {
     // MARK: - Estado publicado
@@ -50,6 +59,7 @@ class AulaViewModel: ObservableObject {
     @Published var codigoAula: String = "..."
     @Published var enCola: Int = 0
     @Published var nombreAlumno: String = ""
+    @Published var alumnosEnCola: [AlumnoCola] = []
     @Published var numAulas: Int = 0 {
         didSet {
             actualizarPageControl()
@@ -326,6 +336,8 @@ class AulaViewModel: ObservableObject {
                                                 < ($1.data()["timestamp"] as? Timestamp)?.seconds ?? 0
                                             }
                                         self.actualizarContador(docs.count)
+                                        // Actualizar la lista de alumnos en cola
+                                        await self.actualizarListaAlumnosEnCola(docs: docs)
                                         if !self.avanzandoCola {
                                             await self.mostrarSiguienteDesdeSnapshot(docs: docs)
                                             self.feedbackTactilNotificacion()
@@ -379,6 +391,39 @@ class AulaViewModel: ObservableObject {
         } catch {
             log.error("Error al obtener nombre de alumno: \(error.localizedDescription)")
             nombreAlumno = "?"
+        }
+    }
+
+    // Construye la lista de alumnos en cola resolviendo los nombres desde Firestore.
+    private func actualizarListaAlumnosEnCola(docs: [QueryDocumentSnapshot]) async {
+        var lista: [AlumnoCola] = []
+        for doc in docs {
+            guard let alumnoId = doc.data()["alumno"] as? String else { continue }
+            let ts = doc.data()["timestamp"] as? Timestamp
+            var nombre = "?"
+            do {
+                let alumnoDoc = try await db.collection("alumnos").document(alumnoId).getDocument()
+                if alumnoDoc.exists, let data = alumnoDoc.data() {
+                    nombre = data["nombre"] as? String ?? "?"
+                }
+            } catch {
+                log.error("Error al obtener nombre de alumno: \(error.localizedDescription)")
+            }
+            lista.append(AlumnoCola(id: doc.documentID, alumnoId: alumnoId, nombre: nombre, timestamp: ts))
+        }
+        alumnosEnCola = lista
+    }
+
+    // Elimina un alumno de la cola sin darlo por atendido.
+    // El alumno podrá pedir turno de nuevo inmediatamente.
+    func eliminarAlumnoDeCola(_ alumno: AlumnoCola) {
+        Task {
+            do {
+                try await refAula?.collection("cola").document(alumno.id).delete()
+                log.info("Alumno \(alumno.nombre) eliminado de la cola")
+            } catch {
+                log.error("Error al eliminar alumno de la cola: \(error.localizedDescription)")
+            }
         }
     }
 

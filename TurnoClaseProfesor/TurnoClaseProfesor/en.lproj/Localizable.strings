@@ -40,3 +40,7 @@
 "Etiquetar aula" = "Set classroom label";
 "Introduce la nueva etiqueta." = "Insert the new label.";
 "Etiqueta" = "Label";
+
+"Cerrar" = "Close";
+"Cola de espera" = "Waiting queue";
+"La cola está vacía" = "The queue is empty";

@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   TurnoClaseProfesor
 
@@ -40,3 +40,7 @@
 "Etiquetar aula" = "Gela etiketatu";
 "Introduce la nueva etiqueta." = "Sartu etiketa berria.";
 "Etiqueta" = "Etiketa";
+
+"Cerrar" = "Itxi";
+"Cola de espera" = "Itxaroteko lerroa";
+"La cola está vacía" = "Lerroa hutsik dago";

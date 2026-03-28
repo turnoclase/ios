@@ -31,6 +31,7 @@ struct ContentView: View {
     @State private var mostrarDialogoEtiqueta = false
     @State private var mostrarDialogoTiempo = false
     @State private var mostrarDialogoError = false
+    @State private var mostrarListaCola = false
 
     // Campos de texto de los diálogos
     @State private var textoCodigo: String = ""
@@ -45,7 +46,8 @@ struct ContentView: View {
         PantallaPrincipal(
             vm: vm,
             opacidadBotonSiguiente: $opacidadBotonSiguiente,
-            onMostrarMenu: { mostrarMenuAcciones = true }
+            onMostrarMenu: { mostrarMenuAcciones = true },
+            onMostrarCola: { mostrarListaCola = true }
         )
         .onAppear { vm.iniciar() }
 
@@ -138,6 +140,12 @@ struct ContentView: View {
                 },
                 onCancelar: { mostrarDialogoTiempo = false }
             )
+        }
+
+        // MARK: - Lista de alumnos en cola
+
+        .sheet(isPresented: $mostrarListaCola) {
+            ListaColaAlumnos(vm: vm, onCerrar: { mostrarListaCola = false })
         }
     }
 }
@@ -710,6 +718,7 @@ private struct PantallaPrincipal: View {
     @ObservedObject var vm: AulaViewModel
     @Binding var opacidadBotonSiguiente: Double
     let onMostrarMenu: () -> Void
+    let onMostrarCola: () -> Void
 
     var body: some View {
         GeometryReader { geo in
@@ -784,7 +793,8 @@ private struct PantallaPrincipal: View {
                     colorTexto: .white,
                     tamanyo: tamanyoBoton
                 ) {
-                    vm.simularBotonEnCola()
+                    vm.feedbackTactilLigero()
+                    onMostrarCola()
                 }
                 .position(posicionEnBorde(angulo: 30, centroX: centroX, centroY: centroY, radio: radio))
                 .accessibilityIdentifier("botonEnCola")
@@ -836,6 +846,130 @@ private struct PantallaPrincipal: View {
                 }
                 .frame(width: 243)
                 .position(x: centroX, y: centroY + tamanyoCirculoPrincipal / 2 + 40)
+            }
+        }
+    }
+}
+
+// MARK: - Lista de alumnos en cola
+
+struct ListaColaAlumnos: View {
+    @ObservedObject var vm: AulaViewModel
+    let onCerrar: () -> Void
+
+    var body: some View {
+        if #available(iOS 26, *) {
+            ListaColaAlumnos26(vm: vm, onCerrar: onCerrar)
+        } else {
+            ListaColaAlumnosLegacy(vm: vm, onCerrar: onCerrar)
+        }
+    }
+}
+
+private struct ListaColaAlumnosLegacy: View {
+    @ObservedObject var vm: AulaViewModel
+    let onCerrar: () -> Void
+
+    var body: some View {
+        NavigationView {
+            Group {
+                if vm.alumnosEnCola.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "person.slash")
+                            .font(.system(size: 48))
+                            .foregroundColor(.secondary)
+                        Text("La cola está vacía".localized())
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List {
+                        ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
+                            HStack(spacing: 12) {
+                                Text("\(index + 1)")
+                                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .frame(width: 32, height: 32)
+                                    .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
+                                Text(alumno.nombre)
+                                    .font(.body)
+                            }
+                        }
+                        .onDelete { offsets in
+                            for i in offsets {
+                                vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Cola de espera".localized())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cerrar".localized()) { onCerrar() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if !vm.alumnosEnCola.isEmpty {
+                        EditButton()
+                    }
+                }
+            }
+        }
+    }
+}
+
+@available(iOS 26, *)
+private struct ListaColaAlumnos26: View {
+    @ObservedObject var vm: AulaViewModel
+    let onCerrar: () -> Void
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if vm.alumnosEnCola.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "person.slash")
+                            .font(.system(size: 48))
+                            .foregroundColor(.secondary)
+                        Text("La cola está vacía".localized())
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List {
+                        ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
+                            HStack(spacing: 12) {
+                                Text("\(index + 1)")
+                                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .frame(width: 32, height: 32)
+                                    .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
+                                Text(alumno.nombre)
+                                    .font(.body)
+                            }
+                        }
+                        .onDelete { offsets in
+                            for i in offsets {
+                                vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Cola de espera".localized())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    BotonCircularAccion(sistemaImagen: "xmark", accion: onCerrar)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if !vm.alumnosEnCola.isEmpty {
+                        EditButton()
+                    }
+                }
             }
         }
     }
