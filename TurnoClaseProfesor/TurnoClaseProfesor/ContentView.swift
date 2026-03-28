@@ -229,24 +229,26 @@ private struct DialogoConexionLegacy: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    TextField("Código de aula".localized(), text: $textoCodigo)
-                        .autocapitalization(.allCharacters)
-                        .autocorrectionDisabled(true)
-                        .keyboardType(.asciiCapable)
-                        .onChange(of: textoCodigo) { v in
-                            if v.count > 5 { textoCodigo = String(v.prefix(5)) }
-                        }
-                    TextField("PIN".localized(), text: $textoPIN)
-                        .keyboardType(.numberPad)
-                        .onChange(of: textoPIN) { v in
-                            if v.count > 4 { textoPIN = String(v.prefix(4)) }
-                        }
+            VStack {
+                Text("Conectar a otra aula".localized())
+                    .font(.headline)
+                Form {
+                    Section {
+                        TextField("Código de aula".localized(), text: $textoCodigo)
+                            .autocapitalization(.allCharacters)
+                            .autocorrectionDisabled(true)
+                            .keyboardType(.asciiCapable)
+                            .onChange(of: textoCodigo) { v in
+                                if v.count > 5 { textoCodigo = String(v.prefix(5)) }
+                            }
+                        TextField("PIN".localized(), text: $textoPIN)
+                            .keyboardType(.numberPad)
+                            .onChange(of: textoPIN) { v in
+                                if v.count > 4 { textoPIN = String(v.prefix(4)) }
+                            }
+                    }
                 }
             }
-            .navigationTitle("Conectar a otra aula".localized())
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar".localized()) { onCancelar() }
@@ -362,18 +364,20 @@ private struct DialogoEtiquetaLegacy: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    TextField("Etiqueta".localized(), text: $textoEtiqueta)
-                        .autocapitalization(.sentences)
-                        .keyboardType(.asciiCapable)
-                        .onChange(of: textoEtiqueta) { v in
-                            if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
-                        }
+            VStack {
+                Text("Etiquetar aula".localized())
+                    .font(.headline)
+                Form {
+                    Section {
+                        TextField("Etiqueta".localized(), text: $textoEtiqueta)
+                            .autocapitalization(.sentences)
+                            .keyboardType(.asciiCapable)
+                            .onChange(of: textoEtiqueta) { v in
+                                if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
+                            }
+                    }
                 }
             }
-            .navigationTitle("Etiquetar aula".localized())
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar".localized()) { onCancelar() }
@@ -492,14 +496,18 @@ private struct DialogoTiempoEsperaLegacy: View {
 
     var body: some View {
         NavigationView {
-            Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
-                ForEach(tiempos, id: \.self) { t in
-                    Text("\(t)").tag(t)
+            VStack {
+                Text("Tiempo de espera (minutos)".localized())
+                    .font(.headline)
+                Form {
+                    Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
+                        ForEach(tiempos, id: \.self) { t in
+                            Text("\(t)").tag(t)
+                        }
+                    }
+                    .pickerStyle(.wheel)
                 }
             }
-            .pickerStyle(.wheel)
-            .navigationTitle("Tiempo de espera (minutos)".localized())
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar".localized()) { onCancelar() }
