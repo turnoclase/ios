@@ -282,7 +282,7 @@ private struct DialogoConexion26: View {
             Form {
                 Section {
                     CabeceraDialogo26(
-                        sistemaImagen: "link.circle.fill",
+                        sistemaImagen: "link.circle",
                         colorIcono: .azul,
                         titulo: "Conectar a otra aula".localized()
                     )
@@ -411,7 +411,7 @@ private struct DialogoEtiqueta26: View {
             Form {
                 Section {
                     CabeceraDialogo26(
-                        sistemaImagen: "tag.fill",
+                        sistemaImagen: "tag",
                         colorIcono: .azul,
                         titulo: "Etiquetar aula".localized()
                     )
