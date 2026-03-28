@@ -100,7 +100,7 @@ struct ContentView: View {
                                 } label: {
                                     Image(systemName: "line.3.horizontal.decrease.circle")
                                         .font(.system(size: 20))
-                                        .foregroundColor(.secondary.opacity(0.7))
+                                        .foregroundColor(.gray.opacity(0.7))
                                 }
                                 .padding(.trailing, 8)
                             }
