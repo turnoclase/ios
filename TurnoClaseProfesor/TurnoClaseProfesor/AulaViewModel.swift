@@ -216,21 +216,9 @@ class AulaViewModel: ObservableObject {
         mostrarIndicador = true
         Task {
             do {
-                let result = try await functions.httpsCallable("nuevoCodigo").call(["keepalive": false])
-                if let codigo = (result.data as? [String: Any])?["codigo"] as? String {
-                    log.info("Nuevo código de aula: \(codigo)")
-                    let datos: [String: Any] = [
-                        "codigo": codigo,
-                        "timestamp": FieldValue.serverTimestamp(),
-                        "pin": String(format: "%04d", Int.random(in: 0...9999)),
-                        "espera": 5,
-                    ]
-                    let ref = try await refMisAulas?.addDocument(data: datos)
-                    refAula = ref
-                    log.info("Aula creada")
-                    numAulas += 1
-                    conectarListener()
-                }
+                let ref = try await crearNuevaAula()
+                refAula = ref
+                conectarListener()
             } catch {
                 log.error("Error al crear el aula: \(error.localizedDescription)")
                 cargando = false
@@ -244,23 +232,32 @@ class AulaViewModel: ObservableObject {
         mostrarIndicador = true
         Task {
             do {
-                let result = try await functions.httpsCallable("nuevoCodigo").call(["keepalive": false])
-                if let codigo = (result.data as? [String: Any])?["codigo"] as? String {
-                    log.info("Nuevo código de aula: \(codigo)")
-                    let datos: [String: Any] = [
-                        "codigo": codigo,
-                        "timestamp": FieldValue.serverTimestamp(),
-                        "pin": String(format: "%04d", Int.random(in: 0...9999)),
-                        "espera": 5,
-                    ]
-                    try await refMisAulas?.addDocument(data: datos)
-                    log.info("Aula creada")
-                    numAulas += 1
-                }
+                _ = try await crearNuevaAula()
             } catch {
                 log.error("Error al crear el aula: \(error.localizedDescription)")
             }
         }
+    }
+
+    @discardableResult
+    private func crearNuevaAula() async throws -> DocumentReference? {
+        let result = try await functions.httpsCallable("nuevoCodigo").call(["keepalive": false])
+        guard let codigo = (result.data as? [String: Any])?["codigo"] as? String else { return nil }
+        log.info("Nuevo código de aula: \(codigo)")
+
+        let datos: [String: Any] = [
+            "codigo": codigo,
+            "timestamp": FieldValue.serverTimestamp(),
+            "pin": String(format: "%04d", Int.random(in: 0 ... 9999)),
+            "espera": 5,
+        ]
+
+        let ref = try await refMisAulas?.addDocument(data: datos)
+        log.info("Aula creada")
+
+        numAulas += 1
+
+        return ref
     }
 
     // MARK: - Listeners
