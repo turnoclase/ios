@@ -171,7 +171,7 @@ private struct FilaAulaLegacy: View {
             Text(aula.codigo)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundColor(.black)
-                .frame(width: 56, height: 32)
+                .frame(width: 72, height: 32)
                 .background(Capsule().foregroundColor(.gris))
                 .onTapGesture {
                     guard editMode?.wrappedValue == .inactive else { return }
@@ -330,7 +330,7 @@ private struct FilaAula26: View {
             Text(aula.codigo)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundColor(.black)
-                .frame(width: 56, height: 32)
+                .frame(width: 72, height: 32)
                 .background(Capsule().foregroundColor(.gris))
                 .onTapGesture {
                     guard editMode?.wrappedValue == .inactive else { return }
