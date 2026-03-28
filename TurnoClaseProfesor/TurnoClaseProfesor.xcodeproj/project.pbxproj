@@ -583,7 +583,7 @@
 				CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_DEBUG_DYLIB = YES;
@@ -599,7 +599,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
 				PRODUCT_NAME = "TurnoClase Teacher";
@@ -621,7 +621,7 @@
 				CODE_SIGN_ENTITLEMENTS = TurnoClaseProfesor/TurnoClaseProfesor.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_DEBUG_DYLIB = YES;
@@ -637,7 +637,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaureguialzo.TurnoClaseProfesor;
 				PRODUCT_NAME = "TurnoClase Teacher";
