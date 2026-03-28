@@ -439,7 +439,9 @@ class ConexionViewModel: ObservableObject {
     // MARK: - Botones de la pantalla de turno
 
     /// Reintenta la conexión cuando hubo un error de red/auth.
-    /// Repite el sign-in anónimo y vuelve a encolar al alumno.
+    /// - Si `uid` ya existe el fallo fue solo de red/Firestore: reconecta directamente.
+    /// - Si `uid` es nil (App Check o Auth fallaron): repite el signIn anónimo para
+    ///   obtener un nuevo token antes de reconectar.
     func reintentar() {
         log.info("Reintentando conexión...")
         // No reseteamos errorRed aquí: el botón de recargar permanece visible
@@ -452,20 +454,26 @@ class ConexionViewModel: ObservableObject {
         let codigo = codigoAulaActual
         let nombre = nombreEfectivo
 
-        Task {
-            do {
-                let resultado = try await withTimeout(segundos: 10) {
-                    try await Auth.auth().signInAnonymously()
+        // Si ya tenemos uid, el fallo fue solo de red/Firestore: reconectamos directamente.
+        if uid != nil {
+            encolarAlumno(codigo: codigo)
+            return
+        }
+
+        // Si uid es nil, App Check o Auth fallaron: hay que repetir el signIn completo.
+        Auth.auth().signInAnonymously { [weak self] result, error in
+            guard let self = self else { return }
+            Task { @MainActor in
+                if let resultado = result {
+                    self.uid = resultado.user.uid
+                    log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
+                    self.actualizarAlumno(nombre: nombre)
+                    self.encolarAlumno(codigo: codigo)
+                } else {
+                    log.error("Error al reintentar sign-in: \(error?.localizedDescription ?? "desconocido")")
+                    self.terminarCarga()
+                    // errorRed ya era true, no hace falta cambiarlo
                 }
-                uid = resultado.user.uid
-                log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
-                actualizarAlumno(nombre: nombre)
-                encolarAlumno(codigo: codigo)
-            } catch {
-                log.error("Error de inicio de sesión al reintentar: \(error.localizedDescription)")
-                errorRed = true
-                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
-                actualizarUI()
             }
         }
     }
