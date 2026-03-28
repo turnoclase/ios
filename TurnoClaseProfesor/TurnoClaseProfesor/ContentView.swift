@@ -903,7 +903,7 @@ private struct ListaColaAlumnosLegacy: View {
                                 HStack(spacing: 12) {
                                     Text("\(index + 1)")
                                         .font(.system(size: 17, weight: .bold, design: .rounded))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(index == 0 ? .white : .black)
                                         .frame(width: 32, height: 32)
                                         .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
                                     Text(alumno.nombre)
@@ -973,7 +973,7 @@ private struct ListaColaAlumnos26: View {
                                 HStack(spacing: 12) {
                                     Text("\(index + 1)")
                                         .font(.system(size: 17, weight: .bold, design: .rounded))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(index == 0 ? .white : .black)
                                         .frame(width: 32, height: 32)
                                         .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
                                     Text(alumno.nombre)
