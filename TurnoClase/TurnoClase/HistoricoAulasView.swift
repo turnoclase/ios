@@ -51,10 +51,10 @@ private struct HistoricoAulasViewLegacy: View {
     let onSeleccionar: (AulaHistorico) -> Void
     let onCerrar: () -> Void
 
-    // Estado para el diálogo de etiqueta nativo
     @State private var aulaParaEtiquetar: AulaHistorico? = nil
     @State private var mostrandoAlerta: Bool = false
     @State private var textoEtiqueta: String = ""
+    @State private var modoEdicion: EditMode = .inactive
 
     var body: some View {
         NavigationView {
@@ -72,11 +72,17 @@ private struct HistoricoAulasViewLegacy: View {
                     Button(NSLocalizedString("CERRAR", comment: "")) { onCerrar() }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if !historico.isEmpty { EditButton() }
+                    if !historico.isEmpty {
+                        Button(modoEdicion == .active
+                            ? NSLocalizedString("LISTO", comment: "")
+                            : NSLocalizedString("EDITAR", comment: ""))
+                        {
+                            withAnimation { modoEdicion = modoEdicion == .active ? .inactive : .active }
+                        }
+                    }
                 }
             }
         }
-        // Alerta nativa del sistema para editar la etiqueta
         .alert(NSLocalizedString("HISTORICO_ETIQUETA_TITULO", comment: ""), isPresented: $mostrandoAlerta) {
             TextField(NSLocalizedString("HISTORICO_ETIQUETA_PLACEHOLDER", comment: ""), text: $textoEtiqueta)
                 .autocorrectionDisabled()
@@ -113,48 +119,24 @@ private struct HistoricoAulasViewLegacy: View {
     private var listaAulas: some View {
         List {
             ForEach($historico) { $aula in
-                HStack(spacing: 12) {
-                    // Código de aula (círculo gris)
-                    Text(aula.codigo)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundColor(.black)
-                        .frame(width: 56, height: 32)
-                        .background(Capsule().foregroundColor(.gris))
-
-                    // Nombre / etiqueta
-                    VStack(alignment: .leading, spacing: 2) {
-                        if !aula.etiqueta.isEmpty {
-                            Text(aula.etiqueta)
-                                .font(.body)
-                        } else {
-                            Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                                .italic()
-                        }
+                FilaAulaLegacy(
+                    aula: aula,
+                    onSeleccionar: {
+                        onSeleccionar(aula)
+                        onCerrar()
+                    },
+                    onEtiquetar: {
+                        aulaParaEtiquetar = aula
+                        textoEtiqueta = aula.etiqueta
+                        mostrandoAlerta = true
                     }
-
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    onSeleccionar(aula)
-                    onCerrar()
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                )
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
                         eliminar(aula)
                     } label: {
                         Label(NSLocalizedString("ELIMINAR", comment: ""), systemImage: "trash")
                     }
-                    Button {
-                        aulaParaEtiquetar = aula
-                        textoEtiqueta = aula.etiqueta
-                        mostrandoAlerta = true
-                    } label: {
-                        Label(NSLocalizedString("HISTORICO_ETIQUETAR", comment: ""), systemImage: "tag")
-                    }
-                    .tint(.azul)
                 }
             }
             .onDelete { offsets in
@@ -167,11 +149,53 @@ private struct HistoricoAulasViewLegacy: View {
                 HistoricoAulas.guardar(historico)
             }
         }
+        .environment(\.editMode, $modoEdicion)
     }
 
     private func eliminar(_ aula: AulaHistorico) {
         historico.removeAll { $0.id == aula.id }
         HistoricoAulas.guardar(historico)
+    }
+}
+
+// Fila que lee editMode directamente del entorno de la List
+private struct FilaAulaLegacy: View {
+    let aula: AulaHistorico
+    let onSeleccionar: () -> Void
+    let onEtiquetar: () -> Void
+
+    @Environment(\.editMode) private var editMode
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(aula.codigo)
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundColor(.black)
+                .frame(width: 56, height: 32)
+                .background(Capsule().foregroundColor(.gris))
+                .onTapGesture {
+                    guard editMode?.wrappedValue == .inactive else { return }
+                    onSeleccionar()
+                }
+
+            Group {
+                if !aula.etiqueta.isEmpty {
+                    Text(aula.etiqueta)
+                        .font(.body)
+                } else {
+                    Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .italic()
+                }
+            }
+            .onTapGesture {
+                guard editMode?.wrappedValue == .inactive else { return }
+                onEtiquetar()
+            }
+
+            Spacer()
+        }
     }
 }
 
@@ -186,6 +210,7 @@ private struct HistoricoAulasView26: View {
     @State private var aulaParaEtiquetar: AulaHistorico? = nil
     @State private var mostrandoAlerta: Bool = false
     @State private var textoEtiqueta: String = ""
+    @State private var modoEdicion: EditMode = .inactive
 
     var body: some View {
         NavigationStack {
@@ -206,7 +231,14 @@ private struct HistoricoAulasView26: View {
                     .buttonStyle(.plain)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if !historico.isEmpty { EditButton() }
+                    if !historico.isEmpty {
+                        Button(modoEdicion == .active
+                            ? NSLocalizedString("LISTO", comment: "")
+                            : NSLocalizedString("EDITAR", comment: ""))
+                        {
+                            withAnimation { modoEdicion = modoEdicion == .active ? .inactive : .active }
+                        }
+                    }
                 }
             }
         }
@@ -246,46 +278,24 @@ private struct HistoricoAulasView26: View {
     private var listaAulas: some View {
         List {
             ForEach($historico) { $aula in
-                HStack(spacing: 12) {
-                    Text(aula.codigo)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundColor(.black)
-                        .frame(width: 56, height: 32)
-                        .background(Capsule().foregroundColor(.gris))
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        if !aula.etiqueta.isEmpty {
-                            Text(aula.etiqueta)
-                                .font(.body)
-                        } else {
-                            Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                                .italic()
-                        }
+                FilaAula26(
+                    aula: aula,
+                    onSeleccionar: {
+                        onSeleccionar(aula)
+                        onCerrar()
+                    },
+                    onEtiquetar: {
+                        aulaParaEtiquetar = aula
+                        textoEtiqueta = aula.etiqueta
+                        mostrandoAlerta = true
                     }
-
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    onSeleccionar(aula)
-                    onCerrar()
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                )
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
                         eliminar(aula)
                     } label: {
                         Label(NSLocalizedString("ELIMINAR", comment: ""), systemImage: "trash")
                     }
-                    Button {
-                        aulaParaEtiquetar = aula
-                        textoEtiqueta = aula.etiqueta
-                        mostrandoAlerta = true
-                    } label: {
-                        Label(NSLocalizedString("HISTORICO_ETIQUETAR", comment: ""), systemImage: "tag")
-                    }
-                    .tint(.azul)
                 }
             }
             .onDelete { offsets in
@@ -298,10 +308,52 @@ private struct HistoricoAulasView26: View {
                 HistoricoAulas.guardar(historico)
             }
         }
+        .environment(\.editMode, $modoEdicion)
     }
 
     private func eliminar(_ aula: AulaHistorico) {
         historico.removeAll { $0.id == aula.id }
         HistoricoAulas.guardar(historico)
+    }
+}
+
+@available(iOS 26, *)
+private struct FilaAula26: View {
+    let aula: AulaHistorico
+    let onSeleccionar: () -> Void
+    let onEtiquetar: () -> Void
+
+    @Environment(\.editMode) private var editMode
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(aula.codigo)
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundColor(.black)
+                .frame(width: 56, height: 32)
+                .background(Capsule().foregroundColor(.gris))
+                .onTapGesture {
+                    guard editMode?.wrappedValue == .inactive else { return }
+                    onSeleccionar()
+                }
+
+            Group {
+                if !aula.etiqueta.isEmpty {
+                    Text(aula.etiqueta)
+                        .font(.body)
+                } else {
+                    Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .italic()
+                }
+            }
+            .onTapGesture {
+                guard editMode?.wrappedValue == .inactive else { return }
+                onEtiquetar()
+            }
+
+            Spacer()
+        }
     }
 }

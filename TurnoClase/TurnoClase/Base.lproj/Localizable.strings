@@ -26,3 +26,5 @@ CERRAR="Close";
 GUARDAR="Save";
 CANCELAR="Cancel";
 ELIMINAR="Delete";
+EDITAR="Edit";
+LISTO="Done";

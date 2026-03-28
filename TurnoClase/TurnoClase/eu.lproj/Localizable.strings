@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   TurnoClase
 
@@ -26,3 +26,5 @@ CERRAR="Itxi";
 GUARDAR="Gorde";
 CANCELAR="Utzi";
 ELIMINAR="Ezabatu";
+EDITAR="Editatu";
+LISTO="Eginda";
