@@ -20,6 +20,80 @@
 import SwiftUI
 import TurnoClaseShared
 
+// MARK: - Diálogo de etiqueta compatible con iOS 15+
+
+/// En iOS 15 el TextField dentro de .alert no se muestra; usamos una sheet propia.
+/// A partir de iOS 16 usamos el .alert nativo con TextField.
+private struct DialogoEtiquetaModifier: ViewModifier {
+    @Binding var activo: Bool
+    @Binding var texto: String
+    let onGuardar: () -> Void
+
+    func body(content: Content) -> some View {
+        if #available(iOS 16, *) {
+            content
+                .alert(NSLocalizedString("HISTORICO_ETIQUETA_TITULO", comment: ""), isPresented: $activo) {
+                    TextField(NSLocalizedString("HISTORICO_ETIQUETA_PLACEHOLDER", comment: ""), text: $texto)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.sentences)
+                        .onChange(of: texto) { nuevo in
+                            if nuevo.count > 20 { texto = String(nuevo.prefix(20)) }
+                        }
+                    Button(NSLocalizedString("GUARDAR", comment: "")) { onGuardar() }
+                    Button(NSLocalizedString("CANCELAR", comment: ""), role: .cancel) {}
+                } message: {
+                    Text(NSLocalizedString("HISTORICO_ETIQUETA_MENSAJE", comment: ""))
+                }
+        } else {
+            content
+                .sheet(isPresented: $activo) {
+                    EtiquetaSheet(texto: $texto, activo: $activo, onGuardar: onGuardar)
+                }
+        }
+    }
+}
+
+/// Sheet de fallback para iOS 15
+private struct EtiquetaSheet: View {
+    @Binding var texto: String
+    @Binding var activo: Bool
+    let onGuardar: () -> Void
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text(NSLocalizedString("HISTORICO_ETIQUETA_MENSAJE", comment: ""))) {
+                    TextField(NSLocalizedString("HISTORICO_ETIQUETA_PLACEHOLDER", comment: ""), text: $texto)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.sentences)
+                        .onChange(of: texto) { nuevo in
+                            if nuevo.count > 20 { texto = String(nuevo.prefix(20)) }
+                        }
+                }
+            }
+            .navigationTitle(NSLocalizedString("HISTORICO_ETIQUETA_TITULO", comment: ""))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(NSLocalizedString("CANCELAR", comment: "")) { activo = false }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(NSLocalizedString("GUARDAR", comment: "")) {
+                        onGuardar()
+                        activo = false
+                    }
+                }
+            }
+        }
+    }
+}
+
+private extension View {
+    func dialogoEtiqueta(activo: Binding<Bool>, texto: Binding<String>, onGuardar: @escaping () -> Void) -> some View {
+        modifier(DialogoEtiquetaModifier(activo: activo, texto: texto, onGuardar: onGuardar))
+    }
+}
+
 // MARK: - Envoltura que selecciona la versión adecuada
 
 struct HistoricoAulasView: View {
@@ -83,24 +157,13 @@ private struct HistoricoAulasViewLegacy: View {
                 }
             }
         }
-        .alert(NSLocalizedString("HISTORICO_ETIQUETA_TITULO", comment: ""), isPresented: $mostrandoAlerta) {
-            TextField(NSLocalizedString("HISTORICO_ETIQUETA_PLACEHOLDER", comment: ""), text: $textoEtiqueta)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.sentences)
-                .onChange(of: textoEtiqueta) { nuevo in
-                    if nuevo.count > 20 { textoEtiqueta = String(nuevo.prefix(20)) }
-                }
-            Button(NSLocalizedString("GUARDAR", comment: "")) {
-                if let aula = aulaParaEtiquetar,
-                   let index = historico.firstIndex(where: { $0.id == aula.id })
-                {
-                    historico[index].etiqueta = textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines)
-                    HistoricoAulas.guardar(historico)
-                }
+        .dialogoEtiqueta(activo: $mostrandoAlerta, texto: $textoEtiqueta) {
+            if let aula = aulaParaEtiquetar,
+               let index = historico.firstIndex(where: { $0.id == aula.id })
+            {
+                historico[index].etiqueta = textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines)
+                HistoricoAulas.guardar(historico)
             }
-            Button(NSLocalizedString("CANCELAR", comment: ""), role: .cancel) {}
-        } message: {
-            Text(NSLocalizedString("HISTORICO_ETIQUETA_MENSAJE", comment: ""))
         }
     }
 
@@ -242,24 +305,13 @@ private struct HistoricoAulasView26: View {
                 }
             }
         }
-        .alert(NSLocalizedString("HISTORICO_ETIQUETA_TITULO", comment: ""), isPresented: $mostrandoAlerta) {
-            TextField(NSLocalizedString("HISTORICO_ETIQUETA_PLACEHOLDER", comment: ""), text: $textoEtiqueta)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.sentences)
-                .onChange(of: textoEtiqueta) { nuevo in
-                    if nuevo.count > 20 { textoEtiqueta = String(nuevo.prefix(20)) }
-                }
-            Button(NSLocalizedString("GUARDAR", comment: "")) {
-                if let aula = aulaParaEtiquetar,
-                   let index = historico.firstIndex(where: { $0.id == aula.id })
-                {
-                    historico[index].etiqueta = textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines)
-                    HistoricoAulas.guardar(historico)
-                }
+        .dialogoEtiqueta(activo: $mostrandoAlerta, texto: $textoEtiqueta) {
+            if let aula = aulaParaEtiquetar,
+               let index = historico.firstIndex(where: { $0.id == aula.id })
+            {
+                historico[index].etiqueta = textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines)
+                HistoricoAulas.guardar(historico)
             }
-            Button(NSLocalizedString("CANCELAR", comment: ""), role: .cancel) {}
-        } message: {
-            Text(NSLocalizedString("HISTORICO_ETIQUETA_MENSAJE", comment: ""))
         }
     }
 
