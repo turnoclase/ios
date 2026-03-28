@@ -148,16 +148,16 @@ struct ContentView: View {
 @available(iOS 26, *)
 private struct BotonCircularAccion: View {
     let sistemaImagen: String
-    let colorFondo: Color
-    let colorIcono: Color
+    var activo: Bool = true
     let accion: () -> Void
 
     var body: some View {
         Button(action: accion) {
             Image(systemName: sistemaImagen)
-                .foregroundColor(colorIcono)
         }
         .buttonStyle(.plain)
+        .opacity(activo ? 1.0 : 0.4)
+        .disabled(!activo)
     }
 }
 
@@ -308,16 +308,13 @@ private struct DialogoConexion26: View {
                 ToolbarItem(placement: .cancellationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "xmark",
-                        colorFondo: Color(.systemGray5),
-                        colorIcono: .primary,
                         accion: onCancelar
                     )
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "checkmark",
-                        colorFondo: puedeConectar ? .azul : Color(.systemGray4),
-                        colorIcono: puedeConectar ? .white : Color(.systemGray2),
+                        activo: puedeConectar,
                         accion: {
                             if puedeConectar { onConectar(textoCodigo, textoPIN) }
                         }
@@ -431,16 +428,13 @@ private struct DialogoEtiqueta26: View {
                 ToolbarItem(placement: .cancellationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "xmark",
-                        colorFondo: Color(.systemGray5),
-                        colorIcono: .primary,
                         accion: onCancelar
                     )
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "checkmark",
-                        colorFondo: puedeGuardar ? .azul : Color(.systemGray4),
-                        colorIcono: puedeGuardar ? .white : Color(.systemGray2),
+                        activo: puedeGuardar,
                         accion: {
                             if puedeGuardar { onGuardar(textoEtiqueta) }
                         }
@@ -567,16 +561,12 @@ private struct DialogoTiempoEspera26: View {
                 ToolbarItem(placement: .cancellationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "xmark",
-                        colorFondo: Color(.systemGray5),
-                        colorIcono: .primary,
                         accion: onCancelar
                     )
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     BotonCircularAccion(
                         sistemaImagen: "checkmark",
-                        colorFondo: .azul,
-                        colorIcono: .white,
                         accion: { onGuardar(seleccion) }
                     )
                 }
