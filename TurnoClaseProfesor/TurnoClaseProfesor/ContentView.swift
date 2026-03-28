@@ -198,10 +198,6 @@ struct DialogoConexion: View {
     let onConectar: (String, String) -> Void
     let onCancelar: () -> Void
 
-    var puedeConectar: Bool {
-        textoCodigo.count >= 5 && textoPIN.count >= 4
-    }
-
     var body: some View {
         if #available(iOS 26, *) {
             DialogoConexion26(
@@ -211,35 +207,55 @@ struct DialogoConexion: View {
                 onCancelar: onCancelar
             )
         } else {
-            NavigationView {
-                Form {
-                    Section {
-                        TextField("Código de aula".localized(), text: $textoCodigo)
-                            .autocapitalization(.allCharacters)
-                            .autocorrectionDisabled(true)
-                            .keyboardType(.asciiCapable)
-                            .onChange(of: textoCodigo) { v in
-                                if v.count > 5 { textoCodigo = String(v.prefix(5)) }
-                            }
-                        TextField("PIN".localized(), text: $textoPIN)
-                            .keyboardType(.numberPad)
-                            .onChange(of: textoPIN) { v in
-                                if v.count > 4 { textoPIN = String(v.prefix(4)) }
-                            }
-                    }
-                }
-                .navigationTitle("Conectar a otra aula".localized())
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancelar".localized()) { onCancelar() }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Conectar".localized()) {
-                            onConectar(textoCodigo, textoPIN)
+            DialogoConexionLegacy(
+                textoCodigo: $textoCodigo,
+                textoPIN: $textoPIN,
+                onConectar: onConectar,
+                onCancelar: onCancelar
+            )
+        }
+    }
+}
+
+private struct DialogoConexionLegacy: View {
+    @Binding var textoCodigo: String
+    @Binding var textoPIN: String
+    let onConectar: (String, String) -> Void
+    let onCancelar: () -> Void
+
+    var puedeConectar: Bool {
+        textoCodigo.count >= 5 && textoPIN.count >= 4
+    }
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Código de aula".localized(), text: $textoCodigo)
+                        .autocapitalization(.allCharacters)
+                        .autocorrectionDisabled(true)
+                        .keyboardType(.asciiCapable)
+                        .onChange(of: textoCodigo) { v in
+                            if v.count > 5 { textoCodigo = String(v.prefix(5)) }
                         }
-                        .disabled(!puedeConectar)
+                    TextField("PIN".localized(), text: $textoPIN)
+                        .keyboardType(.numberPad)
+                        .onChange(of: textoPIN) { v in
+                            if v.count > 4 { textoPIN = String(v.prefix(4)) }
+                        }
+                }
+            }
+            .navigationTitle("Conectar a otra aula".localized())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancelar".localized()) { onCancelar() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Conectar".localized()) {
+                        onConectar(textoCodigo, textoPIN)
                     }
+                    .disabled(!puedeConectar)
                 }
             }
         }
@@ -317,11 +333,6 @@ struct DialogoEtiqueta: View {
     let onGuardar: (String) -> Void
     let onCancelar: () -> Void
 
-    var puedeGuardar: Bool {
-        textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
-            || textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count == 0
-    }
-
     var body: some View {
         if #available(iOS 26, *) {
             DialogoEtiqueta26(
@@ -330,29 +341,48 @@ struct DialogoEtiqueta: View {
                 onCancelar: onCancelar
             )
         } else {
-            NavigationView {
-                Form {
-                    Section {
-                        TextField("Etiqueta".localized(), text: $textoEtiqueta)
-                            .autocapitalization(.sentences)
-                            .keyboardType(.asciiCapable)
-                            .onChange(of: textoEtiqueta) { v in
-                                if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
-                            }
-                    }
-                }
-                .navigationTitle("Etiquetar aula".localized())
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancelar".localized()) { onCancelar() }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Guardar".localized()) {
-                            onGuardar(textoEtiqueta)
+            DialogoEtiquetaLegacy(
+                textoEtiqueta: $textoEtiqueta,
+                onGuardar: onGuardar,
+                onCancelar: onCancelar
+            )
+        }
+    }
+}
+
+private struct DialogoEtiquetaLegacy: View {
+    @Binding var textoEtiqueta: String
+    let onGuardar: (String) -> Void
+    let onCancelar: () -> Void
+
+    var puedeGuardar: Bool {
+        textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count >= 3
+            || textoEtiqueta.trimmingCharacters(in: .whitespacesAndNewlines).count == 0
+    }
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Etiqueta".localized(), text: $textoEtiqueta)
+                        .autocapitalization(.sentences)
+                        .keyboardType(.asciiCapable)
+                        .onChange(of: textoEtiqueta) { v in
+                            if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
                         }
-                        .disabled(!puedeGuardar)
+                }
+            }
+            .navigationTitle("Etiquetar aula".localized())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancelar".localized()) { onCancelar() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Guardar".localized()) {
+                        onGuardar(textoEtiqueta)
                     }
+                    .disabled(!puedeGuardar)
                 }
             }
         }
@@ -425,6 +455,31 @@ struct DialogoTiempoEspera: View {
     let onGuardar: (Int) -> Void
     let onCancelar: () -> Void
 
+    var body: some View {
+        if #available(iOS 26, *) {
+            DialogoTiempoEspera26(
+                tiempos: tiempos,
+                tiempoActual: tiempoActual,
+                onGuardar: onGuardar,
+                onCancelar: onCancelar
+            )
+        } else {
+            DialogoTiempoEsperaLegacy(
+                tiempos: tiempos,
+                tiempoActual: tiempoActual,
+                onGuardar: onGuardar,
+                onCancelar: onCancelar
+            )
+        }
+    }
+}
+
+private struct DialogoTiempoEsperaLegacy: View {
+    let tiempos: [Int]
+    let tiempoActual: Int
+    let onGuardar: (Int) -> Void
+    let onCancelar: () -> Void
+
     @State private var seleccion: Int
 
     init(tiempos: [Int], tiempoActual: Int, onGuardar: @escaping (Int) -> Void, onCancelar: @escaping () -> Void) {
@@ -436,31 +491,22 @@ struct DialogoTiempoEspera: View {
     }
 
     var body: some View {
-        if #available(iOS 26, *) {
-            DialogoTiempoEspera26(
-                tiempos: tiempos,
-                tiempoActual: tiempoActual,
-                onGuardar: onGuardar,
-                onCancelar: onCancelar
-            )
-        } else {
-            NavigationView {
-                Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
-                    ForEach(tiempos, id: \.self) { t in
-                        Text("\(t)").tag(t)
-                    }
+        NavigationView {
+            Picker("Tiempo de espera (minutos)".localized(), selection: $seleccion) {
+                ForEach(tiempos, id: \.self) { t in
+                    Text("\(t)").tag(t)
                 }
-                .pickerStyle(.wheel)
-                .navigationTitle("Tiempo de espera (minutos)".localized())
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancelar".localized()) { onCancelar() }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Guardar".localized()) {
-                            onGuardar(seleccion)
-                        }
+            }
+            .pickerStyle(.wheel)
+            .navigationTitle("Tiempo de espera (minutos)".localized())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancelar".localized()) { onCancelar() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Guardar".localized()) {
+                        onGuardar(seleccion)
                     }
                 }
             }
