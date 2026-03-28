@@ -222,6 +222,7 @@ class ConexionViewModel: ObservableObject {
                 }
                 if let doc = querySnapshot.documents.first {
                     log.info("Conectado a aula existente")
+                    errorRed = false
                     conectarListenerAula(doc)
                 } else {
                     log.error("Aula no encontrada")
@@ -250,6 +251,8 @@ class ConexionViewModel: ObservableObject {
                 {
                     self.refAula = documentSnapshot?.reference
                     self.segundosEspera = ((documentSnapshot?.data()?["espera"] as? Int) ?? 5) * 60
+                    // Conexión confirmada: ya no hay error de red
+                    self.errorRed = false
                     self.conectarListenerCola()
                 } else {
                     log.info("El aula ha desaparecido")
@@ -430,7 +433,6 @@ class ConexionViewModel: ObservableObject {
             mostrarCronometro = false
             mostrarBotonActualizar = false
             mostrarError = false
-            errorRed = false
         }
     }
 
@@ -440,7 +442,9 @@ class ConexionViewModel: ObservableObject {
     /// Repite el sign-in anónimo y vuelve a encolar al alumno.
     func reintentar() {
         log.info("Reintentando conexión...")
-        errorRed = false
+        // No reseteamos errorRed aquí: el botón de recargar permanece visible
+        // durante la carga para evitar el parpadeo. Se pondrá a false solo cuando
+        // la conexión se confirme como exitosa.
         mostrarError = false
         iniciarCarga()
         desconectarListeners()
