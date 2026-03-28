@@ -508,6 +508,20 @@ class AulaViewModel: ObservableObject {
         conectarAula(posicion: aulaActual)
     }
 
+    // MARK: - Reintentar conexión
+
+    func reintentar() {
+        errorRed = false
+        desconectarListeners()
+        let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
+        let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
+        if !codigoAulaConectada.isEmpty, !pinConectada.isEmpty {
+            buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
+        } else {
+            conectarAula(posicion: aulaActual)
+        }
+    }
+
     // MARK: - Borrar aula
 
     func borrarAulaReconectar(codigo: String) {

@@ -481,25 +481,39 @@ private struct PantallaPrincipal: View {
                 .accessibilityIdentifier("botonEnCola")
 
                 // Botón siguiente (azul, 150°)
-                BotónCircularIcono(
-                    imagen: .flecha,
-                    colorFondo: .azul,
-                    colorIcono: .white,
-                    tamanyo: tamanyoBoton
-                ) {
-                    vm.feedbackTactilLigero()
-                    vm.mostrarSiguiente(avanzarCola: true)
-                }
-                .disabled(vm.errorRed)
-                .opacity(vm.errorRed ? 0.4 : opacidadBotonSiguiente)
-                ._onButtonGesture(pressing: { pressing in
-                    guard !vm.cargando, !vm.errorRed else { return }
-                    withAnimation(.linear(duration: pressing ? 0.1 : 0.3)) {
-                        opacidadBotonSiguiente = pressing ? 0.15 : 1.0
+                // Cuando hay error de red: muestra icono de recargar y permite reintentar
+                if vm.errorRed {
+                    BotónCircularIcono(
+                        imagen: .recargar,
+                        colorFondo: .azul,
+                        colorIcono: .white,
+                        tamanyo: tamanyoBoton
+                    ) {
+                        vm.feedbackTactilLigero()
+                        vm.reintentar()
                     }
-                }, perform: {})
-                .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
-                .accessibilityIdentifier("botonSiguiente")
+                    .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
+                    .accessibilityIdentifier("botonSiguiente")
+                } else {
+                    BotónCircularIcono(
+                        imagen: .flecha,
+                        colorFondo: .azul,
+                        colorIcono: .white,
+                        tamanyo: tamanyoBoton
+                    ) {
+                        vm.feedbackTactilLigero()
+                        vm.mostrarSiguiente(avanzarCola: true)
+                    }
+                    .opacity(opacidadBotonSiguiente)
+                    ._onButtonGesture(pressing: { pressing in
+                        guard !vm.cargando else { return }
+                        withAnimation(.linear(duration: pressing ? 0.1 : 0.3)) {
+                            opacidadBotonSiguiente = pressing ? 0.15 : 1.0
+                        }
+                    }, perform: {})
+                    .position(posicionEnBorde(angulo: 150, centroX: centroX, centroY: centroY, radio: radio))
+                    .accessibilityIdentifier("botonSiguiente")
+                }
 
                 // PageControl + ActivityIndicator
                 VStack(spacing: 8) {
