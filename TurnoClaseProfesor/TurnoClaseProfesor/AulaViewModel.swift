@@ -66,10 +66,13 @@ class AulaViewModel: ObservableObject {
     @Published var cargando: Bool = true
     @Published var errorRed: Bool = false
 
-    // Alertas / diálogos
-    @Published var alertaActiva: AlertaAula? = nil
+    /// Duración mínima (en segundos) que se muestra la animación de carga.
+    var duracionMinimaCarga: Double = 1.0
 
     // MARK: - Propiedades internas
+
+    // Alertas / diálogos
+    @Published var alertaActiva: AlertaAula? = nil
 
     let MAX_AULAS = 16
     var uid: String?
@@ -86,6 +89,29 @@ class AulaViewModel: ObservableObject {
 
     // Para test UI
     var n = 2
+    private var inicioCarga: Date = .distantPast
+
+    // MARK: - Duración mínima de carga
+
+    /// Inicia la carga y registra el instante de inicio.
+    func iniciarCarga() {
+        inicioCarga = Date()
+        cargando = true
+    }
+
+    /// Termina la carga respetando la duración mínima configurada en `duracionMinimaCarga`.
+    func terminarCarga() {
+        let transcurrido = Date().timeIntervalSince(inicioCarga)
+        let restante = duracionMinimaCarga - transcurrido
+        if restante > 0 {
+            Task {
+                try? await Task.sleep(nanoseconds: UInt64(restante * 1000000000))
+                self.cargando = false
+            }
+        } else {
+            cargando = false
+        }
+    }
 
     // MARK: - Inicialización
 
@@ -109,7 +135,7 @@ class AulaViewModel: ObservableObject {
         reachability.whenUnreachable = { [weak self] _ in
             guard let self = self else { return }
             Task { @MainActor in
-                self.cargando = false
+                self.terminarCarga()
                 self.errorRed = true
                 self.actualizarAulaUI(codigo: "?", enCola: 0)
                 self.nombreAlumno = ""
@@ -137,7 +163,7 @@ class AulaViewModel: ObservableObject {
         } else {
             actualizarAulaUI(codigo: "...", enCola: 0)
             nombreAlumno = ""
-            cargando = true
+            iniciarCarga()
             errorRed = false
             mostrarIndicador = false
             numAulas = 0
@@ -169,7 +195,7 @@ class AulaViewModel: ObservableObject {
                 } else {
                     Task { @MainActor in
                         log.error("Error de inicio de sesión: \(error!.localizedDescription)")
-                        self.cargando = false
+                        self.terminarCarga()
                         self.errorRed = true
                         self.actualizarAulaUI(codigo: "?", enCola: 0)
                     }
@@ -182,7 +208,7 @@ class AulaViewModel: ObservableObject {
 
     func conectarAula(posicion: Int = 0) {
         guard let uid = uid else { return }
-        cargando = true
+        iniciarCarga()
         refMisAulas = db.collection("profesores").document(uid).collection("aulas")
         Task {
             do {
@@ -203,7 +229,7 @@ class AulaViewModel: ObservableObject {
                 }
             } catch {
                 log.error("Error al recuperar la lista de aulas \(error.localizedDescription)")
-                cargando = false
+                terminarCarga()
                 errorRed = true
                 actualizarAulaUI(codigo: "?", enCola: 0)
             }
@@ -221,7 +247,7 @@ class AulaViewModel: ObservableObject {
                 conectarListener()
             } catch {
                 log.error("Error al crear el aula: \(error.localizedDescription)")
-                cargando = false
+                terminarCarga()
                 errorRed = true
                 actualizarAulaUI(codigo: "?", enCola: 0)
             }
@@ -269,7 +295,7 @@ class AulaViewModel: ObservableObject {
             Task { @MainActor in
                 if let error = error {
                     log.error("Error en listener de aula: \(error.localizedDescription)")
-                    self.cargando = false
+                    self.terminarCarga()
                     self.errorRed = true
                     self.actualizarAulaUI(codigo: "?", enCola: 0)
                     return
@@ -277,7 +303,7 @@ class AulaViewModel: ObservableObject {
                 if documentSnapshot?.exists == true {
                     if let aula = documentSnapshot?.data() {
                         log.info("Actualizando datos del aula...")
-                        self.cargando = false
+                        self.terminarCarga()
                         self.errorRed = false
                         self.actualizarAulaUI(codigo: aula["codigo"] ??? "?")
                         self.PIN = aula["pin"] ??? "?"
@@ -290,7 +316,7 @@ class AulaViewModel: ObservableObject {
                                 Task { @MainActor in
                                     if let error = error {
                                         log.error("Error al recuperar datos: \(error.localizedDescription)")
-                                        self.cargando = false
+                                        self.terminarCarga()
                                         self.errorRed = true
                                     } else if let snapshot = querySnapshot {
                                         self.errorRed = false
@@ -314,7 +340,7 @@ class AulaViewModel: ObservableObject {
                         self.actualizarAulaUI(codigo: "?", enCola: 0)
                         self.PIN = "?"
                         self.desconectarListeners()
-                        self.cargando = true
+                        self.iniciarCarga()
                         self.conectarAula()
                     } else {
                         self.desconectarAula()
@@ -439,7 +465,7 @@ class AulaViewModel: ObservableObject {
     func buscarAula(codigo: String?, pin: String?) {
         guard let codigo = codigo, let pin = pin else { return }
         log.debug("Buscando UID del aula: \(codigo):\(pin)")
-        cargando = true
+        iniciarCarga()
         errorRed = false
         Task {
             do {
@@ -459,7 +485,7 @@ class AulaViewModel: ObservableObject {
                     conectarListener()
                 } else {
                     log.error("Aula no encontrada")
-                    cargando = false
+                    terminarCarga()
                     if UserDefaults.standard.string(forKey: "codigoAulaConectada") == nil {
                         alertaActiva = .errorConexion
                     }
@@ -467,7 +493,7 @@ class AulaViewModel: ObservableObject {
                 }
             } catch {
                 log.error("Error al recuperar datos: \(error.localizedDescription)")
-                cargando = false
+                terminarCarga()
                 errorRed = true
                 actualizarAulaUI(codigo: "?", enCola: 0)
             }

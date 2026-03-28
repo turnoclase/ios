@@ -77,6 +77,9 @@ class ConexionViewModel: ObservableObject {
     @Published var mostrarError: Bool = false
     @Published var cargando: Bool = true
 
+    /// Duración mínima (en segundos) que se muestra la animación de carga.
+    var duracionMinimaCarga: Double = 1.0
+
     // MARK: Propiedades internas
 
     var uid: String?
@@ -92,6 +95,30 @@ class ConexionViewModel: ObservableObject {
     var ultimaPeticion: Date?
     var segundosEspera = 300 // 5 minutos por defecto
     var n = 2 // Para Fastlane snapshot
+    private var inicioCarga: Date = .distantPast
+
+    // MARK: - Duración mínima de carga
+
+    /// Inicia la carga y registra el instante de inicio.
+    func iniciarCarga() {
+        inicioCarga = Date()
+        cargando = true
+    }
+
+    /// Termina la carga respetando la duración mínima configurada en `duracionMinimaCarga`.
+    /// Si la carga fue más rápida que el mínimo, retrasa el ocultado de la animación.
+    func terminarCarga() {
+        let transcurrido = Date().timeIntervalSince(inicioCarga)
+        let restante = duracionMinimaCarga - transcurrido
+        if restante > 0 {
+            Task {
+                try? await Task.sleep(nanoseconds: UInt64(restante * 1_000_000_000))
+                self.cargando = false
+            }
+        } else {
+            cargando = false
+        }
+    }
 
     // MARK: - Inicialización (pantalla inicial)
 
@@ -138,7 +165,7 @@ class ConexionViewModel: ObservableObject {
         pedirTurno = true
         atendido = false
         encolando = false
-        cargando = true
+        iniciarCarga()
         mostrarError = false
         estadoTurno = .enCola(posicion: 0)
         reiniciarCronometro()
@@ -341,7 +368,7 @@ class ConexionViewModel: ObservableObject {
                     mostrarCronometro = false
                     mostrarBotonActualizar = true
                     mostrarError = false
-                    cargando = false
+                    terminarCarga()
                 }
             }
         }
@@ -368,19 +395,19 @@ class ConexionViewModel: ObservableObject {
                 } else if posicion == 1 {
                     estadoTurno = .esTuTurno
                 }
-                cargando = false
+                terminarCarga()
                 actualizarUI()
             } catch {
                 log.error("Error al actualizar pantalla: \(error.localizedDescription)")
-                cargando = false
+                terminarCarga()
                 log.error("Error al actualizar pantalla: \(error.localizedDescription)")
-                cargando = false
+                terminarCarga()
             }
         }
     }
 
     private func actualizarUI() {
-        cargando = false
+        terminarCarga()
         switch estadoTurno {
         case .esperando:
             mostrarCronometro = true
@@ -416,7 +443,7 @@ class ConexionViewModel: ObservableObject {
         }
         if atendido {
             log.info("Pidiendo nuevo turno")
-            cargando = true
+            iniciarCarga()
             desconectarListeners()
             atendido = false
             pedirTurno = true

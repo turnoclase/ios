@@ -165,6 +165,9 @@ public struct BotónCircularIcono: View {
 // MARK: - Animación de tres puntos en onda
 
 /// Tres puntos que suben y bajan en onda, para indicar estado de espera/carga.
+///
+/// La duración mínima de visibilidad se controla desde el ViewModel mediante
+/// `terminarCarga()`, que retarda la asignación de `cargando = false`.
 public struct AnimacionPuntos: View {
     public let color: Color
     public let tamanyo: CGFloat
