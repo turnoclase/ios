@@ -884,21 +884,36 @@ private struct ListaColaAlumnosLegacy: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    List {
-                        ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
-                            HStack(spacing: 12) {
-                                Text("\(index + 1)")
-                                    .font(.system(size: 17, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                                    .frame(width: 32, height: 32)
-                                    .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
-                                Text(alumno.nombre)
-                                    .font(.body)
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(vm.codigoAula)
+                                .font(.title.bold())
+                            if !vm.etiquetaAula.isEmpty {
+                                Text(vm.etiquetaAula)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
                             }
                         }
-                        .onDelete { offsets in
-                            for i in offsets {
-                                vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 8)
+
+                        List {
+                            ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
+                                HStack(spacing: 12) {
+                                    Text("\(index + 1)")
+                                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                        .frame(width: 32, height: 32)
+                                        .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
+                                    Text(alumno.nombre)
+                                        .font(.body)
+                                }
+                            }
+                            .onDelete { offsets in
+                                for i in offsets {
+                                    vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                                }
                             }
                         }
                     }
@@ -939,21 +954,36 @@ private struct ListaColaAlumnos26: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    List {
-                        ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
-                            HStack(spacing: 12) {
-                                Text("\(index + 1)")
-                                    .font(.system(size: 17, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                                    .frame(width: 32, height: 32)
-                                    .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
-                                Text(alumno.nombre)
-                                    .font(.body)
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(vm.codigoAula)
+                                .font(.title.bold())
+                            if !vm.etiquetaAula.isEmpty {
+                                Text(vm.etiquetaAula)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
                             }
                         }
-                        .onDelete { offsets in
-                            for i in offsets {
-                                vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
+                        .padding(.bottom, 8)
+
+                        List {
+                            ForEach(Array(vm.alumnosEnCola.enumerated()), id: \.element.id) { index, alumno in
+                                HStack(spacing: 12) {
+                                    Text("\(index + 1)")
+                                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                        .frame(width: 32, height: 32)
+                                        .background(Circle().foregroundColor(index == 0 ? .azul : .gris))
+                                    Text(alumno.nombre)
+                                        .font(.body)
+                                }
+                            }
+                            .onDelete { offsets in
+                                for i in offsets {
+                                    vm.eliminarAlumnoDeCola(vm.alumnosEnCola[i])
+                                }
                             }
                         }
                     }
