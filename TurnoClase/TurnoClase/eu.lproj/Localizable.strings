@@ -13,3 +13,16 @@ MENSAJE_ERROR="Gela zenbakia egiaztatu,\nez dirudi zuzena.";
 MENSAJE_ERROR_RED="Sare konexiorik ez.\nSakatu ⟳ berriro saiatzeko";
 AULA="Ikasgela";
 NOMBRE="Izena";
+
+/* Gelaren historiala */
+HISTORICO_TITULO="Gelak";
+HISTORICO_VACIO="Oraindik ez dago gelarik";
+HISTORICO_SIN_ETIQUETA="Etiketa gabe";
+HISTORICO_ETIQUETAR="Etiketatu";
+HISTORICO_ETIQUETA_TITULO="Gela etiketatu";
+HISTORICO_ETIQUETA_PLACEHOLDER="Etiketa (gehienez 20 karaktere)";
+HISTORICO_ETIQUETA_MENSAJE="Sartu etiketa bat gela honentzako.";
+CERRAR="Itxi";
+GUARDAR="Gorde";
+CANCELAR="Utzi";
+ELIMINAR="Ezabatu";

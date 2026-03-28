@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   TurnoClase
 
@@ -13,3 +13,16 @@ MENSAJE_ERROR="Check classroom number,\nit doesn't seem to be correct.";
 MENSAJE_ERROR_RED="No network connection.\nPress ⟳ to retry";
 AULA="Classroom";
 NOMBRE="Name";
+
+/* Histórico de aulas */
+HISTORICO_TITULO="Classrooms";
+HISTORICO_VACIO="No classrooms yet";
+HISTORICO_SIN_ETIQUETA="No label";
+HISTORICO_ETIQUETAR="Label";
+HISTORICO_ETIQUETA_TITULO="Label classroom";
+HISTORICO_ETIQUETA_PLACEHOLDER="Label (max. 20 characters)";
+HISTORICO_ETIQUETA_MENSAJE="Enter a label for this classroom.";
+CERRAR="Close";
+GUARDAR="Save";
+CANCELAR="Cancel";
+ELIMINAR="Delete";

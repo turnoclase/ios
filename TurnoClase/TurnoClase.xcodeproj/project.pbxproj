@@ -13,6 +13,8 @@
 		410D71021FA8D634009AC062 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 410D71011FA8D633009AC062 /* GoogleService-Info.plist */; };
 		4116087A1B517B88008C9A1E /* Licenses in Resources */ = {isa = PBXBuildFile; fileRef = 411608781B517B88008C9A1E /* Licenses */; };
 		4116087B1B517B88008C9A1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 411608791B517B88008C9A1E /* Settings.bundle */; };
+		413C75582F7875920063F66A /* AulaHistorico.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C75572F7875920063F66A /* AulaHistorico.swift */; };
+		413C755A2F78759C0063F66A /* HistoricoAulasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413C75592F78759C0063F66A /* HistoricoAulasView.swift */; };
 		414C5BF81FBF65E500D88D64 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414EC8641B4C8B1B0002492C /* Localizable.strings */; };
 		414C797F221F991E003E97E4 /* TurnoClaseShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; };
 		414C7980221F991E003E97E4 /* TurnoClaseShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 413592BB221F814C0089E71C /* TurnoClaseShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -64,6 +66,8 @@
 		411608781B517B88008C9A1E /* Licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Licenses; path = TurnoClase/Licenses; sourceTree = "<group>"; };
 		411608791B517B88008C9A1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = TurnoClase/Settings.bundle; sourceTree = "<group>"; };
 		413592BB221F814C0089E71C /* TurnoClaseShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TurnoClaseShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		413C75572F7875920063F66A /* AulaHistorico.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AulaHistorico.swift; sourceTree = "<group>"; };
+		413C75592F78759C0063F66A /* HistoricoAulasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricoAulasView.swift; sourceTree = "<group>"; };
 		414EC8551B4C83CB0002492C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		414EC8571B4C85260002492C /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		414EC8631B4C8B1B0002492C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 		415BC6441B2F5305004FADE0 /* TurnoClase */ = {
 			isa = PBXGroup;
 			children = (
+				413C75592F78759C0063F66A /* HistoricoAulasView.swift */,
+				413C75572F7875920063F66A /* AulaHistorico.swift */,
 				415BC6471B2F5305004FADE0 /* AppDelegate.swift */,
 				6FA992EE80F34B76B762267F /* TurnoClaseApp.swift */,
 				F646018F9DD34395BFA5FA4F /* ContentView.swift */,
@@ -327,8 +333,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				415BC6481B2F5305004FADE0 /* AppDelegate.swift in Sources */,
+				413C75582F7875920063F66A /* AulaHistorico.swift in Sources */,
 				E219507EA87345C2A468211E /* TurnoClaseApp.swift in Sources */,
 				E6F1B4304FCE4821AA0F458A /* ContentView.swift in Sources */,
+				413C755A2F78759C0063F66A /* HistoricoAulasView.swift in Sources */,
 				653BE40901B9485D9C807A04 /* TurnoView.swift in Sources */,
 				21F321278112493C82374791 /* ConexionViewModel.swift in Sources */,
 			);

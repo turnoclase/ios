@@ -60,6 +60,10 @@ class ConexionViewModel: ObservableObject {
     @Published var nombreUsuario: String = ""
     @Published var placeholder: String = ""
 
+    // MARK: Histórico de aulas
+
+    @Published var historicoAulas: [AulaHistorico] = []
+
     // MARK: Estado de navegación
 
     @Published var mostrandoTurno: Bool = false
@@ -130,6 +134,7 @@ class ConexionViewModel: ObservableObject {
         placeholder = Nombres.aleatorio()
         codigoAula = UserDefaults.standard.string(forKey: "codigoAula") ?? ""
         nombreUsuario = UserDefaults.standard.string(forKey: "nombreUsuario") ?? ""
+        historicoAulas = HistoricoAulas.cargar()
 
         #if DEBUG
         if codigoAula.isEmpty {
@@ -253,6 +258,8 @@ class ConexionViewModel: ObservableObject {
                     self.segundosEspera = ((documentSnapshot?.data()?["espera"] as? Int) ?? 5) * 60
                     // Conexión confirmada: ya no hay error de red
                     self.errorRed = false
+                    // Registrar en el histórico de aulas
+                    self.historicoAulas = HistoricoAulas.registrarConexion(codigo: self.codigoAulaActual)
                     self.conectarListenerCola()
                 } else {
                     log.info("El aula ha desaparecido")

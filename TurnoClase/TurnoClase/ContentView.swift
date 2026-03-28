@@ -24,6 +24,7 @@ import UIKit
 struct ContentView: View {
     @StateObject private var vm = ConexionViewModel()
     @FocusState private var campoActivo: Campo?
+    @State private var mostrandoHistorico: Bool = false
 
     enum Campo { case aula, nombre }
 
@@ -36,6 +37,15 @@ struct ContentView: View {
             }
         }
         .onAppear { vm.iniciar() }
+        .sheet(isPresented: $mostrandoHistorico) {
+            HistoricoAulasView(
+                historico: $vm.historicoAulas,
+                onSeleccionar: { aula in
+                    vm.codigoAula = aula.codigo
+                },
+                onCerrar: { mostrandoHistorico = false }
+            )
+        }
     }
 
     // MARK: - Pantalla inicial
@@ -68,18 +78,33 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .kerning(1)
 
-                        CampoTexto(
-                            texto: $vm.codigoAula,
-                            placeholder: "BE131",
-                            limite: 5,
-                            capitalizacion: .characters,
-                            forzarMayusculas: true,
-                            teclado: .asciiCapable,
-                            botonEnvio: .next
-                        )
-                        .focused($campoActivo, equals: .aula)
-                        .onSubmit { campoActivo = .nombre }
-                        .frame(height: 36)
+                        ZStack(alignment: .trailing) {
+                            CampoTexto(
+                                texto: $vm.codigoAula,
+                                placeholder: "BE131",
+                                limite: 5,
+                                capitalizacion: .characters,
+                                forzarMayusculas: true,
+                                teclado: .asciiCapable,
+                                botonEnvio: .next
+                            )
+                            .focused($campoActivo, equals: .aula)
+                            .onSubmit { campoActivo = .nombre }
+                            .frame(height: 36)
+
+                            // Icono de histórico (solo si hay aulas guardadas)
+                            if !vm.historicoAulas.isEmpty {
+                                Button {
+                                    campoActivo = nil
+                                    mostrandoHistorico = true
+                                } label: {
+                                    Image(systemName: "line.3.horizontal.decrease.circle")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.secondary.opacity(0.7))
+                                }
+                                .padding(.trailing, 8)
+                            }
+                        }
                         .padding(.vertical, 3)
                         .padding(.horizontal, 12)
                         .background(

@@ -13,3 +13,16 @@ MENSAJE_ERROR="Verifica el número de aula,\nno parece correcto.";
 MENSAJE_ERROR_RED="Sin conexión de red.\nPulsa ⟳ para reintentar";
 AULA="Aula";
 NOMBRE="Nombre";
+
+/* Histórico de aulas */
+HISTORICO_TITULO="Aulas";
+HISTORICO_VACIO="Todavía no hay aulas";
+HISTORICO_SIN_ETIQUETA="Sin etiqueta";
+HISTORICO_ETIQUETAR="Etiquetar";
+HISTORICO_ETIQUETA_TITULO="Etiquetar aula";
+HISTORICO_ETIQUETA_PLACEHOLDER="Etiqueta (máx. 20 caracteres)";
+HISTORICO_ETIQUETA_MENSAJE="Introduce una etiqueta para esta aula.";
+CERRAR="Cerrar";
+GUARDAR="Guardar";
+CANCELAR="Cancelar";
+ELIMINAR="Eliminar";
