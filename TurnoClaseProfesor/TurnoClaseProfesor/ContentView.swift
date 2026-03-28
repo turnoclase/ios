@@ -241,11 +241,13 @@ private struct DialogoConexionLegacy: View {
                             .onChange(of: textoCodigo) { v in
                                 if v.count > 5 { textoCodigo = String(v.prefix(5)) }
                             }
+                            .onSubmit { if puedeConectar { onConectar(textoCodigo, textoPIN) } }
                         TextField("PIN".localized(), text: $textoPIN)
                             .keyboardType(.numberPad)
                             .onChange(of: textoPIN) { v in
                                 if v.count > 4 { textoPIN = String(v.prefix(4)) }
                             }
+                            .onSubmit { if puedeConectar { onConectar(textoCodigo, textoPIN) } }
                     }
                 }
             }
@@ -296,11 +298,13 @@ private struct DialogoConexion26: View {
                         .onChange(of: textoCodigo) { v in
                             if v.count > 5 { textoCodigo = String(v.prefix(5)) }
                         }
+                        .onSubmit { if puedeConectar { onConectar(textoCodigo, textoPIN) } }
                     TextField("PIN".localized(), text: $textoPIN)
                         .keyboardType(.numberPad)
                         .onChange(of: textoPIN) { v in
                             if v.count > 4 { textoPIN = String(v.prefix(4)) }
                         }
+                        .onSubmit { if puedeConectar { onConectar(textoCodigo, textoPIN) } }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -372,6 +376,7 @@ private struct DialogoEtiquetaLegacy: View {
                             .onChange(of: textoEtiqueta) { v in
                                 if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
                             }
+                            .onSubmit { if puedeGuardar { onGuardar(textoEtiqueta) } }
                     }
                 }
             }
@@ -421,6 +426,7 @@ private struct DialogoEtiqueta26: View {
                         .onChange(of: textoEtiqueta) { v in
                             if v.count > 50 { textoEtiqueta = String(v.prefix(50)) }
                         }
+                        .onSubmit { if puedeGuardar { onGuardar(textoEtiqueta) } }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
