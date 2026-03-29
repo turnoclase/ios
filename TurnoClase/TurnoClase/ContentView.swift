@@ -102,7 +102,7 @@ struct ContentView: View {
                                         .font(.system(size: 20))
                                         .foregroundColor(.gray.opacity(0.7))
                                 }
-                                .padding(.trailing, 8)
+                                .padding(.trailing, -2)
                             }
                         }
                         .padding(.vertical, 3)
