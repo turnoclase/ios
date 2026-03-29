@@ -197,10 +197,8 @@ private struct HistoricoAulasViewLegacy: View {
                     }
                 )
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    Button(role: .destructive) {
+                    Button(NSLocalizedString("ELIMINAR", comment: ""), role: .destructive) {
                         eliminar(aula)
-                    } label: {
-                        Label(NSLocalizedString("ELIMINAR", comment: ""), systemImage: "trash")
                     }
                 }
             }
