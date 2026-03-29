@@ -600,24 +600,28 @@ private struct MenuAccionesAula: View {
     let onCerrar: () -> Void
 
     var titulo: String {
+        guard vm.codigoAula != "?" else { return "Error de conexión".localized() }
+        return vm.codigoAula
+    }
+
+    var subtitulo: String {
         guard vm.codigoAula != "?" else { return "No hay conexión de red".localized() }
         return vm.invitado
             ? "Conectado como invitado".localized()
             : String(format: "PIN para compartir este aula: %@".localized(), vm.PIN)
     }
 
-    var subtitulo: String {
-        guard vm.codigoAula != "?" else { return "Error de conexión".localized() }
-        return String(format: "Aula %@".localized(), vm.codigoAula)
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             // Cabecera informativa
             VStack(spacing: 4) {
-                Text(subtitulo)
-                    .font(.headline)
                 Text(titulo)
+                    .font(.headline)
+                if !vm.etiquetaAula.isEmpty {
+                    Text(String(format: "» %@ «", vm.etiquetaAula))
+                        .font(.headline)
+                }
+                Text(subtitulo)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -635,12 +639,7 @@ private struct MenuAccionesAula: View {
                         onCerrar(); DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { onEtiquetar() }
                     } label: {
                         Label {
-                            if vm.etiquetaAula.count > 0 {
-                                Text(String(format: "» %@ «", vm.etiquetaAula))
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("Etiquetar aula".localized())
-                            }
+                            Text("Etiquetar aula".localized())
                         } icon: {
                             Image(systemName: "tag")
                                 .foregroundColor(.azul)
