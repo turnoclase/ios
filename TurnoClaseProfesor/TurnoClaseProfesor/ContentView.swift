@@ -870,6 +870,8 @@ private struct ListaColaAlumnosLegacy: View {
     @ObservedObject var vm: AulaViewModel
     let onCerrar: () -> Void
 
+    @State private var modoEdicion: EditMode = .inactive
+
     var body: some View {
         NavigationView {
             Group {
@@ -909,6 +911,11 @@ private struct ListaColaAlumnosLegacy: View {
                                     Text(alumno.nombre)
                                         .font(.body)
                                 }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button("Borrar".localized(), role: .destructive) {
+                                        vm.eliminarAlumnoDeCola(alumno)
+                                    }
+                                }
                             }
                             .onDelete { offsets in
                                 for i in offsets {
@@ -916,6 +923,7 @@ private struct ListaColaAlumnosLegacy: View {
                                 }
                             }
                         }
+                        .environment(\.editMode, $modoEdicion)
                     }
                 }
             }
@@ -927,7 +935,11 @@ private struct ListaColaAlumnosLegacy: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if !vm.alumnosEnCola.isEmpty {
-                        EditButton()
+                        Button(modoEdicion == .active ? "Hecho".localized() : "Editar".localized()) {
+                            withAnimation {
+                                modoEdicion = modoEdicion == .active ? .inactive : .active
+                            }
+                        }
                     }
                 }
             }
@@ -939,6 +951,8 @@ private struct ListaColaAlumnosLegacy: View {
 private struct ListaColaAlumnos26: View {
     @ObservedObject var vm: AulaViewModel
     let onCerrar: () -> Void
+
+    @State private var modoEdicion: EditMode = .inactive
 
     var body: some View {
         NavigationStack {
@@ -979,6 +993,11 @@ private struct ListaColaAlumnos26: View {
                                     Text(alumno.nombre)
                                         .font(.body)
                                 }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button("Borrar".localized(), role: .destructive) {
+                                        vm.eliminarAlumnoDeCola(alumno)
+                                    }
+                                }
                             }
                             .onDelete { offsets in
                                 for i in offsets {
@@ -986,6 +1005,7 @@ private struct ListaColaAlumnos26: View {
                                 }
                             }
                         }
+                        .environment(\.editMode, $modoEdicion)
                     }
                 }
             }
@@ -997,7 +1017,11 @@ private struct ListaColaAlumnos26: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if !vm.alumnosEnCola.isEmpty {
-                        EditButton()
+                        Button(modoEdicion == .active ? "Hecho".localized() : "Editar".localized()) {
+                            withAnimation {
+                                modoEdicion = modoEdicion == .active ? .inactive : .active
+                            }
+                        }
                     }
                 }
             }
