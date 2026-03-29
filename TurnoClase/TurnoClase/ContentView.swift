@@ -122,7 +122,7 @@ struct ContentView: View {
                             texto: $vm.nombreUsuario,
                             placeholder: vm.placeholder,
                             limite: 15,
-                            capitalizacion: .never,
+                            capitalizacion: .words,
                             botonEnvio: .go
                         )
                         .focused($campoActivo, equals: .nombre)
