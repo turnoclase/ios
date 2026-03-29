@@ -40,6 +40,7 @@ private struct DialogoEtiquetaModifier: ViewModifier {
                             if nuevo.count > 20 { texto = String(nuevo.prefix(20)) }
                         }
                     Button(NSLocalizedString("GUARDAR", comment: "")) { onGuardar() }
+                        .keyboardShortcut(.defaultAction)
                     Button(NSLocalizedString("CANCELAR", comment: ""), role: .cancel) {}
                 } message: {
                     Text(NSLocalizedString("HISTORICO_ETIQUETA_MENSAJE", comment: ""))
@@ -82,6 +83,7 @@ private struct EtiquetaSheet: View {
                         onGuardar()
                         activo = false
                     }
+                    .keyboardShortcut(.defaultAction)
                 }
             }
         }
@@ -234,7 +236,7 @@ private struct FilaAulaLegacy: View {
             Text(aula.codigo)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundColor(.black)
-                .frame(width: 72, height: 32)
+                .frame(width: 88, height: 32)
                 .background(Capsule().foregroundColor(.gris))
                 .onTapGesture {
                     guard editMode?.wrappedValue == .inactive else { return }
@@ -382,7 +384,7 @@ private struct FilaAula26: View {
             Text(aula.codigo)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundColor(.black)
-                .frame(width: 72, height: 32)
+                .frame(width: 88, height: 32)
                 .background(Capsule().foregroundColor(.gris))
                 .onTapGesture {
                     guard editMode?.wrappedValue == .inactive else { return }
