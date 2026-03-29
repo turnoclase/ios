@@ -174,6 +174,7 @@ class ConexionViewModel: ObservableObject {
         pedirTurno = true
         atendido = false
         encolando = false
+        ultimaPeticion = nil   // Limpiar para que el tiempo de espera sea por aula
         iniciarCarga()
         mostrarError = false
         errorRed = false
