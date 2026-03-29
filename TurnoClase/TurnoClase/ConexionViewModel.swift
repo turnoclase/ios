@@ -545,6 +545,8 @@ class ConexionViewModel: ObservableObject {
 
     func iniciarCronometro() {
         guard timer == nil else { return }
+        // Actualizar de inmediato para no mostrar 00:00 durante el primer segundo
+        tickCronometro()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
                 self?.tickCronometro()
@@ -555,6 +557,9 @@ class ConexionViewModel: ObservableObject {
     func reiniciarCronometro() {
         timer?.invalidate()
         timer = nil
+        minutosRestantes = 0
+        segundosRestantes = 0
+        mostrarCronometro = false
     }
 
     private func tiempoEsperaRestante() -> Int {
