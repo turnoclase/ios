@@ -47,3 +47,6 @@
 "Editar" = "Editatu";
 "Hecho" = "Eginda";
 "Borrar" = "Ezabatu";
+"Vaciar cola" = "Lerroa hustu";
+"Vaciar" = "Hustu";
+"Esta acción eliminará a todos los alumnos de la cola de espera." = "Akzio honek itxaroteko lerroko ikasle guztiak ezabatuko ditu.";

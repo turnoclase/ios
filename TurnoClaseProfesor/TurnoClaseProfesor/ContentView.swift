@@ -870,6 +870,7 @@ private struct ListaColaAlumnosLegacy: View {
     let onCerrar: () -> Void
 
     @State private var modoEdicion: EditMode = .inactive
+    @State private var mostrarDialogoVaciar: Bool = false
 
     var body: some View {
         NavigationView {
@@ -923,6 +924,15 @@ private struct ListaColaAlumnosLegacy: View {
                             }
                         }
                         .environment(\.editMode, $modoEdicion)
+
+                        Button(role: .destructive) {
+                            mostrarDialogoVaciar = true
+                        } label: {
+                            Label("Vaciar cola".localized(), systemImage: "trash")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .padding()
                     }
                 }
             }
@@ -942,6 +952,12 @@ private struct ListaColaAlumnosLegacy: View {
                     }
                 }
             }
+            .alert("Vaciar cola".localized(), isPresented: $mostrarDialogoVaciar) {
+                Button("Vaciar".localized(), role: .destructive) { vm.vaciarCola() }
+                Button("Cancelar".localized(), role: .cancel) {}
+            } message: {
+                Text("Esta acción eliminará a todos los alumnos de la cola de espera.".localized())
+            }
         }
     }
 }
@@ -952,6 +968,7 @@ private struct ListaColaAlumnos26: View {
     let onCerrar: () -> Void
 
     @State private var modoEdicion: EditMode = .inactive
+    @State private var mostrarDialogoVaciar: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -1005,6 +1022,16 @@ private struct ListaColaAlumnos26: View {
                             }
                         }
                         .environment(\.editMode, $modoEdicion)
+
+                        Button(role: .destructive) {
+                            mostrarDialogoVaciar = true
+                        } label: {
+                            Label("Vaciar cola".localized(), systemImage: "trash")
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 9)
+                        }
+                        .buttonStyle(.bordered)
+                        .padding()
                     }
                 }
             }
@@ -1023,6 +1050,12 @@ private struct ListaColaAlumnos26: View {
                         }
                     }
                 }
+            }
+            .alert("Vaciar cola".localized(), isPresented: $mostrarDialogoVaciar) {
+                Button("Vaciar".localized(), role: .destructive) { vm.vaciarCola() }
+                Button("Cancelar".localized(), role: .cancel) {}
+            } message: {
+                Text("Esta acción eliminará a todos los alumnos de la cola de espera.".localized())
             }
         }
     }

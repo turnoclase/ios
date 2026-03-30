@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   TurnoClaseProfesor
 
@@ -47,3 +47,6 @@
 "Editar" = "Edit";
 "Hecho" = "Done";
 "Borrar" = "Delete";
+"Vaciar cola" = "Clear queue";
+"Vaciar" = "Clear";
+"Esta acción eliminará a todos los alumnos de la cola de espera." = "This action will remove all students from the waiting queue.";

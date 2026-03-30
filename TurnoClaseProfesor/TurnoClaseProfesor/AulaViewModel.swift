@@ -427,6 +427,22 @@ class AulaViewModel: ObservableObject {
         }
     }
 
+    // Vacía la cola completa eliminando todos los documentos de la subcolección "cola".
+    func vaciarCola() {
+        Task {
+            do {
+                guard let refAula = refAula else { return }
+                let snapshot = try await refAula.collection("cola").getDocuments()
+                for doc in snapshot.documents {
+                    try await doc.reference.delete()
+                }
+                log.info("Cola vaciada (\(snapshot.documents.count) alumnos eliminados)")
+            } catch {
+                log.error("Error al vaciar la cola: \(error.localizedDescription)")
+            }
+        }
+    }
+
     // MARK: - Mostrar siguiente
 
     func mostrarSiguiente(avanzarCola: Bool = false) {
