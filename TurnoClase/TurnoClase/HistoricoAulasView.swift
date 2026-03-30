@@ -241,23 +241,25 @@ private struct FilaAulaLegacy: View {
                     onSeleccionar()
                 }
 
-            Group {
-                if !aula.etiqueta.isEmpty {
-                    Text(aula.etiqueta)
-                        .font(.body)
-                } else {
-                    Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .italic()
+            HStack {
+                Group {
+                    if !aula.etiqueta.isEmpty {
+                        Text(aula.etiqueta)
+                            .font(.body)
+                    } else {
+                        Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                    }
                 }
+                Spacer()
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 guard editMode?.wrappedValue == .inactive else { return }
                 onEtiquetar()
             }
-
-            Spacer()
         }
     }
 }
@@ -389,23 +391,25 @@ private struct FilaAula26: View {
                     onSeleccionar()
                 }
 
-            Group {
-                if !aula.etiqueta.isEmpty {
-                    Text(aula.etiqueta)
-                        .font(.body)
-                } else {
-                    Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .italic()
+            HStack {
+                Group {
+                    if !aula.etiqueta.isEmpty {
+                        Text(aula.etiqueta)
+                            .font(.body)
+                    } else {
+                        Text(NSLocalizedString("HISTORICO_SIN_ETIQUETA", comment: ""))
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .italic()
+                    }
                 }
+                Spacer()
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 guard editMode?.wrappedValue == .inactive else { return }
                 onEtiquetar()
             }
-
-            Spacer()
         }
     }
 }
