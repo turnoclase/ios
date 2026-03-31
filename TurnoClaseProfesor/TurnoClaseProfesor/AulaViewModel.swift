@@ -194,12 +194,12 @@ class AulaViewModel: ObservableObject {
                         self.uid = resultado.user.uid
                         log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
 
-                        let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
+                        let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
                         if !uidAnterior.isEmpty && uidAnterior != self.uid {
                             self.uid = uidAnterior
                             log.info("Ya estaba registrado con UID: \(uidAnterior)")
                         } else {
-                            UserDefaults.standard.set(self.uid, forKey: "uidAnterior")
+                            KeychainHelper.guardar(self.uid ?? "", clave: "uidAnterior")
                         }
 
                         let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
@@ -633,12 +633,12 @@ class AulaViewModel: ObservableObject {
                 self.uid = currentUser.uid
 
                 // Aplicar la misma lógica de uidAnterior que en iniciar()
-                let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
+                let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
                 if !uidAnterior.isEmpty && uidAnterior != self.uid {
                     self.uid = uidAnterior
                     log.info("Ya estaba registrado con UID: \(uidAnterior)")
                 } else {
-                    UserDefaults.standard.set(self.uid, forKey: "uidAnterior")
+                    KeychainHelper.guardar(self.uid ?? "", clave: "uidAnterior")
                 }
 
                 let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
@@ -662,12 +662,12 @@ class AulaViewModel: ObservableObject {
                     log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
 
                     // Aplicar la misma lógica de uidAnterior que en iniciar()
-                    let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
+                    let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
                     if !uidAnterior.isEmpty && uidAnterior != self.uid {
                         self.uid = uidAnterior
                         log.info("Ya estaba registrado con UID: \(uidAnterior)")
                     } else {
-                        UserDefaults.standard.set(self.uid, forKey: "uidAnterior")
+                        KeychainHelper.guardar(self.uid ?? "", clave: "uidAnterior")
                     }
 
                     let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
