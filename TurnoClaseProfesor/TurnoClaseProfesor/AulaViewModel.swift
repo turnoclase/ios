@@ -138,10 +138,16 @@ class AulaViewModel: ObservableObject {
                 log.info("Red móvil")
             }
             Task { @MainActor in
-                guard self.uid != nil, self.errorRed else { return }
-                self.errorRed = false
-                self.desconectarListeners()
-                self.conectarAula()
+                guard self.errorRed else { return }
+                if self.uid != nil {
+                    // El fallo fue de red/Firestore: reconectamos directamente.
+                    self.errorRed = false
+                    self.desconectarListeners()
+                    self.conectarAula()
+                } else {
+                    // El fallo fue de App Check o Auth (uid == nil): repetimos el signIn completo.
+                    self.reintentar()
+                }
             }
         }
 
@@ -607,13 +613,55 @@ class AulaViewModel: ObservableObject {
             return
         }
 
-        // Si uid es nil (AppCheck o Auth fallaron), repetimos el signIn completo
+        // Si uid es nil (App Check o Auth fallaron), hay que obtener una sesión válida.
+        // Primero intentamos refrescar la sesión existente (lo más habitual: App Check
+        // falló pero Firebase Auth ya tiene un usuario en caché del arranque anterior).
+        // Forzar el refresco del token garantiza que Firestore recibirá un JWT fresco
+        // que corresponde al UID activo, evitando "Missing or insufficient permissions".
+        if let currentUser = Auth.auth().currentUser {
+            Task { @MainActor in
+                do {
+                    // Fuerza la renovación del token de Auth para que Firestore lo acepte.
+                    _ = try await currentUser.getIDToken(forcingRefresh: true)
+                    log.info("Token refrescado para UID: \(currentUser.uid)")
+                } catch {
+                    // Si el refresco falla, continuamos de todos modos; Firestore lo
+                    // rechazará y el usuario podrá reintentar de nuevo.
+                    log.error("No se pudo refrescar el token: \(error.localizedDescription)")
+                }
+
+                self.uid = currentUser.uid
+
+                // Aplicar la misma lógica de uidAnterior que en iniciar()
+                let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
+                if !uidAnterior.isEmpty && uidAnterior != self.uid {
+                    self.uid = uidAnterior
+                    log.info("Ya estaba registrado con UID: \(uidAnterior)")
+                } else {
+                    UserDefaults.standard.set(self.uid, forKey: "uidAnterior")
+                }
+
+                let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
+                let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
+                if !codigoAulaConectada.isEmpty && !pinConectada.isEmpty {
+                    self.buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
+                } else {
+                    self.conectarAula(posicion: self.aulaActual)
+                }
+                self.reintentando = false
+            }
+            return
+        }
+
+        // No hay ninguna sesión activa: creamos una nueva cuenta anónima.
         Auth.auth().signInAnonymously { [weak self] result, error in
             guard let self = self else { return }
             if let resultado = result {
                 Task { @MainActor in
                     self.uid = resultado.user.uid
+                    log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
 
+                    // Aplicar la misma lógica de uidAnterior que en iniciar()
                     let uidAnterior = UserDefaults.standard.string(forKey: "uidAnterior") ?? ""
                     if !uidAnterior.isEmpty && uidAnterior != self.uid {
                         self.uid = uidAnterior
