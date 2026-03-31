@@ -97,6 +97,8 @@ class AulaViewModel: ObservableObject {
 
     // Para evitar actualizaciones del listener mientras se avanza la cola
     var avanzandoCola: Bool = false
+    // Para evitar actualizaciones del listener mientras se vacía la cola
+    var vaciandoCola: Bool = false
 
     // Para test UI
     var n = 2
@@ -337,8 +339,10 @@ class AulaViewModel: ObservableObject {
                                             }
                                         self.actualizarContador(docs.count)
                                         // Actualizar la lista de alumnos en cola
-                                        await self.actualizarListaAlumnosEnCola(docs: docs)
-                                        if !self.avanzandoCola {
+                                        if !self.vaciandoCola {
+                                            await self.actualizarListaAlumnosEnCola(docs: docs)
+                                        }
+                                        if !self.avanzandoCola && !self.vaciandoCola {
                                             await self.mostrarSiguienteDesdeSnapshot(docs: docs)
                                             self.feedbackTactilNotificacion()
                                         }
@@ -429,9 +433,18 @@ class AulaViewModel: ObservableObject {
 
     // Vacía la cola completa eliminando todos los documentos de la subcolección "cola".
     func vaciarCola() {
+        // Resetear el estado local inmediatamente para evitar que la UI
+        // muestre nombres residuales mientras Firestore procesa los borrados.
+        nombreAlumno = ""
+        alumnosEnCola = []
+        avanzandoCola = false
+        vaciandoCola = true
         Task {
             do {
-                guard let refAula = refAula else { return }
+                guard let refAula = refAula else {
+                    vaciandoCola = false
+                    return
+                }
                 let snapshot = try await refAula.collection("cola").getDocuments()
                 for doc in snapshot.documents {
                     try await doc.reference.delete()
@@ -440,6 +453,7 @@ class AulaViewModel: ObservableObject {
             } catch {
                 log.error("Error al vaciar la cola: \(error.localizedDescription)")
             }
+            vaciandoCola = false
         }
     }
 
