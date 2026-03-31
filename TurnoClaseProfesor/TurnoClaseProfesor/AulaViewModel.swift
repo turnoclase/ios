@@ -437,10 +437,11 @@ class AulaViewModel: ObservableObject {
         }
     }
 
-    // Vacía la cola completa eliminando todos los documentos de la subcolección "cola".
+    // Vacía la cola completa eliminando todos los documentos en una sola transacción batch.
+    // Al ser atómica, el listener sólo recibe un único evento con la cola ya vacía,
+    // eliminando la condición de carrera de los borrados secuenciales.
     func vaciarCola() {
-        // Resetear el estado local inmediatamente para evitar que la UI
-        // muestre nombres residuales mientras Firestore procesa los borrados.
+        // Resetear el estado local inmediatamente para que la UI se limpie al instante.
         nombreAlumno = ""
         alumnosEnCola = []
         avanzandoCola = false
@@ -452,9 +453,16 @@ class AulaViewModel: ObservableObject {
                     return
                 }
                 let snapshot = try await refAula.collection("cola").getDocuments()
-                for doc in snapshot.documents {
-                    try await doc.reference.delete()
+                guard !snapshot.documents.isEmpty else {
+                    log.info("Cola ya estaba vacía")
+                    vaciandoCola = false
+                    return
                 }
+                let batch = db.batch()
+                for doc in snapshot.documents {
+                    batch.deleteDocument(doc.reference)
+                }
+                try await batch.commit()
                 log.info("Cola vaciada (\(snapshot.documents.count) alumnos eliminados)")
             } catch {
                 log.error("Error al vaciar la cola: \(error.localizedDescription)")
