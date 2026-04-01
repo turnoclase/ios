@@ -194,7 +194,7 @@ class AulaViewModel: ObservableObject {
                         self.uid = resultado.user.uid
                         log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
 
-                        let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
+                        let uidAnterior = self.leerUidAnterior()
                         if !uidAnterior.isEmpty && uidAnterior != self.uid {
                             self.uid = uidAnterior
                             log.info("Ya estaba registrado con UID: \(uidAnterior)")
@@ -641,7 +641,7 @@ class AulaViewModel: ObservableObject {
                 self.uid = currentUser.uid
 
                 // Aplicar la misma lógica de uidAnterior que en iniciar()
-                let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
+                let uidAnterior = self.leerUidAnterior()
                 if !uidAnterior.isEmpty && uidAnterior != self.uid {
                     self.uid = uidAnterior
                     log.info("Ya estaba registrado con UID: \(uidAnterior)")
@@ -670,7 +670,7 @@ class AulaViewModel: ObservableObject {
                     log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
 
                     // Aplicar la misma lógica de uidAnterior que en iniciar()
-                    let uidAnterior = KeychainHelper.leer(clave: "uidAnterior") ?? ""
+                    let uidAnterior = self.leerUidAnterior()
                     if !uidAnterior.isEmpty && uidAnterior != self.uid {
                         self.uid = uidAnterior
                         log.info("Ya estaba registrado con UID: \(uidAnterior)")
@@ -804,6 +804,19 @@ class AulaViewModel: ObservableObject {
 
     private func feedbackTactilNotificacion() {
         UINotificationFeedbackGenerator().notificationOccurred(.warning)
+    }
+
+    /// Lee el UID anterior priorizando la migración desde UserDefaults al Keychain.
+    /// Si existe el valor en UserDefaults, lo migra al Keychain, lo borra de UserDefaults
+    /// y lo devuelve. Si no existe en UserDefaults, lo lee directamente del Keychain.
+    private func leerUidAnterior() -> String {
+        if let uidLocal = UserDefaults.standard.string(forKey: "uidAnterior"), !uidLocal.isEmpty {
+            KeychainHelper.guardar(uidLocal, clave: "uidAnterior")
+            UserDefaults.standard.removeObject(forKey: "uidAnterior")
+            log.info("uidAnterior migrado de UserDefaults al Keychain")
+            return uidLocal
+        }
+        return KeychainHelper.leer(clave: "uidAnterior") ?? ""
     }
 
     func feedbackTactilLigero() {
