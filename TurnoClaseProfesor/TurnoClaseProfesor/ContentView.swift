@@ -64,7 +64,7 @@ struct ContentView: View {
             )
             .modify {
                 if #available(iOS 16, *) {
-                    $0.presentationDetents([.fraction(0.45)])
+                    $0.presentationDetents([.fraction(0.58)])
                         .presentationDragIndicator(.visible)
                 } else {
                     $0
