@@ -87,6 +87,14 @@ Al completar cualquier característica o cambio, crear un commit con:
 - **Mensaje en español**, en imperativo y conciso (p.ej. `Añadir vista de historial de aulas`).
 - Un commit por característica o cambio cohesionado; no agrupar cambios no relacionados.
 - No incluir ficheros de usuario de Xcode (`xcuserstate`, `xcuserdatad/`) ni carpetas `DerivedData/`.
+- **Antes de hacer el commit**, verificar que el proyecto compila sin errores:
+
+  ```bash
+  xcodebuild -workspace TurnoClase.xcworkspace \
+             -scheme TurnoClase \
+             -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+             build
+  ```
 
 ## Consideraciones para agentes
 
