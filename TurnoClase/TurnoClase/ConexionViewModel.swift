@@ -96,6 +96,7 @@ class ConexionViewModel: ObservableObject {
     var listenerAula: ListenerRegistration?
     var listenerCola: ListenerRegistration?
     var listenerPosicion: ListenerRegistration?
+    private var pantallaTask: Task<Void, Never>?
     var pedirTurno = true
     var atendido = false
     var encolando = false
@@ -293,6 +294,8 @@ class ConexionViewModel: ObservableObject {
                 if documentSnapshot?.exists == false {
                     self.atendido = true
                     log.info("Nos han borrado de la cola")
+                    // Fix Bug 2: actualizar la UI inmediatamente sin esperar a listenerCola
+                    await self.manejarAtendido()
                 }
             }
         }
@@ -329,8 +332,9 @@ class ConexionViewModel: ObservableObject {
             refPosicion = docs[0].reference
             conectarListenerPosicion(docs[0].reference)
             actualizarPantalla()
-        } else if pedirTurno || !atendido {
-            // No está en cola y debe encolarse (primera petición o reconexión sin haber sido atendido)
+        } else if pedirTurno {
+            // Fix Bug 2: eliminar !atendido de la condición para evitar el re-encolado
+            // involuntario cuando listenerCola llega antes que listenerPosicion
             guard !encolando else { return }
             pedirTurno = false
             encolando = true
@@ -369,45 +373,35 @@ class ConexionViewModel: ObservableObject {
         } else {
             // El alumno fue atendido (borrado de la cola por el profesor)
             log.info("La cola se ha vaciado tras ser atendido")
-            Task {
-                await recuperarUltimaPeticion()
-                if segundosEspera > 0, tiempoEsperaRestante() > 0 {
-                    // Hay que esperar: mostrar cronómetro
-                    estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
-                    mostrarCronometro = true
-                    mostrarBotonActualizar = false
-                    mostrarError = false
-                    iniciarCronometro()
-                    actualizarUI()
-                } else {
-                    // Sin tiempo de espera o tiempo expirado: mostrar botón
-                    log.info("Mostrando botón para volver a pedir turno")
-                    reiniciarCronometro()
-                    borrarUltimaPeticion()
-                    estadoTurno = .volverAEmpezar
-                    mostrarCronometro = false
-                    mostrarBotonActualizar = true
-                    mostrarError = false
-                    terminarCarga()
-                }
-            }
+            Task { await manejarAtendido() }
         }
     }
 
+    // Fix Bug 3: función extraída con task propio para evitar condiciones de carrera entre
+    // invocaciones concurrentes de actualizarPantalla
     private func actualizarPantalla() {
         guard let refAula = refAula, let refPosicion = refPosicion else {
             estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
             actualizarUI()
             return
         }
-        Task {
+        pantallaTask?.cancel()
+        pantallaTask = Task {
             do {
                 let document = try await refPosicion.getDocument(source: .server)
+                guard !Task.isCancelled else { return }
+                if !document.exists {
+                    // Fix Bug 1: el documento fue eliminado (atendido), actualizar estado
+                    atendido = true
+                    await manejarAtendido()
+                    return
+                }
                 guard let datos = document.data(),
                       let timestamp = datos["timestamp"] as? Timestamp else { return }
                 let querySnapshot = try await refAula.collection("cola")
                     .whereField("timestamp", isLessThanOrEqualTo: timestamp)
                     .getDocuments(source: .server)
+                guard !Task.isCancelled else { return }
                 let posicion = querySnapshot.documents.count
                 log.info("Posición en la cola: \(posicion)")
                 if posicion > 1 {
@@ -418,11 +412,32 @@ class ConexionViewModel: ObservableObject {
                 terminarCarga()
                 actualizarUI()
             } catch {
-                log.error("Error al actualizar pantalla: \(error.localizedDescription)")
-                terminarCarga()
+                if Task.isCancelled { return }
                 log.error("Error al actualizar pantalla: \(error.localizedDescription)")
                 terminarCarga()
             }
+        }
+    }
+
+    private func manejarAtendido() async {
+        log.info("La cola se ha vaciado tras ser atendido")
+        await recuperarUltimaPeticion()
+        if segundosEspera > 0, tiempoEsperaRestante() > 0 {
+            estadoTurno = .esperando(segundosRestantes: tiempoEsperaRestante())
+            mostrarCronometro = true
+            mostrarBotonActualizar = false
+            mostrarError = false
+            iniciarCronometro()
+            actualizarUI()
+        } else {
+            log.info("Mostrando botón para volver a pedir turno")
+            reiniciarCronometro()
+            borrarUltimaPeticion()
+            estadoTurno = .volverAEmpezar
+            mostrarCronometro = false
+            mostrarBotonActualizar = true
+            mostrarError = false
+            terminarCarga()
         }
     }
 
@@ -534,6 +549,7 @@ class ConexionViewModel: ObservableObject {
         listenerAula?.remove(); listenerAula = nil
         listenerCola?.remove(); listenerCola = nil
         listenerPosicion?.remove(); listenerPosicion = nil
+        pantallaTask?.cancel(); pantallaTask = nil
     }
 
     private func desconectarListenerPosicion() {
