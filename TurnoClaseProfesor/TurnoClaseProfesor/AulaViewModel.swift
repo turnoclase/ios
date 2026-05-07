@@ -648,7 +648,7 @@ class AulaViewModel: ObservableObject {
         if uid != nil {
             Task { @MainActor in
                 if let user = Auth.auth().currentUser {
-                    try? await user.getIDTokenResult(forcingRefresh: false)
+                    _ = try? await user.getIDTokenResult(forcingRefresh: false)
                 }
                 let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
                 let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""

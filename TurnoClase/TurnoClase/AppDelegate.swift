@@ -69,7 +69,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Task.detached(priority: .background) {
             // Refrescar el ID token de Auth si el usuario ya está autenticado
             if let user = Auth.auth().currentUser {
-                try? await user.getIDTokenResult(forcingRefresh: false)
+                _ = try? await user.getIDTokenResult(forcingRefresh: false)
             }
             // Refrescar el token de App Check si ha expirado
             _ = try? await AppCheck.appCheck().token(forcingRefresh: false)

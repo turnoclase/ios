@@ -79,7 +79,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         Task.detached(priority: .background) {
             if let user = Auth.auth().currentUser {
-                try? await user.getIDTokenResult(forcingRefresh: false)
+                _ = try? await user.getIDTokenResult(forcingRefresh: false)
             }
             _ = try? await AppCheck.appCheck().token(forcingRefresh: false)
         }
