@@ -43,8 +43,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // Configurar Firebase App Check según el entorno
         #if DEBUG
             AppCheck.setAppCheckProviderFactory(AppCheckDebugProviderFactory())
-        #else
-            AppCheck.setAppCheckProviderFactory(AppAttestProviderFactory())
         #endif
 
         // Habilitar Firebase
