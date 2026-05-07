@@ -184,7 +184,9 @@ class ConexionViewModel: ObservableObject {
 
         Task {
             do {
-                let resultado = try await withTimeout(segundos: 10) {
+                // Timeout más holgado en arranque en frío: App Check + Auth pueden necesitar
+                // renovar tokens de red simultáneamente tras días de inactividad.
+                let resultado = try await withTimeout(segundos: 20) {
                     try await Auth.auth().signInAnonymously()
                 }
                 uid = resultado.user.uid
@@ -238,10 +240,33 @@ class ConexionViewModel: ObservableObject {
                     actualizarUI()
                 }
             } catch {
-                log.error("Error al recuperar datos: \(error.localizedDescription)")
-                errorRed = true
-                estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
-                actualizarUI()
+                log.warning("Primer intento fallido al conectar al aula: \(error.localizedDescription). Reintentando en 2,5 s...")
+                // Reintento automático silencioso: el SDK puede necesitar unos segundos para
+                // completar el refresco de tokens de App Check / Auth en arranque en frío.
+                do {
+                    try await Task.sleep(nanoseconds: 2_500_000_000)
+                    let querySnapshot = try await withTimeout(segundos: 10) {
+                        try await db.collectionGroup("aulas")
+                            .whereField("codigo", isEqualTo: codigo)
+                            .limit(to: 1)
+                            .getDocuments(source: .server)
+                    }
+                    if let doc = querySnapshot.documents.first {
+                        log.info("Conectado a aula existente (reintento automático)")
+                        errorRed = false
+                        conectarListenerAula(doc)
+                    } else {
+                        log.error("Aula no encontrada (reintento automático)")
+                        errorRed = false
+                        estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR", comment: ""))
+                        actualizarUI()
+                    }
+                } catch {
+                    log.error("Error al recuperar datos: \(error.localizedDescription)")
+                    errorRed = true
+                    estadoTurno = .error(mensaje: NSLocalizedString("MENSAJE_ERROR_RED", comment: ""))
+                    actualizarUI()
+                }
             }
         }
     }
@@ -462,14 +487,10 @@ class ConexionViewModel: ObservableObject {
     // MARK: - Botones de la pantalla de turno
 
     /// Reintenta la conexión cuando hubo un error de red/auth.
-    /// - Si `uid` ya existe el fallo fue solo de red/Firestore: reconecta directamente.
-    /// - Si `uid` es nil (App Check o Auth fallaron): repite el signIn anónimo para
-    ///   obtener un nuevo token antes de reconectar.
+    /// Siempre pasa por signInAnonymously para garantizar que el ID token
+    /// está fresco, independientemente de si uid ya existía.
     func reintentar() {
         log.info("Reintentando conexión...")
-        // No reseteamos errorRed aquí: el botón de recargar permanece visible
-        // durante la carga para evitar el parpadeo. Se pondrá a false solo cuando
-        // la conexión se confirme como exitosa.
         mostrarError = false
         iniciarCarga()
         desconectarListeners()
@@ -477,26 +498,19 @@ class ConexionViewModel: ObservableObject {
         let codigo = codigoAulaActual
         let nombre = nombreEfectivo
 
-        // Si ya tenemos uid, el fallo fue solo de red/Firestore: reconectamos directamente.
-        if uid != nil {
-            encolarAlumno(codigo: codigo)
-            return
-        }
-
-        // Si uid es nil, App Check o Auth fallaron: hay que repetir el signIn completo.
-        Auth.auth().signInAnonymously { [weak self] result, error in
-            guard let self = self else { return }
-            Task { @MainActor in
-                if let resultado = result {
-                    self.uid = resultado.user.uid
-                    log.info("Registrado como usuario con UID: \(self.uid ??? "[Desconocido]")")
-                    self.actualizarAlumno(nombre: nombre)
-                    self.encolarAlumno(codigo: codigo)
-                } else {
-                    log.error("Error al reintentar sign-in: \(error?.localizedDescription ?? "desconocido")")
-                    self.terminarCarga()
-                    // errorRed ya era true, no hace falta cambiarlo
+        Task {
+            do {
+                let resultado = try await withTimeout(segundos: 20) {
+                    try await Auth.auth().signInAnonymously()
                 }
+                uid = resultado.user.uid
+                log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
+                actualizarAlumno(nombre: nombre)
+                encolarAlumno(codigo: codigo)
+            } catch {
+                log.error("Error al reintentar sign-in: \(error.localizedDescription)")
+                terminarCarga()
+                // errorRed ya era true, no hace falta cambiarlo
             }
         }
     }

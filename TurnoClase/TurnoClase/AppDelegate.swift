@@ -25,11 +25,9 @@ import UIKit
 import XCGLogger
 
 import Firebase
+import FirebaseAuth
+import FirebaseAppCheck
 import FirebaseFirestore
-
-#if DEBUG
-    import FirebaseAppCheck
-#endif
 
 // Servicio de logs XCGLogger
 let log = XCGLogger.default
@@ -42,10 +40,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // Configurar XCGLogger
         log.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: nil, fileLevel: .debug)
 
-        // Debug de Firebase App Check
+        // Configurar Firebase App Check según el entorno
         #if DEBUG
-            let providerFactory = AppCheckDebugProviderFactory()
-            AppCheck.setAppCheckProviderFactory(providerFactory)
+            AppCheck.setAppCheckProviderFactory(AppCheckDebugProviderFactory())
+        #else
+            AppCheck.setAppCheckProviderFactory(AppAttestProviderFactory())
         #endif
 
         // Habilitar Firebase
@@ -62,5 +61,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         db.settings = settings
 
         return true
+    }
+
+    // Pre-calentar tokens de Auth y App Check cada vez que la app pasa a primer plano,
+    // antes de que el usuario interactúe. Así el refresco está listo cuando pulse "conectar".
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Task.detached(priority: .background) {
+            // Refrescar el ID token de Auth si el usuario ya está autenticado
+            if let user = Auth.auth().currentUser {
+                try? await user.getIDTokenResult(forcingRefresh: false)
+            }
+            // Refrescar el token de App Check si ha expirado
+            _ = try? await AppCheck.appCheck().token(forcingRefresh: false)
+        }
     }
 }
