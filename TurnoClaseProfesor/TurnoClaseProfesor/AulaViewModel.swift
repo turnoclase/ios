@@ -130,24 +130,12 @@ class AulaViewModel: ObservableObject {
 
     func iniciar() {
         // Detectar el estado de la conexión de red
-        reachability.whenReachable = { [weak self] reachability in
+        reachability.whenReachable = { [weak self] _ in
             guard let self = self else { return }
-            if reachability.connection == .wifi {
-                log.info("Red Wifi")
-            } else {
-                log.info("Red móvil")
-            }
             Task { @MainActor in
                 guard self.errorRed else { return }
-                if self.uid != nil {
-                    // El fallo fue de red/Firestore: reconectamos directamente.
-                    self.errorRed = false
-                    self.desconectarListeners()
-                    self.conectarAula()
-                } else {
-                    // El fallo fue de App Check o Auth (uid == nil): repetimos el signIn completo.
-                    self.reintentar()
-                }
+                // reintentar() refresca el token en todos los casos (uid nil o no)
+                self.reintentar()
             }
         }
 
@@ -247,10 +235,30 @@ class AulaViewModel: ObservableObject {
                     crearAula()
                 }
             } catch {
-                log.error("Error al recuperar la lista de aulas \(error.localizedDescription)")
-                terminarCarga()
-                errorRed = true
-                actualizarAulaUI(codigo: "?", enCola: 0)
+                log.warning("Primer intento fallido al conectar al aula: \(error.localizedDescription). Reintentando en 2,5 s...")
+                do {
+                    try await Task.sleep(nanoseconds: 2_500_000_000)
+                    let querySnapshot = try await withTimeout(segundos: 10) {
+                        try await self.refMisAulas?.order(by: "timestamp").getDocuments(source: .server)
+                    }
+                    let total = querySnapshot?.documents.count ?? 0
+                    numAulas = total
+                    if posicion >= 0 && posicion < total {
+                        if let seleccionada = querySnapshot?.documents[posicion] {
+                            log.info("Conectado a aula existente (reintento automático)")
+                            refAula = seleccionada.reference
+                            conectarListener()
+                        }
+                    } else {
+                        log.info("Creando nueva aula (reintento automático)...")
+                        crearAula()
+                    }
+                } catch {
+                    log.error("Error al recuperar la lista de aulas: \(error.localizedDescription)")
+                    terminarCarga()
+                    errorRed = true
+                    actualizarAulaUI(codigo: "?", enCola: 0)
+                }
             }
         }
     }
@@ -582,10 +590,37 @@ class AulaViewModel: ObservableObject {
                     desconectarAula()
                 }
             } catch {
-                log.error("Error al recuperar datos: \(error.localizedDescription)")
-                terminarCarga()
-                errorRed = true
-                actualizarAulaUI(codigo: "?", enCola: 0)
+                log.warning("Primer intento fallido al buscar aula: \(error.localizedDescription). Reintentando en 2,5 s...")
+                do {
+                    try await Task.sleep(nanoseconds: 2_500_000_000)
+                    let querySnapshot = try await withTimeout(segundos: 10) {
+                        try await db.collectionGroup("aulas")
+                            .whereField("codigo", isEqualTo: codigo.uppercased())
+                            .whereField("pin", isEqualTo: pin)
+                            .getDocuments(source: .server)
+                    }
+                    if querySnapshot.documents.count > 0 {
+                        log.info("Aula encontrada: \(codigo) (reintento automático)")
+                        UserDefaults.standard.set(codigo, forKey: "codigoAulaConectada")
+                        UserDefaults.standard.set(pin, forKey: "pinConectada")
+                        desconectarListeners()
+                        invitado = true
+                        refAula = querySnapshot.documents.first?.reference
+                        conectarListener()
+                    } else {
+                        log.error("Aula no encontrada (reintento automático)")
+                        terminarCarga()
+                        if UserDefaults.standard.string(forKey: "codigoAulaConectada") == nil {
+                            alertaActiva = .errorConexion
+                        }
+                        desconectarAula()
+                    }
+                } catch {
+                    log.error("Error al recuperar datos: \(error.localizedDescription)")
+                    terminarCarga()
+                    errorRed = true
+                    actualizarAulaUI(codigo: "?", enCola: 0)
+                }
             }
         }
     }
@@ -608,16 +643,22 @@ class AulaViewModel: ObservableObject {
         desconectarListeners()
         iniciarCarga()
 
-        // Si ya tenemos uid, reconectamos directamente (el fallo fue sólo de red/Firestore)
+        // Si ya tenemos uid, refrescamos el token de forma preventiva antes de reconectar.
+        // El token puede estar caducado tras días de inactividad aunque uid no sea nil.
         if uid != nil {
-            let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
-            let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
-            if !codigoAulaConectada.isEmpty, !pinConectada.isEmpty {
-                buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
-            } else {
-                conectarAula(posicion: aulaActual)
+            Task { @MainActor in
+                if let user = Auth.auth().currentUser {
+                    try? await user.getIDTokenResult(forcingRefresh: false)
+                }
+                let codigoAulaConectada = UserDefaults.standard.string(forKey: "codigoAulaConectada") ?? ""
+                let pinConectada = UserDefaults.standard.string(forKey: "pinConectada") ?? ""
+                if !codigoAulaConectada.isEmpty, !pinConectada.isEmpty {
+                    self.buscarAula(codigo: codigoAulaConectada, pin: pinConectada)
+                } else {
+                    self.conectarAula(posicion: self.aulaActual)
+                }
+                self.reintentando = false
             }
-            reintentando = false
             return
         }
 
