@@ -99,6 +99,9 @@ class AulaViewModel: ObservableObject {
     var avanzandoCola: Bool = false
     // Para evitar actualizaciones del listener mientras se vacía la cola
     var vaciandoCola: Bool = false
+    // Tasks cancelables para actualización de nombre y lista (RC1, RC4)
+    private var siguienteTask: Task<Void, Never>?
+    private var listaTask: Task<Void, Never>?
 
     // Para test UI
     var n = 2
@@ -352,13 +355,22 @@ class AulaViewModel: ObservableObject {
                                                 < ($1.data()["timestamp"] as? Timestamp)?.seconds ?? 0
                                             }
                                         self.actualizarContador(docs.count)
-                                        // Actualizar la lista de alumnos en cola
+                                        // Actualizar la lista de alumnos en cola (RC1: cancelable)
                                         if !self.vaciandoCola {
-                                            await self.actualizarListaAlumnosEnCola(docs: docs)
+                                            self.listaTask?.cancel()
+                                            self.listaTask = Task {
+                                                await self.actualizarListaAlumnosEnCola(docs: docs)
+                                            }
                                         }
                                         if !self.avanzandoCola && !self.vaciandoCola {
-                                            await self.mostrarSiguienteDesdeSnapshot(docs: docs)
-                                            self.feedbackTactilNotificacion()
+                                            // Mostrar siguiente alumno (RC4: cancelable)
+                                            self.siguienteTask?.cancel()
+                                            self.siguienteTask = Task {
+                                                await self.mostrarSiguienteDesdeSnapshot(docs: docs)
+                                                if !Task.isCancelled {
+                                                    self.feedbackTactilNotificacion()
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -386,6 +398,10 @@ class AulaViewModel: ObservableObject {
         listenerAula = nil
         listenerCola?.remove()
         listenerCola = nil
+        siguienteTask?.cancel()
+        siguienteTask = nil
+        listaTask?.cancel()
+        listaTask = nil
     }
 
     // Muestra el nombre del primer alumno a partir del snapshot del listener de cola.
@@ -401,6 +417,7 @@ class AulaViewModel: ObservableObject {
             // Usar .default: resuelve con caché local si está disponible,
             // o del servidor si no. Nunca bloquea indefinidamente.
             let alumnoDoc = try await db.collection("alumnos").document(alumnoId).getDocument()
+            guard !Task.isCancelled else { return }
             if alumnoDoc.exists, let alumno = alumnoDoc.data() {
                 nombreAlumno = alumno["nombre"] as? String ?? "?"
             } else {
@@ -408,7 +425,7 @@ class AulaViewModel: ObservableObject {
             }
         } catch {
             log.error("Error al obtener nombre de alumno: \(error.localizedDescription)")
-            nombreAlumno = "?"
+            if !Task.isCancelled { nombreAlumno = "?" }
         }
     }
 
@@ -416,6 +433,7 @@ class AulaViewModel: ObservableObject {
     private func actualizarListaAlumnosEnCola(docs: [QueryDocumentSnapshot]) async {
         var lista: [AlumnoCola] = []
         for doc in docs {
+            guard !Task.isCancelled else { return }
             guard let alumnoId = doc.data()["alumno"] as? String else { continue }
             let ts = doc.data()["timestamp"] as? Timestamp
             var nombre = "?"
@@ -429,6 +447,7 @@ class AulaViewModel: ObservableObject {
             }
             lista.append(AlumnoCola(id: doc.documentID, alumnoId: alumnoId, nombre: nombre, timestamp: ts))
         }
+        guard !Task.isCancelled else { return }
         alumnosEnCola = lista
     }
 
@@ -452,7 +471,9 @@ class AulaViewModel: ObservableObject {
         // Resetear el estado local inmediatamente para que la UI se limpie al instante.
         nombreAlumno = ""
         alumnosEnCola = []
-        avanzandoCola = false
+        // Cancelar tasks pendientes de nombre/lista ya que la cola va a vaciarse
+        siguienteTask?.cancel()
+        listaTask?.cancel()
         vaciandoCola = true
         Task {
             do {
@@ -511,9 +532,9 @@ class AulaViewModel: ObservableObject {
                             "timestamp": FieldValue.serverTimestamp(),
                         ])
                         try await refPosicion.delete()
-                        avanzandoCola = false
                         // Mostrar el siguiente alumno en cola (si lo hay)
                         await mostrarSiguienteDesdeFirestore(refAula: refAula, docs: docs)
+                        avanzandoCola = false
                     } else {
                         nombreAlumno = alumno["nombre"] as? String ?? "?"
                     }

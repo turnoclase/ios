@@ -394,7 +394,10 @@ class ConexionViewModel: ObservableObject {
                 }
             }
         } else {
-            // El alumno fue atendido (borrado de la cola por el profesor)
+            // El alumno fue atendido (borrado de la cola por el profesor).
+            // Sólo procesamos el "atendido" si no estamos en mitad de un encolado:
+            // si encolando=true el documento aún puede no ser visible localmente.
+            guard !encolando else { return }
             log.info("La cola se ha vaciado tras ser atendido")
             Task { await manejarAtendido() }
         }
