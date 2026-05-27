@@ -191,7 +191,7 @@ class ConexionViewModel: ObservableObject {
                 }
                 uid = resultado.user.uid
                 log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
-                actualizarAlumno(nombre: nombre)
+                await actualizarAlumno(nombre: nombre)
                 encolarAlumno(codigo: codigo)
                 mostrandoTurno = true
             } catch {
@@ -206,15 +206,13 @@ class ConexionViewModel: ObservableObject {
 
     // MARK: - Registrar alumno en Firestore
 
-    private func actualizarAlumno(nombre: String) {
+    private func actualizarAlumno(nombre: String) async {
         guard let uid = uid else { return }
-        Task {
-            do {
-                try await db.collection("alumnos").document(uid).setData(["nombre": nombre], merge: true)
-                log.info("Alumno actualizado")
-            } catch {
-                log.error("Error al actualizar el alumno: \(error.localizedDescription)")
-            }
+        do {
+            try await db.collection("alumnos").document(uid).setData(["nombre": nombre], merge: true)
+            log.info("Alumno actualizado")
+        } catch {
+            log.error("Error al actualizar el alumno: \(error.localizedDescription)")
         }
     }
 
@@ -505,7 +503,7 @@ class ConexionViewModel: ObservableObject {
                 }
                 uid = resultado.user.uid
                 log.info("Registrado como usuario con UID: \(uid ??? "[Desconocido]")")
-                actualizarAlumno(nombre: nombre)
+                await actualizarAlumno(nombre: nombre)
                 encolarAlumno(codigo: codigo)
             } catch {
                 log.error("Error al reintentar sign-in: \(error.localizedDescription)")
